@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-comfortaa
+  }
+
+  input[type="checkbox"] {
+    @apply h-4 w-4 cursor-pointer rounded border duration-200 checked:bg-primary;
+  }
+
+  input[type="checkbox"]:hover {
+    @apply shadow-[0_0_0_2px_hsla(244,49%,49%,.1)];
+  }
+
+  input[type="checkbox"]:focus {
+    @apply shadow-[inset_0_0_0_1px_hsla(244,49%,49%,1),0_0_0_2px_hsla(244,49%,49%,0.1)];
+  }
+
+  select,
+  input {
+    @apply appearance-none;
+  }
+}
+
+@layer components {
+  .button {
+    @apply whitespace-nowrap rounded-xl px-5 py-3 font-medium duration-200;
+  }
+
+  .button-primary {
+    @apply bg-primary text-white hover:bg-primary-dark;
+  }
+
+  .button-secondary {
+    @apply border border-primary text-primary hover:border-primary-dark hover:text-primary-dark;
+  }
+
+  .button-disabled {
+    @apply cursor-not-allowed whitespace-nowrap rounded-xl bg-white-full-dark opacity-20 px-5 py-3 font-medium text-white;
+  }
+
+  .button-secondary-disabled {
+    @apply cursor-not-allowed whitespace-nowrap rounded-xl border border-white-full-dark px-5 py-3 font-medium text-white-full-dark opacity-20;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
