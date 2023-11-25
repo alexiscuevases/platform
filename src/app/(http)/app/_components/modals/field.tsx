@@ -74,7 +74,7 @@ export default function Field({ fieldData, data, errors, setData, resources, set
           <option value="">- Selecciona una opción -</option>
           {fieldData.options?.map((option, index) => (
             <option key={index} value={option.value}>
-              {option.name}
+              {option.title}
             </option>
           ))}
         </select>

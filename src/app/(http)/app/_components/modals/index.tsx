@@ -15,7 +15,8 @@ import Field from "./field";
 import { GeneralErrors } from "@typescript/others";
 
 interface OptionInterface {
-  id: string;
+  value: string;
+  title: string;
 }
 
 interface FieldInterface {

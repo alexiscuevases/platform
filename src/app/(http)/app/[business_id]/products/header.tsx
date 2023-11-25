@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoAdd, IoSearchOutline } from "react-icons/io5";
 import Link from "next/link";
 import Modal from "../../_components/modals";
@@ -13,6 +13,9 @@ import { createBusinessURL } from "@helpers/createBusinessURL";
 import { currencyFormat } from "@helpers/currencyFormat";
 import { GeneralErrors } from "@typescript/others";
 import { CreateProduct } from "@typescript/models/business/product";
+import { ParsedCategory } from "@typescript/models/business/category";
+import { getCategoriesByBusinessId } from "@services/business/category";
+import { SchemaParser } from "@utils/schemaParser";
 
 interface Props {
   business: Business;
@@ -20,6 +23,8 @@ interface Props {
 
 export default function Header({ business }: Props) {
   const [isOpen, setOpen] = useState<boolean>(false);
+  const [categories, setCategories] = useState<ParsedCategory[]>([]);
+  const [categoryOptions, setCategoryOptions] = useState<any[]>([]);
   // @ts-expect-error
   const [data, setData] = useState<CreateProductInterface>({});
   const [resources, setResources] = useState<any[]>([]);
@@ -61,6 +66,28 @@ export default function Header({ business }: Props) {
     setOpen(false);
     router.refresh();
   };
+
+  useEffect(() => {
+    const Categories = async () => {
+      const response = await getCategoriesByBusinessId(business._id);
+      if (response.result) {
+        const parsedCategories = [];
+        const parsedCategoryOptions = [];
+        response.result.forEach(category => {
+          const parsedCategory = new SchemaParser({
+            language_code: "ES",
+            currency_code: "COP"
+          }).parseCategory(category);
+          parsedCategories.push(category);
+          parsedCategoryOptions.push({ value: parsedCategory._id, title: parsedCategory.name });
+        });
+        setCategories(parsedCategories);
+        setCategoryOptions(parsedCategoryOptions);
+      }
+    };
+
+    Categories();
+  }, [business]);
 
   return (
     <div className="flex justify-between">
@@ -180,7 +207,7 @@ export default function Header({ business }: Props) {
                 id: "category",
                 title: "Categoría",
                 type: "select",
-                options: [],
+                options: categoryOptions,
                 warning: "No has definido ningún impuesto para esta categoría"
               },
               {
