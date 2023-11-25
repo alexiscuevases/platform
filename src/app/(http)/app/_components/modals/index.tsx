@@ -25,7 +25,8 @@ interface FieldInterface {
   disabled?: boolean;
   information?: string;
   warning?: string;
-  multi_values?: boolean;
+  multi_values?: string;
+  multi_values_type?: "market" | "language";
   default_property?: any;
   options?: OptionInterface[];
   value?: string;
@@ -36,6 +37,8 @@ interface SectionInterface {
   type: "fields" | "taxes" | "variations";
   title: string;
   information?: string;
+  multi_values?: string;
+  multi_values_type?: "market" | "language";
   fields?: FieldInterface[] | FieldInterface[][];
 }
 
@@ -160,10 +163,6 @@ export default function Modal({
                         <IoAdd fontWeight={0.5} size={20} />
                         <span>Añadir variación</span>
                       </button>
-                      <button className="flex items-center space-x-1 text-xs text-primary duration-200 hover:text-primary-dark">
-                        <IoEarthOutline size={14} />
-                        <span>Variación por mercado</span>
-                      </button>
                     </>
                   )}
                   {section.type === "fields" &&
@@ -172,23 +171,31 @@ export default function Modal({
                         <div className={!Array.isArray(field) ? "space-y-6" : "flex space-x-6"}>
                           {Array.isArray(field) ?
                             field.map((field, index) => (
-                              <div
-                                key={index}
-                                className={`group relative w-full ${
-                                  field.disabled &&
-                                  "rounded-2xl border border-white-full-dark bg-white-full-dark bg-opacity-20"
-                                }`}>
-                                <Field
-                                  fieldData={field}
-                                  data={field}
-                                  setData={setData}
-                                  resources={resources}
-                                  setResources={setResources}
-                                  setDeletedResources={setDeletedResources}
-                                />
+                              <div key={index} className="w-full space-y-1">
+                                <div
+                                  className={`group relative ${
+                                    field.disabled &&
+                                    "rounded-2xl border border-white-full-dark bg-white-full-dark bg-opacity-20"
+                                  }`}>
+                                  <Field
+                                    fieldData={field}
+                                    data={field}
+                                    setData={setData}
+                                    errors={errors}
+                                    resources={resources}
+                                    setResources={setResources}
+                                    setDeletedResources={setDeletedResources}
+                                  />
+                                </div>
+                                {errors[field.id] ?
+                                  <p className="text-xs text-danger">{errors[field.id]}</p>
+                                : field.information && (
+                                    <p className="mt-2 text-xs text-white-full-dark">{field.information}</p>
+                                  )
+                                }
                               </div>
                             ))
-                          : <div>
+                          : <div className="space-y-1">
                               <div
                                 className={`group relative w-full ${
                                   field.disabled &&
@@ -198,6 +205,7 @@ export default function Modal({
                                   fieldData={field}
                                   data={field}
                                   setData={setData}
+                                  errors={errors}
                                   resources={resources}
                                   setResources={setResources}
                                   setDeletedResources={setDeletedResources}
@@ -214,8 +222,9 @@ export default function Modal({
                         </div>
                         {field.multi_values && (
                           <button className="flex items-center space-x-1 text-xs text-primary duration-200 hover:text-primary-dark">
-                            <IoLanguageOutline size={16} />
-                            <span>Traducciones</span>
+                            {field.multi_values_type === "language" && <IoLanguageOutline size={16} />}
+                            {field.multi_values_type === "market" && <IoEarthOutline size={16} />}
+                            <span>{field.multi_values}</span>
                           </button>
                         )}
                         {field.warning && (
@@ -226,6 +235,13 @@ export default function Modal({
                         )}
                       </div>
                     ))}
+                  {section.multi_values && (
+                    <button className="flex items-center space-x-1 text-xs text-primary duration-200 hover:text-primary-dark">
+                      {section.multi_values_type === "language" && <IoLanguageOutline size={16} />}
+                      {section.multi_values_type === "market" && <IoEarthOutline size={16} />}
+                      <span>{section.multi_values}</span>
+                    </button>
+                  )}
                 </div>
               ))}
             </div>

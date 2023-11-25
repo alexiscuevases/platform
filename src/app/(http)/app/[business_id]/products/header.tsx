@@ -92,14 +92,16 @@ export default function Header({ business }: Props) {
                 id: "names",
                 title: "Nombre",
                 type: "text",
-                multi_values: true,
+                multi_values: "Traducciones",
+                multi_values_type: "language",
                 default_property: "Default"
               },
               {
                 id: "descriptions",
                 title: "Descripción",
                 type: "textarea",
-                multi_values: true,
+                multi_values: "Traducciones",
+                multi_values_type: "language",
                 default_property: "Default"
               }
             ]
@@ -117,20 +119,20 @@ export default function Header({ business }: Props) {
           {
             type: "fields",
             title: "Precios, costos y ganancias",
+            multi_values: "Precios, costo y ganancias por mercado",
+            multi_values_type: "market",
             fields: [
               [
                 {
                   id: "prices",
                   title: "Precio",
                   type: "number",
-                  multi_values: true,
                   default_property: "Default"
                 },
                 {
                   id: "comparation_prices",
                   title: "Precio de comparación",
                   type: "number",
-                  multi_values: true,
                   default_property: "Default"
                 }
               ],
@@ -139,7 +141,6 @@ export default function Header({ business }: Props) {
                   id: "costs",
                   title: "Costo",
                   type: "number",
-                  multi_values: true,
                   default_property: "Default"
                 },
                 {
@@ -167,7 +168,9 @@ export default function Header({ business }: Props) {
           },
           {
             type: "variations",
-            title: "Variaciones del producto"
+            title: "Variaciones del producto",
+            multi_values: "Variaciones por mercado",
+            multi_values_type: "market"
           },
           {
             type: "fields",

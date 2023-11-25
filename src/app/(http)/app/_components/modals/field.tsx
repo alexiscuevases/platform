@@ -2,7 +2,7 @@ import { ResourceController } from "@controllers/resource";
 import Image from "next/image";
 import { IoAdd, IoCloudUploadOutline, IoTrash } from "react-icons/io5";
 
-export default function Field({ fieldData, data, setData, resources, setDeletedResources, setResources }) {
+export default function Field({ fieldData, data, errors, setData, resources, setDeletedResources, setResources }) {
   const resourceController = new ResourceController();
 
   return (
@@ -26,7 +26,11 @@ export default function Field({ fieldData, data, setData, resources, setDeletedR
           className={`w-full px-4 pb-2 pt-6 ${
             fieldData.disabled ?
               "cursor-not-allowed  text-white-full-dark"
-            : "peer rounded-2xl border caret-primary outline-none transition-all hover:shadow-[0_0_0_4px_hsla(244,49%,49%,.1)] focus:shadow-[inset_0_0_0_2px_hsla(244,49%,49%,1),0_0_0_4px_hsla(244,49%,49%,0.1)]"
+            : `peer rounded-2xl border outline-none transition-all ${
+                errors[fieldData.id] ?
+                  "border-danger caret-danger hover:shadow-[0_0_0_4px_hsla(353,100%,35%,.1)] focus:shadow-[inset_0_0_0_1px_hsla(353,100%,35%,1),0_0_0_4px_hsla(353,100%,35%,0.1)]"
+                : "caret-primary hover:shadow-[0_0_0_4px_hsla(244,49%,49%,.1)] focus:shadow-[inset_0_0_0_2px_hsla(244,49%,49%,1),0_0_0_4px_hsla(244,49%,49%,0.1)]"
+              }`
           }`}
         />
       )}
@@ -45,7 +49,11 @@ export default function Field({ fieldData, data, setData, resources, setDeletedR
           defaultValue={fieldData.default_value}
           disabled={fieldData.disabled}
           placeholder=" "
-          className="peer max-h-[200px] min-h-[100px] w-full rounded-2xl border bg-transparent px-4 pb-2 pt-6 caret-primary outline-none transition-shadow hover:shadow-[0_0_0_4px_hsla(244,49%,49%,.1)] focus:shadow-[inset_0_0_0_2px_hsla(244,49%,49%,1),0_0_0_4px_hsla(244,49%,49%,0.1)]"
+          className={`peer max-h-[200px] min-h-[100px] w-full rounded-2xl border bg-transparent px-4 pb-2 pt-6 outline-none transition-shadow ${
+            errors[fieldData.id] ?
+              "border-danger caret-danger hover:shadow-[0_0_0_4px_hsla(353,100%,35%,.1)] focus:shadow-[inset_0_0_0_1px_hsla(353,100%,35%,1),0_0_0_4px_hsla(353,100%,35%,0.1)]"
+            : "caret-primary hover:shadow-[0_0_0_4px_hsla(244,49%,49%,.1)] focus:shadow-[inset_0_0_0_2px_hsla(244,49%,49%,1),0_0_0_4px_hsla(244,49%,49%,0.1)]"
+          } `}
         />
       )}
       {fieldData.type === "select" && (
@@ -165,7 +173,9 @@ export default function Field({ fieldData, data, setData, resources, setDeletedR
       {fieldData.type !== "file" && fieldData.type !== "checkbox" ?
         <label
           htmlFor={fieldData.id}
-          className={`absolute left-4 right-4 text-white-full-dark selection:bg-transparent ${
+          className={`absolute left-4 right-4 ${
+            errors[fieldData.id] ? "text-danger" : "text-white-full-dark"
+          } selection:bg-transparent ${
             fieldData.disabled ?
               "top-2 cursor-not-allowed text-xs"
             : `top-4 ${
