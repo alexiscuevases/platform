@@ -2,10 +2,9 @@
 
 import { fetchData } from "@helpers/fetchData";
 import { getConfigs } from "@helpers/getConfigs";
-import { CreateCollection, UpdateCollection } from "@typescript/models/business/collection";
+import { Collection, CreateCollection, UpdateCollection } from "@typescript/models/business/collection";
 import { GeneralResponse } from "@typescript/others";
 import { ValidatorToCreateCollection, ValidatorToUpdateCollection } from "@validators/business/collection";
-import { Collection } from "mongoose";
 
 const API_ENDPOINT = getConfigs("application").URLs.api;
 

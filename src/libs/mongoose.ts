@@ -3,19 +3,16 @@
 import { getEnvironmentVariable } from "@helpers/getEnvironmentVariable";
 import { SchemaValidator } from "@utils/schemaValidator";
 import * as TS from "@typescript/utils/validator";
-import { Schema, connect } from "mongoose";
+import { Connection, MongooseOptions, Schema, connect } from "mongoose";
 
-let dbConnection: any;
-let dbOptions: any = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-};
+let dbConnection: Connection;
+let dbOptions: MongooseOptions = {};
 
-export const ConnectMongo = async (): Promise<any> => {
+export const ConnectMongo = async (): Promise<Connection> => {
   if (dbConnection) return dbConnection;
 
   try {
-    dbConnection = await connect(getEnvironmentVariable("MONGO_URI"), dbOptions);
+    dbConnection = (await connect(getEnvironmentVariable("MONGO_URI"), dbOptions)) as any;
   } catch (error: any) {
     throw new Error(`Error connecting to MongoDB: ${error.message}`);
   }

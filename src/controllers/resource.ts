@@ -1,10 +1,11 @@
+import { getEnvironmentVariable } from "@helpers/getEnvironmentVariable";
 import { deleteResource, uploadResource } from "@libs/cloudinary";
 import { DeleteResource } from "@typescript/models/resource";
 import { GeneralResponse } from "@typescript/others";
 
 export class ResourceController {
   getResourceUrlByPublicId(public_id: string): string {
-    return `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/${public_id}`;
+    return `https://res.cloudinary.com/${getEnvironmentVariable("NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME")}/${public_id}`;
   }
 
   async uploadResources(resources: File[]): Promise<GeneralResponse<any, any>> {
