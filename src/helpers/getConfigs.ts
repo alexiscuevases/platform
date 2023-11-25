@@ -3,7 +3,7 @@ import { BusinessConfigs } from "@configs/business";
 import { LegalConfigs } from "@configs/legal";
 import { PlatformConfigs } from "@configs/platform";
 
-type Configs = typeof Configs;
+type ConfigsTS = typeof Configs;
 const Configs = {
   application: ApplicationConfigs,
   business: BusinessConfigs,
@@ -11,15 +11,15 @@ const Configs = {
   platform: PlatformConfigs
 };
 
-export const getConfigs = <T extends keyof Configs>(Configs: T): Configs[T] => {
+export const getConfigs = <ConfigName extends keyof ConfigsTS>(ConfigName: ConfigName): ConfigsTS[ConfigName] => {
   // @ts-expect-error
-  if (Configs === "application") return Configs.application;
+  if (ConfigName === "application") return Configs.application;
   // @ts-expect-error
-  else if (Configs === "business") return Configs.business;
+  else if (ConfigName === "business") return Configs.business;
   // @ts-expect-error
-  else if (Configs === "legal") return Configs.legal;
+  else if (ConfigName === "legal") return Configs.legal;
   // @ts-expect-error
-  else if (Configs === "platform") return Configs.platform;
+  else if (ConfigName === "platform") return Configs.platform;
 
-  return {} as Configs[T];
+  return {} as ConfigsTS[ConfigName];
 };
