@@ -1,8 +1,8 @@
 "use client";
 
+import { getConfigs } from "@helpers/getConfigs";
 import Image from "next/image";
 import { useState } from "react";
-import { getSettings } from "settings";
 
 export function GeneralFAQs() {
   const [questionShowing, setQuestion] = useState<number>(0);
@@ -46,7 +46,7 @@ export function GeneralFAQs() {
                 ab molestias officiis possimus.
               </p>
               <div className="hidden lg:inline-flex">
-                <a className="button button-primary" href={`${getSettings("application").URLs.www}/get-started`}>
+                <a className="button button-primary" href={`${getConfigs("application").URLs.www}/get-started`}>
                   Empezar gratis
                 </a>
               </div>
@@ -60,7 +60,7 @@ export function GeneralFAQs() {
               />
             </div>
             <div className="lg:hidden">
-              <a className="button button-primary" href={`${getSettings("application").URLs.www}/get-started`}>
+              <a className="button button-primary" href={`${getConfigs("application").URLs.www}/get-started`}>
                 Empezar gratis
               </a>
             </div>

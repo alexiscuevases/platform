@@ -1,9 +1,11 @@
-import { getUrlParams, apiResponseHandler } from "helpers";
-import { CreateProviderInterface, ProviderInterface } from "interfaces";
-import { ConnectMongo } from "utilities";
-import { BusinessModel, ProviderModel } from "models";
+import { apiResponseHandler } from "@helpers/apiResponseHandler";
+import { getUrlParams } from "@helpers/getUrlParams";
+import { ConnectMongo } from "@libs/mongoose";
+import { BusinessModel } from "@models/business/business";
+import { ProviderModel } from "@models/business/provider";
+import { CreateProvider, Provider } from "@typescript/models/business/provider";
+import { ValidatorToCreateProvider } from "@validators/business/provider";
 import { NextRequest, NextResponse } from "next/server";
-import { CreateProviderValidator } from "validations";
 
 interface Params {
   _id: any;
@@ -11,8 +13,8 @@ interface Params {
 
 export async function POST(request: NextRequest, { params }: { params: Params }): Promise<NextResponse> {
   try {
-    const body: CreateProviderInterface = await request.json();
-    const validation = CreateProviderValidator.validate(body);
+    const body: CreateProvider = await request.json();
+    const validation = ValidatorToCreateProvider.validate(body);
     if (!validation.success) return apiResponseHandler({ status: 200, errors: validation.errors });
 
     await ConnectMongo();
@@ -30,7 +32,7 @@ export async function POST(request: NextRequest, { params }: { params: Params })
 export async function GET(request: NextRequest, { params }: { params: Params }): Promise<NextResponse> {
   try {
     await ConnectMongo();
-    const providers: ProviderInterface[] = await ProviderModel.find({
+    const providers: Provider[] = await ProviderModel.find({
       business_id: params._id,
       ...getUrlParams(request.url)
     });

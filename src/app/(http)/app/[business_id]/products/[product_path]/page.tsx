@@ -1,17 +1,19 @@
-import { isBusinessId, isProductPath } from "guards";
 import type { Metadata } from "next";
-import { BusinessApiResponseInterface, ProductApiResponseInterface } from "interfaces";
 import Navbar from "../../../_components/navbar";
 import Header from "./header";
-import { cleanObject } from "helpers";
+import { cleanObject } from "@helpers/cleanObject";
+import { isBusinessId } from "@guards/business";
+import { isProductPath } from "@guards/product";
+import { Product } from "@typescript/models/business/product";
+import { Business } from "@typescript/models/business";
 
 export const metadata: Metadata = {
   title: "Productos"
 };
 
 interface Props {
-  business: BusinessApiResponseInterface;
-  product: ProductApiResponseInterface;
+  business: Business;
+  product: Product;
 }
 
 export default isBusinessId(

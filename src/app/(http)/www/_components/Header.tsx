@@ -1,12 +1,12 @@
+import { getConfigs } from "@helpers/getConfigs";
 import Link from "next/link";
-import { getSettings } from "settings";
 
 export function Header() {
   return (
     <>
       <header className="mx-auto max-w-[2024px] px-0 md:px-12 lg:px-16">
         <div className="flex h-24 items-center justify-between">
-          <Link href={getSettings("application").URLs.www}>
+          <Link href={getConfigs("application").URLs.www}>
             <svg width="200" height="26" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
                 fillRule="evenodd"
@@ -55,17 +55,17 @@ export function Header() {
               <div className="absolute -bottom-0.5 left-0 right-0 h-0.5 w-0 bg-primary-dark duration-200 group-hover:w-full" />
             </Link>
             <Link
-              href={`${getSettings("application").URLs.www}/prices`}
+              href={`${getConfigs("application").URLs.www}/prices`}
               className="group relative font-medium text-primary-dark">
               Precios
               <div className="absolute -bottom-0.5 left-0 right-0 h-0.5 w-0 bg-primary-dark duration-200 group-hover:w-full" />
             </Link>
           </nav>
           <div className="flex items-center space-x-3">
-            <Link className="button button-secondary" href={`${getSettings("application").URLs.www}/access`}>
+            <Link className="button button-secondary" href={`${getConfigs("application").URLs.www}/access`}>
               Iniciar sesión
             </Link>
-            <Link className="button button-primary" href={`${getSettings("application").URLs.www}/get-started`}>
+            <Link className="button button-primary" href={`${getConfigs("application").URLs.www}/get-started`}>
               Empezar gratis
             </Link>
           </div>

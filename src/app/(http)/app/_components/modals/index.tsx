@@ -12,7 +12,7 @@ import {
   IoWarningOutline
 } from "react-icons/io5";
 import Field from "./field";
-import { ErrorsInterface } from "interfaces";
+import { GeneralErrors } from "@typescript/others";
 
 interface OptionInterface {
   id: string;
@@ -49,7 +49,7 @@ interface Props {
   setData: any;
   resourcesInformation?: any;
   setDeletedResources?: any;
-  errors: ErrorsInterface<any>;
+  errors: GeneralErrors<any>;
   resources?: any;
   setResources?: any;
   waitingResponse: boolean;

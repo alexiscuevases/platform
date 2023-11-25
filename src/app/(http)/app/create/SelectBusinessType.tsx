@@ -1,8 +1,8 @@
 "use client";
 
-import { CreateBusinessInterface } from "interfaces";
+import { getConfigs } from "@helpers/getConfigs";
+import { CreateBusiness } from "@typescript/models/business";
 import { IoBusiness, IoPerson } from "react-icons/io5";
-import { getSettings } from "settings";
 
 export default function SelectBusinessType({
   setData,
@@ -10,7 +10,7 @@ export default function SelectBusinessType({
   setStep
 }: {
   setData: any;
-  data: CreateBusinessInterface;
+  data: CreateBusiness;
   setStep: any;
 }) {
   const NextStep = business_type => {
@@ -41,7 +41,7 @@ export default function SelectBusinessType({
       <div className="space-y-6">
         <p>Es quien asume las obligaciones y responsabilidades del negocio a registrar</p>
         <ul className="w-full">
-          {getSettings("business").types.map((business_type: any, index: number) => (
+          {getConfigs("business").types.map((business_type: any, index: number) => (
             <li key={index}>
               {index !== 0 && <div className="mx-auto my-2 h-[1px] w-[calc(100%-32px)] bg-primary/5"></div>}
               <button

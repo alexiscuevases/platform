@@ -1,14 +1,16 @@
 "use client";
 
-import { BusinessApiResponseInterface, CreateCategoryInterface, ErrorsInterface } from "interfaces";
 import { useState } from "react";
 import { IoAdd } from "react-icons/io5";
 import Modal from "../../_components/modals";
 import { useRouter } from "next/navigation";
-import { CategoryController } from "controllers";
+import { Business } from "@typescript/models/business";
+import { CategoryController } from "@controllers/business/category";
+import { GeneralErrors } from "@typescript/others";
+import { CreateCategory } from "@typescript/models/business/category";
 
 interface Props {
-  business: BusinessApiResponseInterface;
+  business: Business;
 }
 
 export default function Header({ business }: Props) {
@@ -16,7 +18,7 @@ export default function Header({ business }: Props) {
   const [data, setData] = useState<CreateCategoryInterface>({});
   const [isOpen, setOpen] = useState(false);
   const [waitingResponse, setWaitingResponse] = useState<boolean>(false);
-  const [errors, setErrors] = useState<ErrorsInterface<CreateCategoryInterface>>({});
+  const [errors, setErrors] = useState<GeneralErrors<CreateCategory>>({});
   const categoryController = new CategoryController();
   const router = useRouter();
 

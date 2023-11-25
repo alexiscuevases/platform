@@ -1,14 +1,9 @@
 "use client";
 
-import {
-  CreateBusinessInterface,
-  ErrorsInterface,
-  LegalAddressInterface,
-  LegalPersonInterface,
-  NaturalPersonInterface
-} from "interfaces";
+import { Address, CreateBusiness, LegalPerson, NaturalPerson } from "@typescript/models/business";
+import { GeneralErrors } from "@typescript/others";
+import { BusinessAddressValidator, LegalPersonValidator, NaturalPersonValidator } from "@validators/business";
 import { useState } from "react";
-import { LegalAddressValidator, LegalPersonValidator, NaturalPersonValidator } from "validations";
 
 export default function AccessInformation({
   setData,
@@ -17,27 +12,27 @@ export default function AccessInformation({
   step
 }: {
   setData: any;
-  data: CreateBusinessInterface;
+  data: CreateBusiness;
   setStep: any;
   step: any;
 }) {
-  const [errors, setErrors] = useState<ErrorsInterface<any>>({});
+  const [errors, setErrors] = useState<GeneralErrors<any>>({});
 
   const continueHandler = () => {
     if (step == 2) {
       setErrors({});
 
       if (data.business_type === "Natural person") {
-        const naturalPersonValidation = NaturalPersonValidator.validate(data as NaturalPersonInterface);
+        const naturalPersonValidation = NaturalPersonValidator.validate(data as NaturalPerson);
         if (!naturalPersonValidation.success) return setErrors(naturalPersonValidation.errors);
       } else {
-        const legalPersonValidation = LegalPersonValidator.validate(data as LegalPersonInterface);
+        const legalPersonValidation = LegalPersonValidator.validate(data as LegalPerson);
         if (!legalPersonValidation.success) return setErrors(legalPersonValidation.errors);
       }
 
       setStep(3);
     } else {
-      const legalAddressValidation = LegalAddressValidator.validate(data as LegalAddressInterface);
+      const legalAddressValidation = BusinessAddressValidator.validate(data as Address);
       if (!legalAddressValidation.success) return setErrors(legalAddressValidation.errors);
 
       setStep(4);

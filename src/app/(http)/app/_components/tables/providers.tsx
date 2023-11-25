@@ -1,16 +1,17 @@
 "use client";
 
-import { getProvidersByBusinessId } from "services";
-import { BusinessApiResponseInterface, ProviderApiResponseInterface } from "interfaces";
+import { getProvidersByBusinessId } from "@services/business/provider";
+import { Business } from "@typescript/models/business";
+import { Provider } from "@typescript/models/business/provider";
 import { useEffect, useState } from "react";
 import { IoOpenOutline } from "react-icons/io5";
 
 interface Props {
-  business: BusinessApiResponseInterface;
+  business: Business;
 }
 
 export function ProvidersTable({ business }: Props) {
-  const [providers, setProviders] = useState<ProviderApiResponseInterface[]>([]);
+  const [providers, setProviders] = useState<Provider[]>([]);
 
   useEffect(() => {
     const Providers = async () => {

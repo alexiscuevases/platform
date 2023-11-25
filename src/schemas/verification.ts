@@ -1,7 +1,7 @@
-import { VerificationInterface } from "interfaces";
-import { SchemaValidator } from "utilities";
+import { Verification } from "@typescript/models/verification";
+import { SchemaValidator } from "@utils/schemaValidator";
 
-export const VerificationSchema = new SchemaValidator<VerificationInterface>({
+export const VerificationSchema = new SchemaValidator<Verification>({
   user_id: { valueType: String, isRequired: true, referenceModel: "User", isObjectId: true },
   type: {
     valueType: String,

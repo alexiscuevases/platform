@@ -1,13 +1,14 @@
 "use client";
 
-import { BusinessApiResponseInterface, ProductApiResponseInterface } from "interfaces";
 import { useState } from "react";
 import { IoCreateOutline, IoDuplicateOutline } from "react-icons/io5";
 import ProductModal from "../../../_components/modals/product";
+import { Business } from "@typescript/models/business";
+import { Product } from "@typescript/models/business/product";
 
 interface Props {
-  business: BusinessApiResponseInterface;
-  product: ProductApiResponseInterface;
+  business: Business;
+  product: Product;
 }
 
 export default function Header({ business, product }: Props) {

@@ -1,11 +1,12 @@
 "use client";
 
-import { UserController } from "controllers";
-import { ErrorsInterface, RecoveryPasswordInterface } from "interfaces";
+import { UserController } from "@controllers/user";
+import { RecoveryUserPassword } from "@typescript/models/user";
+import { GeneralErrors } from "@typescript/others";
 import { useState } from "react";
 
 interface Props {
-  data: RecoveryPasswordInterface;
+  data: RecoveryUserPassword;
   setStep: any;
   setVerification: any;
   verification: {
@@ -14,12 +15,12 @@ interface Props {
   };
 }
 
-interface PosibleErrors extends RecoveryPasswordInterface {
+interface PosibleErrors extends RecoveryUserPassword {
   code: string;
 }
 
 export default function SecondStep({ data, setStep, setVerification, verification }: Props) {
-  const [errors, setErrors] = useState<ErrorsInterface<PosibleErrors>>({});
+  const [errors, setErrors] = useState<GeneralErrors<PosibleErrors>>({});
   const [waitingResponse, setWaitingResponse] = useState<boolean>(false);
   const userController = new UserController();
 

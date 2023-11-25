@@ -1,13 +1,14 @@
 "use client";
 
-import { UserController } from "controllers";
-import { CreateUserInterface, ErrorsInterface } from "interfaces";
+import { UserController } from "@controllers/user";
+import { getConfigs } from "@helpers/getConfigs";
+import { CreateUser } from "@typescript/models/user";
+import { GeneralErrors } from "@typescript/others";
 import { useState } from "react";
-import { getSettings } from "settings";
 
 interface Props {
   setData: any;
-  data: CreateUserInterface;
+  data: CreateUser;
   setStep: any;
   step: number;
   setVerification: any;
@@ -15,7 +16,7 @@ interface Props {
 
 export default function SecondStep({ setData, data, setStep, setVerification }: Props) {
   const [waitingResponse, setWaitingResponse] = useState<boolean>(false);
-  const [errors, setErrors] = useState<ErrorsInterface<CreateUserInterface>>({});
+  const [errors, setErrors] = useState<GeneralErrors<CreateUser>>({});
   const userController = new UserController();
 
   const continueHandler = async () => {
@@ -37,7 +38,7 @@ export default function SecondStep({ setData, data, setStep, setVerification }: 
       <div className="space-y-6">
         <p className="text-white-full-dark">
           Por este medio le comunicaremos cualquier información importante y, lo usarás para iniciar sesión en{" "}
-          {getSettings("platform").name}
+          {getConfigs("platform").name}
         </p>
         <div className="max-w-[500px] space-y-8">
           <div className="min-h-[200px] space-y-6">

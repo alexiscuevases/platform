@@ -1,15 +1,16 @@
-import { BusinessApiResponseInterface, ProductApiResponseInterface } from "interfaces";
-import { SchemaParser } from "utilities";
+import { Business } from "@typescript/models/business";
+import { Product } from "@typescript/models/business/product";
+import { SchemaParser } from "@utils/schemaParser";
 
 interface Props {
-  business: BusinessApiResponseInterface;
-  product: ProductApiResponseInterface;
+  business: Business;
+  product: Product;
   params: {
     product_path: string;
   };
 }
 
-export async function Product({ business, product, params }: Props) {
+export async function ProductComponent({ business, product, params }: Props) {
   const parsedProduct = new SchemaParser({
     language_code: "ES",
     currency_code: "COP"

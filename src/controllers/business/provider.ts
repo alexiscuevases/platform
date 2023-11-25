@@ -1,16 +1,9 @@
-import {
-  ResponseInterface,
-  CreateProviderInterface,
-  UpdateProviderInterface,
-  ProviderApiResponseInterface
-} from "interfaces";
-import { createProviderByBusinessId, updateProviderByBusinessId } from "services";
+import { createProviderByBusinessId, updateProviderByBusinessId } from "@services/business/provider";
+import { CreateProvider, Provider, UpdateProvider } from "@typescript/models/business/provider";
+import { GeneralResponse } from "@typescript/others";
 
 export class ProviderController {
-  async create(
-    business_id: string,
-    dataToCreate: CreateProviderInterface
-  ): Promise<ResponseInterface<ProviderApiResponseInterface, CreateProviderInterface>> {
+  async create(business_id: string, dataToCreate: CreateProvider): Promise<GeneralResponse<Provider, CreateProvider>> {
     const provider = await createProviderByBusinessId(business_id, dataToCreate);
     if (!provider.success) return { success: false, errors: provider.errors };
 
@@ -20,8 +13,8 @@ export class ProviderController {
   async update(
     business_id: string,
     provider_id: string,
-    dataToUpdate: UpdateProviderInterface
-  ): Promise<ResponseInterface<ProviderApiResponseInterface, UpdateProviderInterface>> {
+    dataToUpdate: UpdateProvider
+  ): Promise<GeneralResponse<Provider, UpdateProvider>> {
     const provider = await updateProviderByBusinessId(business_id, provider_id, dataToUpdate);
     if (!provider.success) return { success: false, errors: provider.errors };
 

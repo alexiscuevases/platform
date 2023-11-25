@@ -2,7 +2,7 @@ import { Footer } from "../../_components/Footer";
 import { Header } from "../../_components/Header";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getSettings } from "settings";
+import { getConfigs } from "@helpers/getConfigs";
 
 export const metadata: Metadata = {
   title: "Términos y Condiciones de Uso"
@@ -25,9 +25,8 @@ export default function Page() {
             <p>
               Estos Términos y Condiciones (en adelante, los &quot;Términos&quot;) regulan el uso de la plataforma de
               comercio electrónico (en adelante, la &quot;Plataforma&quot;) proporcionada por{" "}
-              {getSettings("legal").constitutions[getSettings("legal").main_constitution].legalName} (en adelante,
-              &quot;
-              {getSettings("legal").constitutions[getSettings("legal").main_constitution].commercialName}&quot;) a los
+              {getConfigs("legal").constitutions[getConfigs("legal").main_constitution].legalName} (en adelante, &quot;
+              {getConfigs("legal").constitutions[getConfigs("legal").main_constitution].commercialName}&quot;) a los
               usuarios (en adelante, los &quot;Usuarios&quot; o el &quot;Usuario&quot;).
             </p>
           </div>
@@ -61,13 +60,13 @@ export default function Page() {
             <p>
               <span className="font-bold">3.1 Los Planes.</span> La Plataforma ofrece planes de pago y gratuitos. Los
               detalles de cada plan, incluyendo precios, comisiones y características, se proporcionan en la página de{" "}
-              <Link className="text-primary underline" href={`${getSettings("application").URLs.www}/prices`}>
+              <Link className="text-primary underline" href={`${getConfigs("application").URLs.www}/prices`}>
                 Precios.
               </Link>
             </p>
             <p>
               <span className="font-bold">3.2 Cambios en los Planes.</span>{" "}
-              {getSettings("legal").constitutions[getSettings("legal").main_constitution].commercialName} se reserva el
+              {getConfigs("legal").constitutions[getConfigs("legal").main_constitution].commercialName} se reserva el
               derecho de cambiar los precios, las comisiones y las características de cada Plan en cualquier momento.
             </p>
           </div>
@@ -79,7 +78,7 @@ export default function Page() {
               con la{" "}
               <Link
                 className="text-primary underline"
-                href={`${getSettings("application").URLs.www}/legal/cancellation-and-refund-policy`}>
+                href={`${getConfigs("application").URLs.www}/legal/cancellation-and-refund-policy`}>
                 Política de Cancelación y Devolución.
               </Link>
             </p>
@@ -118,11 +117,11 @@ export default function Page() {
             <p>
               <span className="font-bold">
                 7.1 Derechos de Propiedad de{" "}
-                {getSettings("legal").constitutions[getSettings("legal").main_constitution].commercialName}.
+                {getConfigs("legal").constitutions[getConfigs("legal").main_constitution].commercialName}.
               </span>{" "}
               Todos los contenidos, diseños, logotipos, marcas y cualquier otro material relacionado con nuestra
               Plataforma son propiedad exclusiva de{" "}
-              {getSettings("legal").constitutions[getSettings("legal").main_constitution].commercialName} o de terceros
+              {getConfigs("legal").constitutions[getConfigs("legal").main_constitution].commercialName} o de terceros
               con licencia. No está autorizado a utilizar, copiar o distribuir ningún material sin nuestro permiso.
             </p>
             <p>
@@ -137,7 +136,7 @@ export default function Page() {
               <span className="font-bold">8.1 Política de Privacidad.</span> Nuestra{" "}
               <Link
                 className="text-primary underline"
-                href={`${getSettings("application").URLs.www}/legal/privacy-policy`}>
+                href={`${getConfigs("application").URLs.www}/legal/privacy-policy`}>
                 Política de Privacidad
               </Link>{" "}
               describe cómo recopilamos, utilizamos y protegemos la información proporcionada a través de nuestra
@@ -149,16 +148,16 @@ export default function Page() {
             <p>
               <span className="font-bold">9.1 Tarifas.</span> El uso de nuestra plataforma puede estar sujeto a tarifas.
               Las tarifas se describen en un acuerdo separado o en nuestra página de{" "}
-              <Link className="text-primary underline" href={`${getSettings("application").URLs.www}/prices`}>
+              <Link className="text-primary underline" href={`${getConfigs("application").URLs.www}/prices`}>
                 Precios.
               </Link>
             </p>
             <p>
               <span className="font-bold">9.2 Pagos.</span> Los Usuarios son concientes y autorizan el pago de cualquier
               tarifa. Las tarifas qué los Usuarios pagarán a{" "}
-              {getSettings("legal").constitutions[getSettings("legal").main_constitution].commercialName} se describen
-              en un acuerdo separado o en nuestra página de{" "}
-              <Link className="text-primary underline" href={`${getSettings("application").URLs.www}/prices`}>
+              {getConfigs("legal").constitutions[getConfigs("legal").main_constitution].commercialName} se describen en
+              un acuerdo separado o en nuestra página de{" "}
+              <Link className="text-primary underline" href={`${getConfigs("application").URLs.www}/prices`}>
                 Precios.
               </Link>
             </p>
@@ -179,7 +178,7 @@ export default function Page() {
           <div className="mb-6 space-y-2">
             <h2 className="text-3xl font-medium">11. Términación</h2>
             <p>
-              {getSettings("legal").constitutions[getSettings("legal").main_constitution].commercialName} se reserva el
+              {getConfigs("legal").constitutions[getConfigs("legal").main_constitution].commercialName} se reserva el
               derecho de terminar la cuenta de cualquier Usuario o Comercio en caso de incumplimiento de estos Términos.
             </p>
           </div>
@@ -187,7 +186,7 @@ export default function Page() {
             <h2 className="text-3xl font-medium">12. Ley Aplicable</h2>
             <p>
               Estos Términos se rigen por las leyes de{" "}
-              {getSettings("legal").constitutions[getSettings("legal").main_constitution].commercialName}. Cualquier
+              {getConfigs("legal").constitutions[getConfigs("legal").main_constitution].commercialName}. Cualquier
               disputa se resolverá en los tribunales de nuestra jurisdicción.
             </p>
           </div>
@@ -203,18 +202,18 @@ export default function Page() {
             <p>
               Si tienes alguna pregunta o inquietud con respecto a estos Términos, no dudes en ponerte en contacto con
               nosotros a través de{" "}
-              <Link className="text-primary underline" href={`mailto:help@${getSettings("application").host}`}>
-                help@{getSettings("application").host}.
+              <Link className="text-primary underline" href={`mailto:help@${getConfigs("application").host}`}>
+                help@{getConfigs("application").host}.
               </Link>
             </p>
           </div>
           <p className="text-sm font-light">
-            Gracias por elegir {getSettings("platform").name} como tu plataforma de comercio electrónico. Estamos
+            Gracias por elegir {getConfigs("platform").name} como tu plataforma de comercio electrónico. Estamos
             comprometidos a proporcionar una experiencia segura y eficiente para tu negocio.
             <br />
             <br />
             Atentamente, El equipo de{" "}
-            {getSettings("legal").constitutions[getSettings("legal").main_constitution].commercialName}
+            {getConfigs("legal").constitutions[getConfigs("legal").main_constitution].commercialName}
           </p>
         </div>
       </main>

@@ -1,21 +1,21 @@
 "use client";
 
-import {
-  BusinessApiResponseInterface,
-  CreateProductInterface,
-  DeleteResourceInterface,
-  ErrorsInterface
-} from "interfaces";
 import { useState } from "react";
 import { IoAdd, IoSearchOutline } from "react-icons/io5";
 import Link from "next/link";
 import Modal from "../../_components/modals";
-import { createBusinessURL, currencyFormat } from "helpers";
 import { useRouter } from "next/navigation";
-import { ProductController, ResourceController } from "controllers";
+import { Business } from "@typescript/models/business";
+import { ResourceController } from "@controllers/resource";
+import { ProductController } from "@controllers/business/product";
+import { DeleteResource } from "@typescript/models/resource";
+import { createBusinessURL } from "@helpers/createBusinessURL";
+import { currencyFormat } from "@helpers/currencyFormat";
+import { GeneralErrors } from "@typescript/others";
+import { CreateProduct } from "@typescript/models/business/product";
 
 interface Props {
-  business: BusinessApiResponseInterface;
+  business: Business;
 }
 
 export default function Header({ business }: Props) {
@@ -29,7 +29,7 @@ export default function Header({ business }: Props) {
     deleting: false
   });
   const [waitingResponse, setWaitingResponse] = useState<boolean>(false);
-  const [errors, setErrors] = useState<ErrorsInterface<CreateProductInterface>>({});
+  const [errors, setErrors] = useState<GeneralErrors<CreateProduct>>({});
   const resourceController = new ResourceController();
   const productController = new ProductController();
   const router = useRouter();
@@ -44,7 +44,7 @@ export default function Header({ business }: Props) {
 
     if (deletedResources && deletedResources.length > 0) {
       setResourcesInformation({ ...resourcesInformation, deleting: true });
-      await resourceController.deleteResources(deletedResources as DeleteResourceInterface[]);
+      await resourceController.deleteResources(deletedResources as DeleteResource[]);
       setResourcesInformation({ ...resourcesInformation, deleting: false });
     }
 

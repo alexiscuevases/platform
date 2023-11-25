@@ -1,39 +1,34 @@
 "use server";
 
-import { fetchData } from "helpers";
-import {
-  CreateAuthenticationInterface,
-  AuthenticationInterface,
-  ResponseInterface,
-  UpdateAuthenticationInterface,
-  AuthenticationApiResponseInterface
-} from "interfaces";
-import { getSettings } from "settings";
-import { CreateAuthenticationValidator, UpdateAuthenticationValidator } from "validations";
+import { getConfigs } from "@helpers/getConfigs";
+import { fetchData } from "@helpers/fetchData";
+import { Authentication, CreateAuthentication, UpdateAuthentication } from "@typescript/models/authentication";
+import { GeneralResponse } from "@typescript/others";
+import { ValidatorToCreateAuthentication, ValidatorToUpdateAuthentication } from "@validators/authentication";
 
-const API_ENDPOINT = `${getSettings("application").URLs.api}/authentication`;
+const API_ENDPOINT = `${getConfigs("application").URLs.api}/authentication`;
 
 export const createAuthentication = async (
-  dataToCreate: CreateAuthenticationInterface
-): Promise<ResponseInterface<AuthenticationApiResponseInterface, CreateAuthenticationInterface>> =>
+  dataToCreate: CreateAuthentication
+): Promise<GeneralResponse<Authentication, CreateAuthentication>> =>
   fetchData(API_ENDPOINT, "POST", dataToCreate, {
-    validator: CreateAuthenticationValidator,
+    validator: ValidatorToCreateAuthentication,
     revalidateTags: ["authentications"]
   });
 
 export const updateAuthenticationById = async (
   authentication_id: string,
-  dataToUpdate: UpdateAuthenticationInterface
-): Promise<ResponseInterface<AuthenticationApiResponseInterface, UpdateAuthenticationInterface>> => {
+  dataToUpdate: UpdateAuthentication
+): Promise<GeneralResponse<Authentication, UpdateAuthentication>> => {
   return fetchData(`${API_ENDPOINT}/${authentication_id}`, "PUT", dataToUpdate, {
-    validator: UpdateAuthenticationValidator,
+    validator: ValidatorToUpdateAuthentication,
     revalidateTags: [`authentication-${authentication_id}`]
   });
 };
 
 export const getAuthenticationById = async (
   authentication_id: string
-): Promise<ResponseInterface<AuthenticationApiResponseInterface, AuthenticationInterface>> =>
+): Promise<GeneralResponse<Authentication, Authentication>> =>
   fetchData(`${API_ENDPOINT}/${authentication_id}`, "GET", null, {
     next: { revalidate: 3600, tags: ["authentications", `authentication-${authentication_id}`] }
   });

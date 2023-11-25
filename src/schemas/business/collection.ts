@@ -1,8 +1,8 @@
-import { SchemaValidator } from "utilities";
-import { ResourceSchema } from "../resource";
-import { CollectionInterface } from "interfaces";
+import { ResourceSchema } from "@schemas/resource";
+import { Collection } from "@typescript/models/business/collection";
+import { SchemaValidator } from "@utils/schemaValidator";
 
-export const CollectionSchema = new SchemaValidator<CollectionInterface>({
+export const CollectionSchema = new SchemaValidator<Collection>({
   business_id: { valueType: String, referenceModel: "Business", isRequired: true, isObjectId: true },
   path: { valueType: String, isRequired: true, isRegex: /^[a-zA-Z0-9\-_]+$/, maxLength: 64 },
   status: {

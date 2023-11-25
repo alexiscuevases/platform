@@ -1,9 +1,9 @@
-import { getSettings } from "settings";
+import { fetchData } from "@helpers/fetchData";
+import { getConfigs } from "@helpers/getConfigs";
 import { NextRequest } from "next/server";
-import { fetchData } from "helpers";
 
 export const isAuthenticatedMiddleware = async (request: NextRequest): Promise<boolean> => {
-  const authenticationCookie = request.cookies.get(getSettings("application").cookies.authentication.name);
+  const authenticationCookie = request.cookies.get(getConfigs("application").cookies.authentication.name);
   if (!authenticationCookie) return false;
 
   const authentication = await fetchData(
@@ -13,7 +13,7 @@ export const isAuthenticatedMiddleware = async (request: NextRequest): Promise<b
     { next: { revalidate: 3600, tags: ["authentications", `authentication-${authenticationCookie.value}`] } }
   );
   if (!authentication.success) {
-    request.cookies.delete(getSettings("application").cookies.authentication.name);
+    request.cookies.delete(getConfigs("application").cookies.authentication.name);
     return false;
   }
 

@@ -1,8 +1,8 @@
-import { BusinessInterface } from "interfaces";
-import { getSettings } from "settings";
-import { SchemaValidator } from "utilities";
+import { getConfigs } from "@helpers/getConfigs";
+import { Business } from "@typescript/models/business";
+import { SchemaValidator } from "@utils/schemaValidator";
 
-export const BusinessSchema = new SchemaValidator<BusinessInterface>({
+export const BusinessSchema = new SchemaValidator<Business>({
   owner_user_id: { valueType: String, referenceModel: "User", isRequired: true, isObjectId: true },
   business_status: {
     valueType: String,
@@ -14,7 +14,7 @@ export const BusinessSchema = new SchemaValidator<BusinessInterface>({
     valueType: String,
     isRequired: true,
     maxLength: 64,
-    notIsEnum: getSettings("business").namesNotAllowed
+    notIsEnum: getConfigs("business").namesNotAllowed
   },
   business_email: { valueType: String, isRequired: true, isEmail: true },
   business_local_subdomain: {
@@ -23,7 +23,7 @@ export const BusinessSchema = new SchemaValidator<BusinessInterface>({
     isRequired: true,
     maxLength: 63,
     isRegex: /^[a-zA-Z0-9-]+$/,
-    notIsEnum: getSettings("business").subdomainsNotAllowed
+    notIsEnum: getConfigs("business").subdomainsNotAllowed
   },
   business_custom_domain: {
     valueType: String,
@@ -31,7 +31,7 @@ export const BusinessSchema = new SchemaValidator<BusinessInterface>({
     maxLength: 191,
     defaultValue: null,
     isRegex: /^[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*$/,
-    notIsEnum: getSettings("business").domainsNotAllowed
+    notIsEnum: getConfigs("business").domainsNotAllowed
   },
   business_currency: { valueType: String, isRequired: false, isEnum: ["USD", "COP"], defaultValue: "USD" },
   business_language: { valueType: String, isRequired: false, defaultValue: "EN" },
@@ -39,7 +39,7 @@ export const BusinessSchema = new SchemaValidator<BusinessInterface>({
   subscription_plan: {
     valueType: String,
     isRequired: false,
-    isEnum: Object.keys(getSettings("platform").plans),
+    isEnum: Object.keys(getConfigs("platform").plans),
     defaultValue: "Free"
   },
   subscription_id: {

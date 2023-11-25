@@ -1,10 +1,10 @@
-import { CreateAuthenticationInterface } from "interfaces";
+import { getConfigs } from "@helpers/getConfigs";
+import { CreateAuthentication } from "@typescript/models/authentication";
 import Link from "next/link";
-import { getSettings } from "settings";
 
 interface Props {
   searchParams: { success: "created" | "updated" };
-  data: CreateAuthenticationInterface;
+  data: CreateAuthentication;
   setData: any;
   setStep: any;
 }
@@ -12,10 +12,10 @@ interface Props {
 export default function FirstStep({ searchParams, data, setData, setStep }: Props) {
   return (
     <>
-      <h1 className="text-xl font-bold">Iniciar sesión en {getSettings("platform").name}</h1>
+      <h1 className="text-xl font-bold">Iniciar sesión en {getConfigs("platform").name}</h1>
       <div className="space-y-6">
         <p className="text-white-full-dark">
-          Ingresa a continuación tu correo electrónico registrado en {getSettings("platform").name}
+          Ingresa a continuación tu correo electrónico registrado en {getConfigs("platform").name}
         </p>
         <div className="max-w-[500px] space-y-8">
           <div className="min-h-[100px] space-y-6">
@@ -49,7 +49,7 @@ export default function FirstStep({ searchParams, data, setData, setStep }: Prop
             </div>
             <div>
               <Link
-                href={`${getSettings("application").URLs.www}/get-started`}
+                href={`${getConfigs("application").URLs.www}/get-started`}
                 className="inline-block cursor-pointer border-b border-dashed border-primary text-sm font-medium text-primary">
                 No tengo una cuenta
               </Link>

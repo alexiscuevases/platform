@@ -1,12 +1,12 @@
 export * from "./product";
 
-import { BusinessApiResponseInterface } from "interfaces";
+import { Business } from "@typescript/models/business";
 import { Products, Products_Skeletoon } from "./components/products";
 import { Suspense } from "react";
 
 interface Props {
   data: {
-    business: BusinessApiResponseInterface;
+    business: Business;
   };
 }
 

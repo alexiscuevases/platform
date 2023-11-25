@@ -1,10 +1,10 @@
-import { apiResponseHandler } from "helpers";
-import { AuthenticationInterface, UpdateAuthenticationInterface } from "interfaces";
-import { AuthenticationModel } from "models";
+import { apiResponseHandler } from "@helpers/apiResponseHandler";
+import { ConnectMongo } from "@libs/mongoose";
+import { AuthenticationModel } from "@models/authentication";
+import { Authentication, UpdateAuthentication } from "@typescript/models/authentication";
+import { ValidatorToUpdateAuthentication } from "@validators/authentication";
 import { Types } from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
-import { ConnectMongo } from "utilities";
-import { UpdateAuthenticationValidator } from "validations";
 
 interface Params {
   _id: any;
@@ -12,8 +12,8 @@ interface Params {
 
 export async function PUT(request: NextRequest, { params }: { params: Params }): Promise<NextResponse> {
   try {
-    const body: UpdateAuthenticationInterface = await request.json();
-    const validation = UpdateAuthenticationValidator.validate(body);
+    const body: UpdateAuthentication = await request.json();
+    const validation = ValidatorToUpdateAuthentication.validate(body);
     if (!validation.success) return apiResponseHandler({ status: 200, errors: validation.errors });
 
     await ConnectMongo();
@@ -29,7 +29,7 @@ export async function GET(request: NextRequest, { params }: { params: Params }):
   try {
     await ConnectMongo();
 
-    const authentications: AuthenticationInterface[] = await AuthenticationModel.aggregate([
+    const authentications: Authentication[] = await AuthenticationModel.aggregate([
       {
         $match: { _id: new Types.ObjectId(params._id) }
       },

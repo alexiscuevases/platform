@@ -22,10 +22,48 @@
         "name": "next"
       }
     ],
-    "baseUrl": "src",
     "paths": {
-      "@/*": [
-        "/*"
+      "@templates/*": [
+        "./src/app/_templates/*"
+      ],
+      "@configs/*": [
+        "./src/configs/*"
+      ],
+      "@controllers/*": [
+        "./src/controllers/*"
+      ],
+      "@guards/*": [
+        "./src/guards/*"
+      ],
+      "@helpers/*": [
+        "./src/helpers/*"
+      ],
+      "@libs/*": [
+        "./src/libs/*"
+      ],
+      "@middlewares/*": [
+        "./src/middlewares/*"
+      ],
+      "@models/*": [
+        "./src/models/*"
+      ],
+      "@resources/*": [
+        "./src/resources/*"
+      ],
+      "@schemas/*": [
+        "./src/schemas/*"
+      ],
+      "@services/*": [
+        "./src/services/*"
+      ],
+      "@typescript/*": [
+        "./src/typescript/*"
+      ],
+      "@utils/*": [
+        "./src/utils/*"
+      ],
+      "@validators/*": [
+        "./src/validators/*"
       ]
     }
   },

@@ -1,6 +1,7 @@
 "use client";
 
-import { CreateUserInterface, ErrorsInterface } from "interfaces";
+import { CreateUser } from "@typescript/models/user";
+import { GeneralErrors } from "@typescript/others";
 import { useState } from "react";
 
 interface VerificationInterface {
@@ -9,7 +10,7 @@ interface VerificationInterface {
 }
 
 interface Props {
-  data: CreateUserInterface;
+  data: CreateUser;
   setData: any;
   step: number;
   setStep: any;
@@ -18,7 +19,7 @@ interface Props {
 }
 
 export default function ThirdStep({ data, setStep, verification, setVerification }: Props) {
-  const [errors, setErrors] = useState<ErrorsInterface<VerificationInterface>>({});
+  const [errors, setErrors] = useState<GeneralErrors<VerificationInterface>>({});
 
   const continueHandler = async () => {
     setErrors({});

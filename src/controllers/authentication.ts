@@ -1,16 +1,15 @@
-import {
-  AuthenticationApiResponseInterface,
-  CreateAuthenticationInterface,
-  ResponseInterface,
-  VerificationApiResponseInterface
-} from "interfaces";
-import { cookie, createAuthentication, createVerification, getVerificationById } from "services";
-import { getSettings } from "settings";
+import { getConfigs } from "@helpers/getConfigs";
+import { createAuthentication } from "@services/authentication";
+import { cookie } from "@services/cookie";
+import { createVerification, getVerificationById } from "@services/verification";
+import { Authentication, CreateAuthentication } from "@typescript/models/authentication";
+import { Verification } from "@typescript/models/verification";
+import { GeneralResponse } from "@typescript/others";
 
 interface CreateAuthentication_SuccessResponseInterface {
   two_factor_authentication: boolean;
-  verification?: VerificationApiResponseInterface;
-  authentication?: AuthenticationApiResponseInterface;
+  verification?: Verification;
+  authentication?: Authentication;
 }
 
 interface VerifyAuthenticationCreation_ErrorResponseInterface {
@@ -19,16 +18,16 @@ interface VerifyAuthenticationCreation_ErrorResponseInterface {
 
 export class AuthenticationController {
   async create(
-    dataToCreate: CreateAuthenticationInterface
-  ): Promise<ResponseInterface<CreateAuthentication_SuccessResponseInterface, CreateAuthenticationInterface>> {
+    dataToCreate: CreateAuthentication
+  ): Promise<GeneralResponse<CreateAuthentication_SuccessResponseInterface, CreateAuthentication>> {
     const auth = await createAuthentication(dataToCreate);
     if (!auth.success) return { success: false, errors: auth.errors };
 
     if (!auth.result.user.two_factor_authentication) {
       await cookie({
-        name: getSettings("application").cookies.authentication.name,
+        name: getConfigs("application").cookies.authentication.name,
         value: auth.result._id,
-        domain: getSettings("application").host.replace(`:${getSettings("application").port}`, "")
+        domain: getConfigs("application").host.replace(`:${getConfigs("application").port}`, "")
       });
 
       return { success: true, result: { two_factor_authentication: false, authentication: auth.result } };
@@ -50,7 +49,7 @@ export class AuthenticationController {
     verification_id: string,
     code: string,
     authentication_id: string
-  ): Promise<ResponseInterface<void, VerifyAuthenticationCreation_ErrorResponseInterface>> {
+  ): Promise<GeneralResponse<void, VerifyAuthenticationCreation_ErrorResponseInterface>> {
     const verification = await getVerificationById(verification_id, {
       code
     });
@@ -58,9 +57,9 @@ export class AuthenticationController {
     if (!verification.success) return { success: false, errors: verification.errors };
 
     await cookie({
-      name: getSettings("application").cookies.authentication.name,
+      name: getConfigs("application").cookies.authentication.name,
       value: authentication_id,
-      domain: getSettings("application").host.replace(`:${getSettings("application").port}`, "")
+      domain: getConfigs("application").host.replace(`:${getConfigs("application").port}`, "")
     });
 
     return { success: true };

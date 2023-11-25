@@ -1,9 +1,11 @@
-import { getUrlParams, apiResponseHandler } from "helpers";
-import { CreateCollectionInterface, CollectionInterface } from "interfaces";
-import { ConnectMongo } from "utilities";
-import { BusinessModel, CollectionModel } from "models";
+import { apiResponseHandler } from "@helpers/apiResponseHandler";
+import { getUrlParams } from "@helpers/getUrlParams";
+import { ConnectMongo } from "@libs/mongoose";
+import { BusinessModel } from "@models/business/business";
+import { CollectionModel } from "@models/business/collection";
+import { Collection, CreateCollection } from "@typescript/models/business/collection";
+import { ValidatorToCreateCollection } from "@validators/business/collection";
 import { NextRequest, NextResponse } from "next/server";
-import { CreateCollectionValidator } from "validations";
 
 interface Params {
   _id: any;
@@ -11,8 +13,8 @@ interface Params {
 
 export async function POST(request: NextRequest, { params }: { params: Params }): Promise<NextResponse> {
   try {
-    const body: CreateCollectionInterface = await request.json();
-    const validation = CreateCollectionValidator.validate(body);
+    const body: CreateCollection = await request.json();
+    const validation = ValidatorToCreateCollection.validate(body);
     if (!validation.success) return apiResponseHandler({ status: 200, errors: validation.errors });
 
     await ConnectMongo();
@@ -34,7 +36,7 @@ export async function POST(request: NextRequest, { params }: { params: Params })
 export async function GET(request: NextRequest, { params }: { params: Params }): Promise<NextResponse> {
   try {
     await ConnectMongo();
-    const collections: CollectionInterface[] = await CollectionModel.find({
+    const collections: Collection[] = await CollectionModel.find({
       business_id: params._id,
       ...getUrlParams(request.url)
     });

@@ -1,29 +1,25 @@
 "use server";
 
-import { fetchData } from "helpers";
-import {
-  CreateVerificationInterface,
-  VerificationInterface,
-  ResponseInterface,
-  VerificationApiResponseInterface
-} from "interfaces";
-import { getSettings } from "settings";
-import { CreateVerificationValidator } from "validations";
+import { getConfigs } from "@helpers/getConfigs";
+import { fetchData } from "@helpers/fetchData";
+import { CreateVerification, Verification } from "@typescript/models/verification";
+import { GeneralResponse } from "@typescript/others";
+import { ValidatorToCreateVerification } from "@validators/verification";
 
-const API_ENDPOINT = `${getSettings("application").URLs.api}/verification`;
+const API_ENDPOINT = `${getConfigs("application").URLs.api}/verification`;
 
 export const createVerification = async (
-  dataToCreate: CreateVerificationInterface
-): Promise<ResponseInterface<VerificationApiResponseInterface, CreateVerificationInterface>> =>
+  dataToCreate: CreateVerification
+): Promise<GeneralResponse<Verification, CreateVerification>> =>
   fetchData(API_ENDPOINT, "POST", dataToCreate, {
-    validator: CreateVerificationValidator,
+    validator: ValidatorToCreateVerification,
     revalidateTags: ["verifications"]
   });
 
 export const getVerificationById = async (
   verification_id: any,
-  dataToFind?: VerificationInterface
-): Promise<ResponseInterface<VerificationApiResponseInterface, VerificationInterface>> => {
+  dataToFind?: Verification
+): Promise<GeneralResponse<Verification, Verification>> => {
   const queryParams = dataToFind ? new URLSearchParams(dataToFind as any).toString() : "";
   return fetchData(`${API_ENDPOINT}/${verification_id}?${queryParams}`, "GET", null, {
     next: { revalidate: 3600, tags: ["verifications", `verification-${verification_id}`] }

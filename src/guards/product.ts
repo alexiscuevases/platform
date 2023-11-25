@@ -1,5 +1,5 @@
+import { getProductsByBusinessId } from "@services/business/product";
 import { notFound } from "next/navigation";
-import { getProductsByBusinessId } from "services";
 
 export const isProductPath = (handler: any) => {
   return async (context: any) => {

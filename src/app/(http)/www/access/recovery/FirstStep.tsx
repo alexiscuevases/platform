@@ -1,13 +1,14 @@
 "use client";
 
-import { UserController } from "controllers";
-import { ErrorsInterface, RecoveryPasswordInterface } from "interfaces";
+import { UserController } from "@controllers/user";
+import { getConfigs } from "@helpers/getConfigs";
+import { RecoveryUserPassword } from "@typescript/models/user";
+import { GeneralErrors } from "@typescript/others";
 import Link from "next/link";
 import { useState } from "react";
-import { getSettings } from "settings";
 
 interface Props {
-  data: RecoveryPasswordInterface;
+  data: RecoveryUserPassword;
   setData: any;
   setUser: any;
   setVerification: any;
@@ -15,7 +16,7 @@ interface Props {
 }
 
 export default function FirstStep({ data, setData, setUser, setVerification, setStep }: Props) {
-  const [errors, setErrors] = useState<ErrorsInterface<RecoveryPasswordInterface>>({});
+  const [errors, setErrors] = useState<GeneralErrors<RecoveryUserPassword>>({});
   const [waitingResponse, setWaitingResponse] = useState<boolean>(false);
   const userController = new UserController();
 
@@ -38,7 +39,7 @@ export default function FirstStep({ data, setData, setUser, setVerification, set
       <h1 className="text-xl font-bold">Recuperar acceso</h1>
       <div className="space-y-6">
         <p className="text-white-full-dark">
-          Ingresa a continuación tu correo electrónico registrado en {getSettings("platform").name}
+          Ingresa a continuación tu correo electrónico registrado en {getConfigs("platform").name}
         </p>
         <div className="max-w-[500px] space-y-8">
           <div className="min-h-[200px] space-y-6">
@@ -80,7 +81,7 @@ export default function FirstStep({ data, setData, setUser, setVerification, set
             </div>
             <div>
               <Link
-                href={`${getSettings("application").URLs.www}/access`}
+                href={`${getConfigs("application").URLs.www}/access`}
                 className="inline-block cursor-pointer border-b border-dashed border-primary text-sm font-medium text-primary">
                 Acceder a mi cuenta
               </Link>

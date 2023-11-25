@@ -1,8 +1,8 @@
-import { ProductInterface } from "interfaces";
-import { SchemaValidator } from "utilities";
-import { ResourceSchema } from "../resource";
+import { ResourceSchema } from "@schemas/resource";
+import { Product } from "@typescript/models/business/product";
+import { SchemaValidator } from "@utils/schemaValidator";
 
-export const ProductSchema = new SchemaValidator<ProductInterface>({
+export const ProductSchema = new SchemaValidator<Product>({
   business_id: { valueType: String, referenceModel: "Business", isRequired: true, isObjectId: true },
   path: { valueType: String, isRequired: true, isRegex: /^[a-zA-Z0-9\-_]+$/, maxLength: 64 },
   status: {

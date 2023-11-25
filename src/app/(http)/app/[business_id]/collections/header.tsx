@@ -1,15 +1,17 @@
 "use client";
 
-import { BusinessApiResponseInterface, CreateCollectionInterface, ErrorsInterface } from "interfaces";
 import { useState } from "react";
 import { IoAdd } from "react-icons/io5";
 import Modal from "../../_components/modals";
 import { useRouter } from "next/navigation";
-import { CollectionController } from "controllers";
-import { createBusinessURL } from "helpers";
+import { Business } from "@typescript/models/business";
+import { CollectionController } from "@controllers/business/collection";
+import { GeneralErrors } from "@typescript/others";
+import { CreateCollection } from "@typescript/models/business/collection";
+import { createBusinessURL } from "@helpers/createBusinessURL";
 
 interface Props {
-  business: BusinessApiResponseInterface;
+  business: Business;
 }
 
 export default function Header({ business }: Props) {
@@ -23,7 +25,7 @@ export default function Header({ business }: Props) {
     uploading: false,
     deleting: false
   });
-  const [errors, setErrors] = useState<ErrorsInterface<CreateCollectionInterface>>({});
+  const [errors, setErrors] = useState<GeneralErrors<CreateCollection>>({});
   const collectionController = new CollectionController();
   const router = useRouter();
 

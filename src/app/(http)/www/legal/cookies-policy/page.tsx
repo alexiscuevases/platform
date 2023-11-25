@@ -2,7 +2,7 @@ import { Footer } from "../../_components/Footer";
 import { Header } from "../../_components/Header";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getSettings } from "settings";
+import { getConfigs } from "@helpers/getConfigs";
 
 export const metadata: Metadata = {
   title: "Política de Cookies"
@@ -25,11 +25,11 @@ export default function Page() {
             <p>
               Esta Política de Cookies (en adelante, la &quot;Política&quot;) es aplicable a nuestra plataforma de
               comercio electrónico (en adelante, la &quot;Plataforma&quot;) proporcionada por{" "}
-              {getSettings("legal").constitutions[getSettings("legal").main_constitution].legalName}
+              {getConfigs("legal").constitutions[getConfigs("legal").main_constitution].legalName}
               (en adelante, &quot;
-              {getSettings("legal").constitutions[getSettings("legal").main_constitution].commercialName}&quot;). En
-              esta Política, explicamos qué son las cookies, cómo las utilizamos en nuestra Plataforma y cómo los
-              usuarios pueden gestionar sus preferencias de cookies.
+              {getConfigs("legal").constitutions[getConfigs("legal").main_constitution].commercialName}&quot;). En esta
+              Política, explicamos qué son las cookies, cómo las utilizamos en nuestra Plataforma y cómo los usuarios
+              pueden gestionar sus preferencias de cookies.
             </p>
           </div>
           <div className="mb-6 space-y-2">
@@ -94,7 +94,7 @@ export default function Page() {
             <h2 className="text-3xl font-medium">7. Pólitica de Privacidad</h2>
             <p>
               Esta Política de Cookies debe leerse junto con nuestra Política de Privacidad, disponible en{" "}
-              <Link className="text-primary underline" href={`${getSettings("application").URLs.www}/prices`}>
+              <Link className="text-primary underline" href={`${getConfigs("application").URLs.www}/prices`}>
                 Política de Privacidad.
               </Link>
             </p>
@@ -104,18 +104,18 @@ export default function Page() {
             <p>
               Si tienes alguna pregunta o inquietud con respecto a esta Política de Cookies, no dudes en ponerte en
               contacto con nosotros a través de{" "}
-              <Link className="text-primary underline" href={`mailto:help@${getSettings("application").host}`}>
-                help@{getSettings("application").host}.
+              <Link className="text-primary underline" href={`mailto:help@${getConfigs("application").host}`}>
+                help@{getConfigs("application").host}.
               </Link>
             </p>
           </div>
           <p className="text-sm font-light">
-            Gracias por elegir {getSettings("platform").name} como tu plataforma de comercio electrónico. Estamos
+            Gracias por elegir {getConfigs("platform").name} como tu plataforma de comercio electrónico. Estamos
             comprometidos a proporcionar una experiencia segura y eficiente para tu negocio.
             <br />
             <br />
             Atentamente, El equipo de{" "}
-            {getSettings("legal").constitutions[getSettings("legal").main_constitution].commercialName}
+            {getConfigs("legal").constitutions[getConfigs("legal").main_constitution].commercialName}
           </p>
         </div>
       </main>

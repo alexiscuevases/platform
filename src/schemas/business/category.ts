@@ -1,13 +1,14 @@
-import { CategoryInterface, TaxInterface } from "interfaces";
-import { SchemaValidator } from "utilities";
+import { Category } from "@typescript/models/business/category";
+import { Tax } from "@typescript/others";
+import { SchemaValidator } from "@utils/schemaValidator";
 
-const TaxSchema = new SchemaValidator<TaxInterface>({
+const TaxSchema = new SchemaValidator<Tax>({
   tax_name: { valueType: String, isRequired: true },
   tax_percentage: { valueType: Number, isRequired: true },
   tax_included: { valueType: Boolean, isRequired: false, defaultValue: true }
 });
 
-export const CategorySchema = new SchemaValidator<CategoryInterface>({
+export const CategorySchema = new SchemaValidator<Category>({
   business_id: { valueType: String, isRequired: true, referenceModel: "Business", isObjectId: true },
   category_id: {
     valueType: String,

@@ -1,4 +1,4 @@
-import { ErrorsInterface, ResponseInterface } from "interfaces";
+import { GeneralErrors, GeneralResponse } from "@typescript/others";
 import { NextResponse } from "next/server";
 
 const commonApiHeaders = {
@@ -19,9 +19,9 @@ export const apiResponseHandler = async <Result, Errors>({
 }: {
   result?: Result;
   status: number;
-  errors?: ErrorsInterface<Errors>;
+  errors?: GeneralErrors<Errors>;
 }): Promise<NextResponse> => {
-  const response: ResponseInterface<Result, Errors> = errors ? { success: false, errors } : { success: true, result };
+  const response: GeneralResponse<Result, Errors> = errors ? { success: false, errors } : { success: true, result };
   return NextResponse.json(response, {
     status,
     headers: errors ? commonApiHeaders : successApiHeaders

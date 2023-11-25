@@ -1,13 +1,10 @@
-import {
-  ResponseInterface,
-  ChangeUserPasswordInterface,
-  RecoveryPasswordInterface,
-  UserApiResponseInterface,
-  VerificationApiResponseInterface,
-  CreateUserInterface
-} from "interfaces";
-import { createVerification, getUsers, getVerificationById, changeUserPassword, createUser } from "services";
-import { Validator, sendMail } from "utilities";
+import { sendMail } from "@libs/nodemailer";
+import { changeUserPassword, createUser, getUsers } from "@services/user";
+import { createVerification, getVerificationById } from "@services/verification";
+import { ChangeUserPassword, CreateUser, RecoveryUserPassword, User } from "@typescript/models/user";
+import { Verification } from "@typescript/models/verification";
+import { GeneralResponse } from "@typescript/others";
+import { Validator } from "@utils/validator";
 
 const validation = new Validator();
 
@@ -21,8 +18,8 @@ interface Create_ErrorResponseInterface {
 }
 
 interface RecoveryPassword_SuccessResponseInterface {
-  user: UserApiResponseInterface;
-  verification: VerificationApiResponseInterface;
+  user: User;
+  verification: Verification;
 }
 
 interface VerifyPasswordRecovery_ErrorResponseInterface {
@@ -32,7 +29,7 @@ interface VerifyPasswordRecovery_ErrorResponseInterface {
 export class UserController {
   async verifyCreation(
     email: string
-  ): Promise<ResponseInterface<Create_SuccessResponseInterface, Create_ErrorResponseInterface>> {
+  ): Promise<GeneralResponse<Create_SuccessResponseInterface, Create_ErrorResponseInterface>> {
     if (!validation.isEmail(email))
       return { success: false, errors: { email: "Correo electrónico no válido, por favor ingrese uno diferente" } };
 
@@ -57,7 +54,7 @@ export class UserController {
     return { success: true, result: { verificationCode } };
   }
 
-  async create(dataToCreate: CreateUserInterface): Promise<ResponseInterface<void, CreateUserInterface>> {
+  async create(dataToCreate: CreateUser): Promise<GeneralResponse<void, CreateUser>> {
     const user = await createUser(dataToCreate);
     if (!user.success) return { success: false, errors: user.errors };
 
@@ -65,8 +62,8 @@ export class UserController {
   }
 
   async recoveryPassword(
-    data: RecoveryPasswordInterface
-  ): Promise<ResponseInterface<RecoveryPassword_SuccessResponseInterface, RecoveryPasswordInterface>> {
+    data: RecoveryUserPassword
+  ): Promise<GeneralResponse<RecoveryPassword_SuccessResponseInterface, RecoveryUserPassword>> {
     if (!validation.isEmail(data.email)) return { success: false, errors: { email: "Correo electrónico no válido" } };
 
     const userExists = await getUsers({ email: data.email });
@@ -86,7 +83,7 @@ export class UserController {
   async verifyPasswordRecovery(
     verification_id: string,
     code: string
-  ): Promise<ResponseInterface<void, VerifyPasswordRecovery_ErrorResponseInterface>> {
+  ): Promise<GeneralResponse<void, VerifyPasswordRecovery_ErrorResponseInterface>> {
     const verification = await getVerificationById(verification_id, {
       code
     });
@@ -95,10 +92,7 @@ export class UserController {
     return { success: true };
   }
 
-  async changePassword(
-    user_id: string,
-    data: ChangeUserPasswordInterface
-  ): Promise<ResponseInterface<void, ChangeUserPasswordInterface>> {
+  async changePassword(user_id: string, data: ChangeUserPassword): Promise<GeneralResponse<void, ChangeUserPassword>> {
     const userUpdated = await changeUserPassword(user_id, {
       password: data.password,
       password_confirmation: data.password_confirmation

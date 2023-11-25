@@ -1,9 +1,11 @@
-import { getUrlParams, apiResponseHandler } from "helpers";
-import { CreateTagInterface, TagInterface } from "interfaces";
-import { ConnectMongo } from "utilities";
-import { BusinessModel, TagModel } from "models";
+import { apiResponseHandler } from "@helpers/apiResponseHandler";
+import { getUrlParams } from "@helpers/getUrlParams";
+import { ConnectMongo } from "@libs/mongoose";
+import { BusinessModel } from "@models/business/business";
+import { TagModel } from "@models/business/tag";
+import { CreateTag, Tag } from "@typescript/models/business/tag";
+import { ValidatorToCreateTag } from "@validators/business/tag";
 import { NextRequest, NextResponse } from "next/server";
-import { CreateTagValidator } from "validations";
 
 interface Params {
   _id: any;
@@ -11,8 +13,8 @@ interface Params {
 
 export async function POST(request: NextRequest, { params }: { params: Params }): Promise<NextResponse> {
   try {
-    const body: CreateTagInterface = await request.json();
-    const validation = CreateTagValidator.validate(body);
+    const body: CreateTag = await request.json();
+    const validation = ValidatorToCreateTag.validate(body);
     if (!validation.success) return apiResponseHandler({ status: 200, errors: validation.errors });
 
     await ConnectMongo();
@@ -30,7 +32,7 @@ export async function POST(request: NextRequest, { params }: { params: Params })
 export async function GET(request: NextRequest, { params }: { params: Params }): Promise<NextResponse> {
   try {
     await ConnectMongo();
-    const tags: TagInterface[] = await TagModel.find({
+    const tags: Tag[] = await TagModel.find({
       business_id: params._id,
       ...getUrlParams(request.url)
     });

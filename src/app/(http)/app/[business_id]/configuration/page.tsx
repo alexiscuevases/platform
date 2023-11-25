@@ -1,16 +1,16 @@
-import { isBusinessId } from "guards";
 import type { Metadata } from "next";
-import { BusinessApiResponseInterface } from "interfaces";
 import Navbar from "../../_components/navbar";
 import Link from "next/link";
 import { IoCashOutline, IoGlobeOutline, IoLanguageOutline, IoLibraryOutline } from "react-icons/io5";
+import { Business } from "@typescript/models/business";
+import { isBusinessId } from "@guards/business";
 
 export const metadata: Metadata = {
   title: "Configuraciones"
 };
 
 interface Props {
-  business: BusinessApiResponseInterface;
+  business: Business;
 }
 
 export default isBusinessId(async ({ business }: Props) => {

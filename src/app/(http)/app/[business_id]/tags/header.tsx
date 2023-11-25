@@ -1,14 +1,16 @@
 "use client";
 
-import { BusinessApiResponseInterface, CreateTagInterface, ErrorsInterface } from "interfaces";
 import { useState } from "react";
 import { IoAdd } from "react-icons/io5";
 import Modal from "../../_components/modals";
 import { useRouter } from "next/navigation";
-import { TagController } from "controllers";
+import { Business } from "@typescript/models/business";
+import { TagController } from "@controllers/business/tag";
+import { GeneralErrors } from "@typescript/others";
+import { CreateTag } from "@typescript/models/business/tag";
 
 interface Props {
-  business: BusinessApiResponseInterface;
+  business: Business;
 }
 
 export default function Header({ business }: Props) {
@@ -16,7 +18,7 @@ export default function Header({ business }: Props) {
   const [data, setData] = useState<CreateTagInterface>({});
   const [isOpen, setOpen] = useState(false);
   const [waitingResponse, setWaitingResponse] = useState<boolean>(false);
-  const [errors, setErrors] = useState<ErrorsInterface<CreateTagInterface>>({});
+  const [errors, setErrors] = useState<GeneralErrors<CreateTag>>({});
   const tagController = new TagController();
   const router = useRouter();
 

@@ -1,18 +1,19 @@
 "use client";
 
-import { getSettings } from "settings";
 import Link from "next/link";
 import { IoStorefront } from "react-icons/io5";
-import { BusinessApiResponseInterface, UserApiResponseInterface } from "interfaces";
 import { useEffect, useState } from "react";
-import { getBusinesses } from "services";
+import { getBusinesses } from "@services/business";
+import { User } from "@typescript/models/user";
+import { Business } from "@typescript/models/business";
+import { getConfigs } from "@helpers/getConfigs";
 
 interface Props {
-  user: UserApiResponseInterface;
+  user: User;
 }
 
 export default function ClientPage({ user }: Props) {
-  const [businesses, setBusinesses] = useState<BusinessApiResponseInterface[]>([]);
+  const [businesses, setBusinesses] = useState<Business[]>([]);
 
   useEffect(() => {
     const Businesses = async () => {
@@ -61,7 +62,7 @@ export default function ClientPage({ user }: Props) {
                         <p className="text-left text-xs text-slate-600">
                           {business.business_custom_domain ?
                             business.business_custom_domain
-                          : `${business.business_local_subdomain}.${getSettings("application").host}`}
+                          : `${business.business_local_subdomain}.${getConfigs("application").host}`}
                         </p>
                       </div>
                       <div>

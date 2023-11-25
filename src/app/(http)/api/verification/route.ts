@@ -1,19 +1,23 @@
-import { apiResponseHandler } from "helpers";
-import { UserInterface, CreateVerificationInterface, VerificationInterface } from "interfaces";
+import { apiResponseHandler } from "@helpers/apiResponseHandler";
+import { ConnectMongo } from "@libs/mongoose";
+import { sendMail } from "@libs/nodemailer";
+import { UserModel } from "@models/user";
+import { VerificationModel } from "@models/verification";
+import { User } from "@typescript/models/user";
+import { CreateVerification } from "@typescript/models/verification";
+import { ValidatorToCreateVerification } from "@validators/verification";
+import { Verification } from "next/dist/lib/metadata/types/metadata-types";
 import { NextRequest, NextResponse } from "next/server";
-import { CreateVerificationValidator } from "validations";
-import { UserModel, VerificationModel } from "models";
-import { ConnectMongo, sendMail } from "utilities";
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
-    const body: CreateVerificationInterface = await request.json();
-    const validation = CreateVerificationValidator.validate(body);
+    const body: CreateVerification = await request.json();
+    const validation = ValidatorToCreateVerification.validate(body);
     if (!validation.success) return apiResponseHandler({ status: 200, errors: validation.errors });
 
     await ConnectMongo();
 
-    const userExists: UserInterface = await UserModel.findById(body.user_id);
+    const userExists: User = await UserModel.findById(body.user_id);
     if (!userExists) return apiResponseHandler({ status: 200, errors: { GENERAL_ERROR: "Usuario no existe" } });
 
     if (
@@ -35,7 +39,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     await VerificationModel.findOneAndDelete(body);
 
-    const verification: VerificationInterface = await VerificationModel.create({
+    const verification: Verification = await VerificationModel.create({
       user_id: userExists._id,
       code: `${Math.floor(100000 + Math.random() * 900000)}`,
       type: body.type,

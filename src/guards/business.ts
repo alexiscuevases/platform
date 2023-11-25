@@ -1,5 +1,5 @@
+import { getBusinesses } from "@services/business";
 import { notFound } from "next/navigation";
-import { getBusinesses } from "services";
 
 export const isBusinessHost = (handler: any) => {
   return async (context: any) => {

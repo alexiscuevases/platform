@@ -1,5 +1,5 @@
+import { getConfigs } from "@helpers/getConfigs";
 import Link from "next/link";
-import { getSettings } from "settings";
 
 export function Footer() {
   const FooterData = [
@@ -8,7 +8,7 @@ export function Footer() {
       links: [
         {
           name: "Plataforma de Comercio Digital",
-          link: `${getSettings("application").URLs.www}/digital-commerce`
+          link: `${getConfigs("application").URLs.www}/digital-commerce`
         }
       ]
     },
@@ -17,19 +17,19 @@ export function Footer() {
       links: [
         {
           name: "Términos y Condiciones de Uso",
-          link: `${getSettings("application").URLs.www}/legal/terms-and-conditions`
+          link: `${getConfigs("application").URLs.www}/legal/terms-and-conditions`
         },
         {
           name: "Política de Privacidad",
-          link: `${getSettings("application").URLs.www}/legal/privacy-policy`
+          link: `${getConfigs("application").URLs.www}/legal/privacy-policy`
         },
         {
           name: "Política de Cookies",
-          link: `${getSettings("application").URLs.www}/legal/cookies-policy`
+          link: `${getConfigs("application").URLs.www}/legal/cookies-policy`
         },
         {
           name: "Política de Cancelación y Devolución",
-          link: `${getSettings("application").URLs.www}/legal/cancellation-and-refund-policy`
+          link: `${getConfigs("application").URLs.www}/legal/cancellation-and-refund-policy`
         }
       ]
     },
@@ -38,15 +38,15 @@ export function Footer() {
       links: [
         {
           name: "Blog",
-          link: getSettings("application").URLs.blog
+          link: getConfigs("application").URLs.blog
         },
         {
           name: "Preguntas frecuentes",
-          link: `${getSettings("application").URLs.www}/faq`
+          link: `${getConfigs("application").URLs.www}/faq`
         },
         {
           name: "Centro de Ayuda",
-          link: `${getSettings("application").URLs.www}/help-center`
+          link: `${getConfigs("application").URLs.www}/help-center`
         }
       ]
     },
@@ -55,19 +55,19 @@ export function Footer() {
       links: [
         {
           name: "Sobre nosotros",
-          link: `${getSettings("application").URLs.www}/about-us`
+          link: `${getConfigs("application").URLs.www}/about-us`
         },
         {
           name: "Trabaja con nosotros",
-          link: `${getSettings("application").URLs.www}/work-with-us`
+          link: `${getConfigs("application").URLs.www}/work-with-us`
         },
         {
           name: "Contacta con nosotros",
-          link: `${getSettings("application").URLs.www}/contact-us`
+          link: `${getConfigs("application").URLs.www}/contact-us`
         },
         {
           name: "Aviso legal",
-          link: `${getSettings("application").URLs.www}/legal`
+          link: `${getConfigs("application").URLs.www}/legal`
         }
       ]
     }
@@ -78,7 +78,7 @@ export function Footer() {
       <div className="relative overflow-hidden bg-primary-full-dark">
         <div className="mx-auto max-w-[2024px] divide-y divide-white px-8 lg:px-12">
           <div className="flex flex-col justify-between gap-x-6 pb-8 pt-8 md:flex-row md:pt-16">
-            <Link href={getSettings("application").URLs.www}>
+            <Link href={getConfigs("application").URLs.www}>
               <svg width="200" height="26" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   fillRule="evenodd"
@@ -115,50 +115,50 @@ export function Footer() {
               Al utilizar este sitio web, usted comprende que la información que se presenta, se proporciona solo con
               fines informativos y acepta nuestros{" "}
               <Link
-                href={`${getSettings("application").URLs.www}/legal/terms-and-conditions`}
+                href={`${getConfigs("application").URLs.www}/legal/terms-and-conditions`}
                 className="underline duration-200 hover:text-white">
                 Términos y Condiciones de Uso
               </Link>
               , tanto como la{" "}
               <Link
-                href={`${getSettings("application").URLs.www}/legal/privacy-policy`}
+                href={`${getConfigs("application").URLs.www}/legal/privacy-policy`}
                 className="underline duration-200 hover:text-white">
                 Política de Privacidad
               </Link>{" "}
               y sin excluir la{" "}
               <Link
-                href={`${getSettings("application").URLs.www}/legal/cookies-policy`}
+                href={`${getConfigs("application").URLs.www}/legal/cookies-policy`}
                 className="underline duration-200 hover:text-white">
                 Política de Cookies.
               </Link>
             </p>
             <p>
-              {getSettings("legal").constitutions[getSettings("legal").main_constitution].legalName} (en adelante “
-              {getSettings("legal").constitutions[getSettings("legal").main_constitution].commercialName}”) es una
-              entidad debidamente registrada y legalmente constituida en{" "}
-              {getSettings("legal").constitutions[getSettings("legal").main_constitution].country}.
+              {getConfigs("legal").constitutions[getConfigs("legal").main_constitution].legalName} (en adelante “
+              {getConfigs("legal").constitutions[getConfigs("legal").main_constitution].commercialName}”) es una entidad
+              debidamente registrada y legalmente constituida en{" "}
+              {getConfigs("legal").constitutions[getConfigs("legal").main_constitution].country}.
               <br />
               Cumplimos con todas las leyes y regulaciones aplicables en nuestra jurisdicción y operamos de acuerdo con
               los estándares legales y éticos más altos.
               <br />
-              {getSettings("legal").constitutions[getSettings("legal").main_constitution].commercialName} se encuentra
+              {getConfigs("legal").constitutions[getConfigs("legal").main_constitution].commercialName} se encuentra
               registrada ante la Cámara de Comercio de Barranquilla bajo el número de registro{" "}
-              {getSettings("legal").constitutions[getSettings("legal").main_constitution].regId}
+              {getConfigs("legal").constitutions[getConfigs("legal").main_constitution].regId}
               , lo que confirma nuestra legitimidad como empresa.
               <br />
               Puedes tener plena confianza en nuestra legalidad y compromiso con el cumplimiento de todas las
               obligaciones legales. Informese más en el{" "}
               <Link
-                href={`${getSettings("application").URLs.www}/legal`}
+                href={`${getConfigs("application").URLs.www}/legal`}
                 className="underline duration-200 hover:text-white">
                 Aviso legal.
               </Link>
             </p>
             <p>
-              {getSettings("platform").name} es una subsidiaria de propiedad total de{" "}
-              {getSettings("legal").constitutions[getSettings("legal").main_constitution].commercialName}.
+              {getConfigs("platform").name} es una subsidiaria de propiedad total de{" "}
+              {getConfigs("legal").constitutions[getConfigs("legal").main_constitution].commercialName}.
             </p>
-            <p>Copyright © 2023 {getSettings("platform").name}, Todos los derechos reservados.</p>
+            <p>Copyright © 2023 {getConfigs("platform").name}, Todos los derechos reservados.</p>
           </div>
         </div>
       </div>

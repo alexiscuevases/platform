@@ -1,16 +1,17 @@
 "use client";
 
-import { getTagsByBusinessId } from "services";
-import { BusinessApiResponseInterface, TagApiResponseInterface } from "interfaces";
+import { getTagsByBusinessId } from "@services/business/tag";
+import { Business } from "@typescript/models/business";
+import { Tag } from "@typescript/models/business/tag";
 import { useEffect, useState } from "react";
 import { IoOpenOutline } from "react-icons/io5";
 
 interface Props {
-  business: BusinessApiResponseInterface;
+  business: Business;
 }
 
 export function TagsTable({ business }: Props) {
-  const [tags, setTags] = useState<TagApiResponseInterface[]>([]);
+  const [tags, setTags] = useState<Tag[]>([]);
 
   useEffect(() => {
     const Tags = async () => {

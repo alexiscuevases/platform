@@ -1,14 +1,16 @@
 "use client";
 
-import { BusinessApiResponseInterface, CreateProviderInterface, ErrorsInterface } from "interfaces";
 import { useState } from "react";
 import { IoAdd } from "react-icons/io5";
 import Modal from "../../_components/modals";
 import { useRouter } from "next/navigation";
-import { ProviderController } from "controllers";
+import { ProviderController } from "@controllers/business/provider";
+import { GeneralErrors } from "@typescript/others";
+import { CreateProvider } from "@typescript/models/business/provider";
+import { Business } from "@typescript/models/business";
 
 interface Props {
-  business: BusinessApiResponseInterface;
+  business: Business;
 }
 
 export default function Header({ business }: Props) {
@@ -16,7 +18,7 @@ export default function Header({ business }: Props) {
   const [data, setData] = useState<CreateProviderInterface>({});
   const [isOpen, setOpen] = useState(false);
   const [waitingResponse, setWaitingResponse] = useState<boolean>(false);
-  const [errors, setErrors] = useState<ErrorsInterface<CreateProviderInterface>>({});
+  const [errors, setErrors] = useState<GeneralErrors<CreateProvider>>({});
   const providerController = new ProviderController();
   const router = useRouter();
 

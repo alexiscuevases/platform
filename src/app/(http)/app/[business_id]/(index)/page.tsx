@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import Navbar from "../../_components/navbar";
-import { BusinessApiResponseInterface } from "interfaces";
-import { isBusinessId } from "guards";
+import { isBusinessId } from "@guards/business";
+import { Business } from "@typescript/models/business";
 
 export const metadata: Metadata = {
   title: "Vista general"
 };
 
 interface Props {
-  business: BusinessApiResponseInterface;
+  business: Business;
 }
 
 export default isBusinessId(({ business }: Props) => {

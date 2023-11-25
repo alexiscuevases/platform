@@ -1,12 +1,13 @@
-import { DeleteResourceInterface, ResponseInterface } from "interfaces";
-import { deleteResource, uploadResource } from "utilities";
+import { deleteResource, uploadResource } from "@libs/cloudinary";
+import { DeleteResource } from "@typescript/models/resource";
+import { GeneralResponse } from "@typescript/others";
 
 export class ResourceController {
   getResourceUrlByPublicId(public_id: string): string {
     return `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/${public_id}`;
   }
 
-  async uploadResources(resources: File[]): Promise<ResponseInterface<any, any>> {
+  async uploadResources(resources: File[]): Promise<GeneralResponse<any, any>> {
     const uploadedResources = [];
 
     for (const resource of resources) {
@@ -27,7 +28,7 @@ export class ResourceController {
     return { success: false, errors: { GENERAL_ERROR: "Resources not uploaded" } };
   }
 
-  async deleteResources(resources: DeleteResourceInterface[]) {
+  async deleteResources(resources: DeleteResource[]) {
     const deletedResources = [];
 
     for (const resource of resources) {

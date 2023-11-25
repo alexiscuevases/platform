@@ -1,14 +1,14 @@
-import { BusinessApiResponseInterface } from "interfaces";
-import { isBusinessHost } from "guards";
+import { isBusinessHost } from "@guards/business";
+import { UseTemplate } from "@templates/index";
+import { Business } from "@typescript/models/business";
 import { Metadata } from "next";
-import { UseTemplate } from "app/_templates";
 
 export const metadata: Metadata = {
   title: "Inicio"
 };
 
 interface Props {
-  business: BusinessApiResponseInterface;
+  business: Business;
 }
 
 export default isBusinessHost(({ business }: Props) => (

@@ -1,41 +1,36 @@
 "use server";
 
-import { fetchData } from "helpers";
-import {
-  CreateTagInterface,
-  TagInterface,
-  ResponseInterface,
-  TagApiResponseInterface,
-  UpdateTagInterface
-} from "interfaces";
-import { getSettings } from "settings";
-import { CreateTagValidator, UpdateTagValidator } from "validations";
+import { getConfigs } from "@helpers/getConfigs";
+import { fetchData } from "@helpers/fetchData";
+import { CreateTag, Tag, UpdateTag } from "@typescript/models/business/tag";
+import { GeneralResponse } from "@typescript/others";
+import { ValidatorToCreateTag, ValidatorToUpdateTag } from "@validators/business/tag";
 
-const API_ENDPOINT = getSettings("application").URLs.api;
+const API_ENDPOINT = getConfigs("application").URLs.api;
 
 export const createTagByBusinessId = async (
   business_id: string,
-  dataToCreate: CreateTagInterface
-): Promise<ResponseInterface<TagApiResponseInterface, CreateTagInterface>> =>
+  dataToCreate: CreateTag
+): Promise<GeneralResponse<Tag, CreateTag>> =>
   fetchData(`${API_ENDPOINT}/business/${business_id}/tag`, "POST", dataToCreate, {
-    validator: CreateTagValidator,
+    validator: ValidatorToCreateTag,
     revalidateTags: [`business-${business_id}.tags`]
   });
 
 export const updateTagByBusinessId = async (
   business_id: string,
   tag_id: string,
-  dataToUpdate: UpdateTagInterface
-): Promise<ResponseInterface<TagApiResponseInterface, UpdateTagInterface>> =>
+  dataToUpdate: UpdateTag
+): Promise<GeneralResponse<Tag, UpdateTag>> =>
   fetchData(`${API_ENDPOINT}/business/${business_id}/tag/${tag_id}`, "PUT", dataToUpdate, {
-    validator: UpdateTagValidator,
+    validator: ValidatorToUpdateTag,
     revalidateTags: [`business-${business_id}.tags`]
   });
 
 export const getTagsByBusinessId = async (
   business_id: string,
-  dataToFind?: TagInterface
-): Promise<ResponseInterface<TagApiResponseInterface[], TagInterface>> => {
+  dataToFind?: Tag
+): Promise<GeneralResponse<Tag[], Tag>> => {
   const queryParams = dataToFind ? new URLSearchParams(dataToFind as any).toString() : "";
   return fetchData(`${API_ENDPOINT}/business/${business_id}/tag?${queryParams}`, "GET", null, {
     next: { revalidate: 3600, tags: [`business-${business_id}.tags`] }

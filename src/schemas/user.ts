@@ -1,7 +1,7 @@
-import { UserInterface } from "interfaces";
-import { SchemaValidator } from "utilities";
+import { User } from "@typescript/models/user";
+import { SchemaValidator } from "@utils/schemaValidator";
 
-export const UserSchema = new SchemaValidator<UserInterface>(
+export const UserSchema = new SchemaValidator<User>(
   {
     types: {
       valueType: [String],

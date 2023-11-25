@@ -1,19 +1,20 @@
 "use client";
 
-import { UserController } from "controllers";
-import { CreateUserInterface, ErrorsInterface } from "interfaces";
+import { UserController } from "@controllers/user";
+import { getConfigs } from "@helpers/getConfigs";
+import { CreateUser } from "@typescript/models/user";
+import { GeneralErrors } from "@typescript/others";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { getSettings } from "settings";
 
 interface Props {
   setData: any;
-  data: CreateUserInterface;
+  data: CreateUser;
 }
 
 export default function FourthStep({ setData, data }: Props) {
   const [waitingResponse, setWaitingResponse] = useState<boolean>(false);
-  const [errors, setErrors] = useState<ErrorsInterface<CreateUserInterface>>({});
+  const [errors, setErrors] = useState<GeneralErrors<CreateUser>>({});
   const router = useRouter();
   const userController = new UserController();
 
@@ -32,7 +33,7 @@ export default function FourthStep({ setData, data }: Props) {
     <div className="mx-auto max-w-[950px] rounded-2xl bg-white px-10 py-10 shadow-2xl">
       <h1 className="text-xl font-bold">Crea una contraseña</h1>
       <div className="space-y-6">
-        <p className="text-white-full-dark">Crea una contraseña para tu cuenta de {getSettings("platform").name}</p>
+        <p className="text-white-full-dark">Crea una contraseña para tu cuenta de {getConfigs("platform").name}</p>
         <div className="max-w-[500px] space-y-8">
           <div className="min-h-[200px] space-y-6">
             <div>

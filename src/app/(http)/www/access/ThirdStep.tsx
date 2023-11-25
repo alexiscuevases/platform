@@ -1,22 +1,23 @@
-import { AuthenticationController } from "controllers";
-import { AuthenticationApiResponseInterface, CreateAuthenticationInterface, ErrorsInterface } from "interfaces";
+import { AuthenticationController } from "@controllers/authentication";
+import { getConfigs } from "@helpers/getConfigs";
+import { Authentication, CreateAuthentication } from "@typescript/models/authentication";
+import { GeneralErrors } from "@typescript/others";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { getSettings } from "settings";
 
 interface Props {
-  data: CreateAuthenticationInterface;
+  data: CreateAuthentication;
   verification: {
     verification_id: string;
     code: string;
   };
   setVerification: any;
-  authentication: AuthenticationApiResponseInterface;
+  authentication: Authentication;
 }
 
 export default function ThirdStep({ data, verification, setVerification, authentication }: Props) {
   const [waitingResponse, setWaitingResponse] = useState<boolean>(false);
-  const [errors, setErrors] = useState<ErrorsInterface<any>>({});
+  const [errors, setErrors] = useState<GeneralErrors<any>>({});
   const router = useRouter();
   const authenticationController = new AuthenticationController();
 
@@ -33,7 +34,7 @@ export default function ThirdStep({ data, verification, setVerification, authent
 
     if (!verifyAuthenticationCreation.success)
       return setErrors(verifyAuthenticationCreation.errors), setWaitingResponse(false);
-    return router.push(getSettings("application").URLs.app);
+    return router.push(getConfigs("application").URLs.app);
   };
   return (
     <>

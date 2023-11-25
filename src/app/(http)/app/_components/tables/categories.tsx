@@ -1,17 +1,18 @@
 "use client";
 
-import { getCategoriesByBusinessId } from "services";
-import { BusinessApiResponseInterface, ParsedCategoryInterface } from "interfaces";
+import { getCategoriesByBusinessId } from "@services/business/category";
+import { Business } from "@typescript/models/business";
+import { ParsedCategory } from "@typescript/models/business/category";
+import { SchemaParser } from "@utils/schemaParser";
 import { useEffect, useState } from "react";
 import { IoOpenOutline } from "react-icons/io5";
-import { SchemaParser } from "utilities";
 
 interface Props {
-  business: BusinessApiResponseInterface;
+  business: Business;
 }
 
 export function CategoriesTable({ business }: Props) {
-  const [categories, setCategories] = useState<ParsedCategoryInterface[]>([]);
+  const [categories, setCategories] = useState<ParsedCategory[]>([]);
 
   useEffect(() => {
     const Categories = async () => {

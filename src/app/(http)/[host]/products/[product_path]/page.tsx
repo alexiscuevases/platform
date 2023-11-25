@@ -1,10 +1,12 @@
-import { BusinessApiResponseInterface, ProductApiResponseInterface } from "interfaces";
-import { isBusinessHost, isProductPath } from "guards";
+import { isBusinessHost } from "@guards/business";
+import { isProductPath } from "@guards/product";
+import { getConfigs } from "@helpers/getConfigs";
+import { getProductsByBusinessId } from "@services/business/product";
+import { UseTemplate } from "@templates/index";
+import { Business } from "@typescript/models/business";
+import { Product } from "@typescript/models/business/product";
 import { Metadata } from "next";
-import { UseTemplate } from "app/_templates";
-import { getProductsByBusinessId } from "services";
 import { cookies } from "next/headers";
-import { getSettings } from "settings";
 
 export async function generateMetadata({ params }: any, parent: any): Promise<Metadata> {
   const products = await getProductsByBusinessId((await parent).other.business_id as string, {
@@ -17,7 +19,7 @@ export async function generateMetadata({ params }: any, parent: any): Promise<Me
     };
 
   const cookieStore = cookies();
-  const languageCookie = cookieStore.get(getSettings("application").cookies.language.name);
+  const languageCookie = cookieStore.get(getConfigs("application").cookies.language.name);
 
   return {
     title: products.result[0].names[languageCookie ? languageCookie.value : "Default"]
@@ -25,8 +27,8 @@ export async function generateMetadata({ params }: any, parent: any): Promise<Me
 }
 
 interface Props {
-  business: BusinessApiResponseInterface;
-  product: ProductApiResponseInterface;
+  business: Business;
+  product: Product;
   params: {
     product_path: string;
   };

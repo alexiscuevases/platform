@@ -1,5 +1,5 @@
-import { SchemaMongo } from "utilities";
-import { models, model } from "mongoose";
-import { UserSchema } from "schemas";
+import { UserSchema } from "@schemas/user";
+import { SchemaMongo } from "@libs/mongoose";
+import { model, models } from "mongoose";
 
 export const UserModel = models.User || model("User", SchemaMongo(UserSchema.toMongoSchemaValidations()));

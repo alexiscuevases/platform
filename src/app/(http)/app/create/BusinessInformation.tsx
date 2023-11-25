@@ -1,10 +1,10 @@
 "use client";
 
-import { getBusinesses } from "services";
-import { BusinessInformationInterface, CreateBusinessInterface, ErrorsInterface } from "interfaces";
+import { getConfigs } from "@helpers/getConfigs";
+import { getBusinesses } from "@services/business";
+import { BusinessInformation, CreateBusiness } from "@typescript/models/business";
+import { GeneralErrors } from "@typescript/others";
 import { useState } from "react";
-import { getSettings } from "settings";
-import { BusinessInformationValidator } from "validations";
 
 export default function AccessInformation({
   setData,
@@ -12,10 +12,10 @@ export default function AccessInformation({
   setStep
 }: {
   setData: any;
-  data: CreateBusinessInterface;
+  data: CreateBusiness;
   setStep: any;
 }) {
-  const [errors, setErrors] = useState<ErrorsInterface<any>>({});
+  const [errors, setErrors] = useState<GeneralErrors<any>>({});
   const [waitingResponse, setWaitingResponse] = useState<boolean>(false);
 
   const continueHandler = async () => {
@@ -23,7 +23,7 @@ export default function AccessInformation({
     setWaitingResponse(true);
     setErrors({});
 
-    const businessInformationValidation = BusinessInformationValidator.validate(data as BusinessInformationInterface);
+    const businessInformationValidation = BusinessInformationValidator.validate(data as BusinessInformation);
     if (!businessInformationValidation.success)
       return setErrors(businessInformationValidation.errors), setWaitingResponse(false);
 
@@ -41,7 +41,7 @@ export default function AccessInformation({
     <div className="mx-auto max-w-[950px] rounded-2xl bg-white px-10 py-10 shadow-2xl">
       <h1 className="text-xl font-bold">Información del negocio</h1>
       <div className="space-y-6">
-        <p className="text-white-full-dark">Crea una contraseña para tu cuenta de {getSettings("platform").name}</p>
+        <p className="text-white-full-dark">Crea una contraseña para tu cuenta de {getConfigs("platform").name}</p>
         <div className="max-w-[500px] space-y-8">
           <div className="min-h-[200px] space-y-6">
             <div>

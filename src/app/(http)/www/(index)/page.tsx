@@ -1,9 +1,9 @@
+import { getConfigs } from "@helpers/getConfigs";
 import { Footer } from "../_components/Footer";
 import { Header } from "../_components/Header";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { getSettings } from "settings";
 
 export const metadata: Metadata = {
   title: "Una Plataforma de Comercio Digital"
@@ -184,8 +184,8 @@ export default function Page() {
                       <p>
                         Comisión única de:{" "}
                         <span className="font-semibold">
-                          ${new Intl.NumberFormat().format(getSettings("platform").plans.Free.costs.fixed_commission)}{" "}
-                          COP + {getSettings("platform").plans.Free.costs.variable_commission}%
+                          ${new Intl.NumberFormat().format(getConfigs("platform").plans.Free.costs.fixed_commission)}{" "}
+                          COP + {getConfigs("platform").plans.Free.costs.variable_commission}%
                         </span>{" "}
                         por venta{" "}
                         <button aria-label="open 30-day SEC yield dialog" type="button">
@@ -221,7 +221,7 @@ export default function Page() {
                     </p>
                   </div>
                   <div className="flex flex-row md:items-center lg:space-x-8">
-                    <Link className="button button-primary" href={`${getSettings("application").URLs.www}/get-started`}>
+                    <Link className="button button-primary" href={`${getConfigs("application").URLs.www}/get-started`}>
                       Empezar gratis
                     </Link>
                   </div>

@@ -1,9 +1,9 @@
-import { apiResponseHandler } from "helpers";
-import { ProductInterface, UploadProductResourcesInterface } from "interfaces";
-import { ConnectMongo } from "utilities";
-import { ProductModel } from "models";
+import { apiResponseHandler } from "@helpers/apiResponseHandler";
+import { ConnectMongo } from "@libs/mongoose";
+import { ProductModel } from "@models/business/product";
+import { Product, UploadProductResources } from "@typescript/models/business/product";
+import { ValidatorToUploadProductResources } from "@validators/business/product";
 import { NextRequest, NextResponse } from "next/server";
-import { UploadProductResourcesValidator } from "validations";
 
 interface Params {
   _id: any;
@@ -12,13 +12,13 @@ interface Params {
 
 export async function PUT(request: NextRequest, { params }: { params: Params }): Promise<NextResponse> {
   try {
-    const body: UploadProductResourcesInterface = await request.json();
-    const validation = UploadProductResourcesValidator.validate(body);
+    const body: UploadProductResources = await request.json();
+    const validation = ValidatorToUploadProductResources.validate(body);
     if (!validation.success) return apiResponseHandler({ status: 200, errors: validation.errors });
 
     await ConnectMongo();
 
-    const productExists: ProductInterface = await ProductModel.findByIdAndUpdate(params.product_id, body);
+    const productExists: Product = await ProductModel.findByIdAndUpdate(params.product_id, body);
     if (!productExists)
       return apiResponseHandler({ status: 200, errors: { GENERAL_ERROR: "Product resources not updated" } });
 

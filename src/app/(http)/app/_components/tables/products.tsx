@@ -1,20 +1,22 @@
 "use client";
 
-import { getProductsByBusinessId } from "services";
-import { BusinessApiResponseInterface, ParsedProductInterface } from "interfaces";
-import { SchemaParser } from "utilities";
 import { IoEye, IoOpenOutline } from "react-icons/io5";
 import Link from "next/link";
-import { createBusinessURL, currencyFormat } from "helpers";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { SchemaParser } from "@utils/schemaParser";
+import { getProductsByBusinessId } from "@services/business/product";
+import { ParsedProduct } from "@typescript/models/business/product";
+import { Business } from "@typescript/models/business";
+import { currencyFormat } from "@helpers/currencyFormat";
+import { createBusinessURL } from "@helpers/createBusinessURL";
 
 interface Props {
-  business: BusinessApiResponseInterface;
+  business: Business;
 }
 
 export function ProductsTable({ business }: Props) {
-  const [products, setProducts] = useState<ParsedProductInterface[]>([]);
+  const [products, setProducts] = useState<ParsedProduct[]>([]);
 
   useEffect(() => {
     const Products = async () => {

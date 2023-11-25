@@ -1,20 +1,23 @@
-import { apiResponseHandler } from "helpers";
-import { AuthenticationInterface, UserInterface, CreateAuthenticationInterface } from "interfaces";
-import { ConnectMongo, sendMail } from "utilities";
-import { AuthenticationModel, UserModel } from "models";
+import { apiResponseHandler } from "@helpers/apiResponseHandler";
+import { getConfigs } from "@helpers/getConfigs";
+import { ConnectMongo } from "@libs/mongoose";
+import { sendMail } from "@libs/nodemailer";
+import { AuthenticationModel } from "@models/authentication";
+import { UserModel } from "@models/user";
+import { Authentication, CreateAuthentication } from "@typescript/models/authentication";
+import { User } from "@typescript/models/user";
+import { ValidatorToCreateAuthentication } from "@validators/authentication";
 import { NextRequest, NextResponse } from "next/server";
-import { getSettings } from "settings";
-import { CreateAuthenticationValidator } from "validations";
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
-    const body: CreateAuthenticationInterface = await request.json();
-    const validation = CreateAuthenticationValidator.validate(body);
+    const body: CreateAuthentication = await request.json();
+    const validation = ValidatorToCreateAuthentication.validate(body);
     if (!validation.success) return apiResponseHandler({ status: 200, errors: validation.errors });
 
     await ConnectMongo();
 
-    const userExists: UserInterface = await UserModel.findOne({ email: body.email });
+    const userExists: User = await UserModel.findOne({ email: body.email });
     if (!userExists)
       return apiResponseHandler({ status: 200, errors: { password: "Correo electrónico o contraseña no válida" } });
 
@@ -32,7 +35,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       });
 
     if (userExists.password === body.password) {
-      let authentication: AuthenticationInterface = await AuthenticationModel.findOneAndUpdate(
+      let authentication: Authentication = await AuthenticationModel.findOneAndUpdate(
         {
           user_id: userExists._id,
           device_ip: request.headers.get("x-forwarded-for"),
@@ -67,8 +70,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       if (userExists.failed_attempts === 5) {
         sendMail({
           to: userExists.email,
-          subject: `Su cuenta de ${getSettings("platform").name} ha sido bloqueada`,
-          body: `Hola ${userExists.names}, su cuenta de ${getSettings("platform").name} ha sido bloqueada por seguridad`
+          subject: `Su cuenta de ${getConfigs("platform").name} ha sido bloqueada`,
+          body: `Hola ${userExists.names}, su cuenta de ${getConfigs("platform").name} ha sido bloqueada por seguridad`
         });
 
         await UserModel.findByIdAndUpdate(userExists._id, {

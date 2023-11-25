@@ -1,16 +1,18 @@
 "use client";
 
-import { createBusiness } from "services";
-import { CreateCardPaymentInterface, CreateBusinessInterface, ErrorsInterface } from "interfaces";
+import { createBusiness } from "@services/business";
+import { CreateBusiness } from "@typescript/models/business";
+import { PaymenentCard } from "@typescript/models/payment";
+import { GeneralErrors } from "@typescript/others";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { IoWallet } from "react-icons/io5";
 
-export default function CreateBusiness({ data, setStep }: { data: CreateBusinessInterface; setStep: any }) {
+export default function CreateBusinessComponent({ data, setStep }: { data: CreateBusiness; setStep: any }) {
   const [waitingResponse, setWaitingResponse] = useState<boolean>(false);
-  const [errors, setErrors] = useState<ErrorsInterface<any>>({});
+  const [errors, setErrors] = useState<GeneralErrors<any>>({});
   // @ts-expect-error
-  const [payment, setPayment] = useState<CreateCardPaymentInterface>({});
+  const [payment, setPayment] = useState<PaymenentCard>({});
   const router = useRouter();
 
   const finishHandler = async () => {

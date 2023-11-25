@@ -1,19 +1,20 @@
 "use client";
 
-import { UserController } from "controllers";
-import { ChangeUserPasswordInterface, ErrorsInterface, UserApiResponseInterface } from "interfaces";
+import { UserController } from "@controllers/user";
+import { getConfigs } from "@helpers/getConfigs";
+import { ChangeUserPassword, User } from "@typescript/models/user";
+import { GeneralErrors } from "@typescript/others";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { getSettings } from "settings";
 
 interface Props {
-  user: UserApiResponseInterface;
-  data: ChangeUserPasswordInterface;
+  user: User;
+  data: ChangeUserPassword;
   setData: any;
 }
 
 export default function ThirdStep({ user, data, setData }: Props) {
-  const [errors, setErrors] = useState<ErrorsInterface<ChangeUserPasswordInterface>>({});
+  const [errors, setErrors] = useState<GeneralErrors<ChangeUserPassword>>({});
   const [waitingResponse, setWaitingResponse] = useState<boolean>(false);
   const router = useRouter();
   const userController = new UserController();
@@ -34,7 +35,7 @@ export default function ThirdStep({ user, data, setData }: Props) {
       <h1 className="text-xl font-bold">Crea una nueva contraseña</h1>
       <div className="space-y-6">
         <p className="text-white-full-dark">
-          Crea una nueva contraseña para tu cuenta de {getSettings("platform").name}
+          Crea una nueva contraseña para tu cuenta de {getConfigs("platform").name}
         </p>
         <div className="max-w-[500px] space-y-8">
           <div className="min-h-[200px] space-y-6">

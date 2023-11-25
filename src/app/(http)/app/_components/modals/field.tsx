@@ -1,4 +1,4 @@
-import { ResourceController } from "controllers";
+import { ResourceController } from "@controllers/resource";
 import Image from "next/image";
 import { IoAdd, IoCloudUploadOutline, IoTrash } from "react-icons/io5";
 

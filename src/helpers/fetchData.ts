@@ -1,8 +1,8 @@
-import { ResponseInterface } from "interfaces";
+import { GeneralResponse } from "@typescript/others";
+import { SchemaValidator } from "@utils/schemaValidator";
 import { revalidateTag } from "next/cache";
-import { SchemaValidator } from "utilities";
 
-const responseErrorHandler = (response: Response): ResponseInterface<any, any> => {
+const responseErrorHandler = (response: Response): GeneralResponse<any, any> => {
   return {
     success: false,
     errors: {
@@ -11,7 +11,7 @@ const responseErrorHandler = (response: Response): ResponseInterface<any, any> =
   };
 };
 
-const fetchErrorHandler = (e: any): ResponseInterface<any, any> => {
+const fetchErrorHandler = (e: any): GeneralResponse<any, any> => {
   return {
     success: false,
     errors: {
@@ -37,7 +37,7 @@ export const fetchData = async <Result, Body>(
     revalidateOtherTags?: RevalidateOtherTag[];
     next?: NextFetchRequestConfig;
   }
-): Promise<ResponseInterface<Result, Body>> => {
+): Promise<GeneralResponse<Result, Body>> => {
   try {
     if (extra && extra.validator && body) {
       const validation = extra.validator.validate(body);

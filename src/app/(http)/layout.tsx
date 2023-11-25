@@ -1,13 +1,13 @@
-import "app/_theme/styles/globals.css";
-import { GT_Alpina, Comfortaa } from "app/_theme/fonts";
+import "@resources/styles/globals.css";
+import { getConfigs } from "@helpers/getConfigs";
+import { Comfortaa, GT_Alpina } from "@resources/fonts";
 import type { Metadata } from "next";
-import { getSettings } from "settings";
 import { ReactNode } from "react";
 
 export const metadata: Metadata = {
   title: {
-    template: `%s · ${getSettings("platform").name}`,
-    default: getSettings("platform").name
+    template: `%s · ${getConfigs("platform").name}`,
+    default: getConfigs("platform").name
   }
 };
 

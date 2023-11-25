@@ -1,9 +1,9 @@
-import { BusinessApiResponseInterface } from "interfaces";
+import { Business } from "@typescript/models/business";
 import Link from "next/link";
 
 interface Props {
   thisPage: string;
-  business: BusinessApiResponseInterface;
+  business: Business;
 }
 
 export default function Navbar({ thisPage, business }: Props) {

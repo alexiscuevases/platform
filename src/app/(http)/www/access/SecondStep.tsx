@@ -1,12 +1,13 @@
-import { AuthenticationController } from "controllers";
-import { CreateAuthenticationInterface, ErrorsInterface } from "interfaces";
+import { AuthenticationController } from "@controllers/authentication";
+import { getConfigs } from "@helpers/getConfigs";
+import { CreateAuthentication } from "@typescript/models/authentication";
+import { GeneralErrors } from "@typescript/others";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { getSettings } from "settings";
 
 interface Props {
-  data: CreateAuthenticationInterface;
+  data: CreateAuthentication;
   setData: any;
   setStep: any;
   setVerification: any;
@@ -15,7 +16,7 @@ interface Props {
 
 export default function SecondStep({ data, setData, setStep, setVerification, setAuthentication }: Props) {
   const [waitingResponse, setWaitingResponse] = useState<boolean>(false);
-  const [errors, setErrors] = useState<ErrorsInterface<any>>({});
+  const [errors, setErrors] = useState<GeneralErrors<any>>({});
   const router = useRouter();
   const authenticationController = new AuthenticationController();
 
@@ -26,7 +27,7 @@ export default function SecondStep({ data, setData, setStep, setVerification, se
 
     const create = await authenticationController.create(data);
     if (!create.success) return setErrors(create.errors), setWaitingResponse(false);
-    if (!create.result.two_factor_authentication) return router.push(getSettings("application").URLs.app);
+    if (!create.result.two_factor_authentication) return router.push(getConfigs("application").URLs.app);
 
     setVerification({ verification_id: create.result.verification._id });
     setAuthentication(create.result.authentication);
@@ -39,7 +40,7 @@ export default function SecondStep({ data, setData, setStep, setVerification, se
       <h1 className="text-xl font-bold">Iniciar sesión en Wealthfront</h1>
       <div className="space-y-6">
         <p className="text-white-full-dark">
-          Ingresa a continuación la contraseña que utilizas para iniciar sesión en {getSettings("platform").name}
+          Ingresa a continuación la contraseña que utilizas para iniciar sesión en {getConfigs("platform").name}
         </p>
         <div className="max-w-[500px] space-y-8">
           <div className="min-h-[100px] space-y-6">
@@ -75,7 +76,7 @@ export default function SecondStep({ data, setData, setStep, setVerification, se
           </div>
           <div>
             <Link
-              href={`${getSettings("application").URLs.www}/access/recovery`}
+              href={`${getConfigs("application").URLs.www}/access/recovery`}
               className="inline-block cursor-pointer border-b border-dashed border-primary text-sm font-medium text-primary">
               He olvidado mi contraseña
             </Link>

@@ -1,8 +1,10 @@
-import { getUrlParams, apiResponseHandler } from "helpers";
-import { VerificationInterface } from "interfaces";
-import { UserModel, VerificationModel } from "models";
+import { apiResponseHandler } from "@helpers/apiResponseHandler";
+import { getUrlParams } from "@helpers/getUrlParams";
+import { ConnectMongo } from "@libs/mongoose";
+import { UserModel } from "@models/user";
+import { VerificationModel } from "@models/verification";
+import { Verification } from "@typescript/models/verification";
 import { NextRequest, NextResponse } from "next/server";
-import { ConnectMongo } from "utilities";
 
 interface Params {
   _id: any;
@@ -12,7 +14,7 @@ export async function GET(request: NextRequest, { params }: { params: Params }):
   try {
     await ConnectMongo();
 
-    const verificationExists: VerificationInterface = await VerificationModel.findById(params._id);
+    const verificationExists: Verification = await VerificationModel.findById(params._id);
     if (verificationExists) {
       if (verificationExists.failed_attemps < 5) {
         if (new Date() > new Date(verificationExists.expiration_date))

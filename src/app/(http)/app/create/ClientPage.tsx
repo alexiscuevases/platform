@@ -6,11 +6,11 @@ import LegalInformation from "./LegalInformation";
 import BusinessInformation from "./BusinessInformation";
 import SelectPlan from "./SelectPlan";
 import CreateBusiness from "./CreateBusiness";
-import { CreateBusinessInterface, UserInterface } from "interfaces";
 import { IoChevronBack } from "react-icons/io5";
 import Link from "next/link";
+import { User } from "@typescript/models/user";
 
-export default function Page({ user }: { user: UserInterface }) {
+export default function Page({ user }: { user: User }) {
   const [step, setStep] = useState<number>(1);
   // @ts-expect-error
   const [data, setData] = useState<CreateBusinessInterface>({

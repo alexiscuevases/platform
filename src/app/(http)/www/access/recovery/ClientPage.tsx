@@ -1,18 +1,18 @@
 "use client";
 
-import { UserInterface } from "interfaces";
 import { useState } from "react";
 import FirstStep from "./FirstStep";
 import ThirdStep from "./ThirdStep";
 import SecondStep from "./SecondStep";
 import { IoChevronBack } from "react-icons/io5";
 import Link from "next/link";
+import { User } from "@typescript/models/user";
 
 export default function ClientPage() {
   const [data, setData] = useState<any>({});
   const [step, setStep] = useState<number>(1);
   const [verification, setVerification] = useState<any>({});
-  const [user, setUser] = useState<UserInterface>();
+  const [user, setUser] = useState<User>();
 
   return (
     <div className="h-full min-h-screen w-full bg-gradient-to-b from-ambient-peach to-ambient-lavender">

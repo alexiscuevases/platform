@@ -1,41 +1,36 @@
 "use server";
 
-import { fetchData } from "helpers";
-import {
-  CreateProviderInterface,
-  ProviderInterface,
-  ResponseInterface,
-  ProviderApiResponseInterface,
-  UpdateProviderInterface
-} from "interfaces";
-import { getSettings } from "settings";
-import { CreateProviderValidator, UpdateProviderValidator } from "validations";
+import { getConfigs } from "@helpers/getConfigs";
+import { fetchData } from "@helpers/fetchData";
+import { CreateProvider, Provider, UpdateProvider } from "@typescript/models/business/provider";
+import { GeneralResponse } from "@typescript/others";
+import { ValidatorToCreateProvider, ValidatorToUpdateProvider } from "@validators/business/provider";
 
-const API_ENDPOINT = getSettings("application").URLs.api;
+const API_ENDPOINT = getConfigs("application").URLs.api;
 
 export const createProviderByBusinessId = async (
   business_id: string,
-  dataToCreate: CreateProviderInterface
-): Promise<ResponseInterface<ProviderApiResponseInterface, CreateProviderInterface>> =>
+  dataToCreate: CreateProvider
+): Promise<GeneralResponse<Provider, CreateProvider>> =>
   fetchData(`${API_ENDPOINT}/business/${business_id}/provider`, "POST", dataToCreate, {
-    validator: CreateProviderValidator,
+    validator: ValidatorToCreateProvider,
     revalidateTags: [`business-${business_id}.providers`]
   });
 
 export const updateProviderByBusinessId = async (
   business_id: string,
   provider_id: string,
-  dataToUpdate: UpdateProviderInterface
-): Promise<ResponseInterface<ProviderApiResponseInterface, UpdateProviderInterface>> =>
+  dataToUpdate: UpdateProvider
+): Promise<GeneralResponse<Provider, UpdateProvider>> =>
   fetchData(`${API_ENDPOINT}/business/${business_id}/provider/${provider_id}`, "PUT", dataToUpdate, {
-    validator: UpdateProviderValidator,
+    validator: ValidatorToUpdateProvider,
     revalidateTags: [`business-${business_id}.providers`]
   });
 
 export const getProvidersByBusinessId = async (
   business_id: string,
-  dataToFind?: ProviderInterface
-): Promise<ResponseInterface<ProviderApiResponseInterface[], ProviderInterface>> => {
+  dataToFind?: Provider
+): Promise<GeneralResponse<Provider[], Provider>> => {
   const queryParams = dataToFind ? new URLSearchParams(dataToFind as any).toString() : "";
   return fetchData(`${API_ENDPOINT}/business/${business_id}/provider?${queryParams}`, "GET", null, {
     next: { revalidate: 3600, tags: [`business-${business_id}.providers`] }

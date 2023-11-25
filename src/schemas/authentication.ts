@@ -1,7 +1,7 @@
-import { AuthenticationInterface } from "interfaces";
-import { SchemaValidator } from "utilities";
+import { Authentication } from "@typescript/models/authentication";
+import { SchemaValidator } from "@utils/schemaValidator";
 
-export const AuthenticationSchema = new SchemaValidator<AuthenticationInterface>({
+export const AuthenticationSchema = new SchemaValidator<Authentication>({
   user_id: { valueType: String, isRequired: true, referenceModel: "User", isObjectId: true },
   device_ip: { valueType: String, isRequired: true },
   device_type: { valueType: String, isRequired: true },

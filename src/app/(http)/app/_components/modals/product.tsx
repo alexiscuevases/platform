@@ -1,15 +1,13 @@
 "use client";
 
-import { ProductController, ResourceController } from "controllers";
+import { ProductController } from "@controllers/business/product";
+import { ResourceController } from "@controllers/resource";
+import { createBusinessURL } from "@helpers/createBusinessURL";
+import { Business } from "@typescript/models/business";
+import { CreateProduct, Product } from "@typescript/models/business/product";
+import { DeleteResource } from "@typescript/models/resource";
+import { GeneralErrors } from "@typescript/others";
 import { AnimatePresence, motion } from "framer-motion";
-import { createBusinessURL } from "helpers";
-import {
-  BusinessApiResponseInterface,
-  CreateProductInterface,
-  DeleteResourceInterface,
-  ErrorsInterface,
-  ProductApiResponseInterface
-} from "interfaces";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -24,11 +22,11 @@ import {
 } from "react-icons/io5";
 
 interface Props {
-  business: BusinessApiResponseInterface;
+  business: Business;
   isOpen: boolean;
   setOpened: any;
   action?: "create" | "update" | "duplicate";
-  product?: ProductApiResponseInterface;
+  product?: Product;
 }
 
 export default function ProductModal({ isOpen, setOpened, business, action = "create", product }: Props) {
@@ -40,7 +38,7 @@ export default function ProductModal({ isOpen, setOpened, business, action = "cr
     deleting: false
   });
   const [waitingResponse, setWaitingResponse] = useState<boolean>(false);
-  const [errors, setErrors] = useState<ErrorsInterface<CreateProductInterface>>({});
+  const [errors, setErrors] = useState<GeneralErrors<CreateProduct>>({});
   const productController = new ProductController();
   const resourceController = new ResourceController();
   const router = useRouter();
@@ -60,7 +58,7 @@ export default function ProductModal({ isOpen, setOpened, business, action = "cr
     );
     if (deletedResources && deletedResources.length > 0) {
       setResourcesInformation({ ...resourcesInformation, deleting: true });
-      await resourceController.deleteResources(deletedResources as DeleteResourceInterface[]);
+      await resourceController.deleteResources(deletedResources as DeleteResource[]);
       setResourcesInformation({ ...resourcesInformation, deleting: false });
     }
 
@@ -170,7 +168,7 @@ export default function ProductModal({ isOpen, setOpened, business, action = "cr
                             onClick={() =>
                               setResources(resources.filter(resourceToDelete => resource !== resourceToDelete))
                             }
-                            className="hover:text-danger bg-white text-slate-600 duration-200">
+                            className="bg-white text-slate-600 duration-200 hover:text-danger">
                             <IoTrash size={16} />
                           </button>
                         </div>
@@ -196,7 +194,7 @@ export default function ProductModal({ isOpen, setOpened, business, action = "cr
                                   resources: data.resources.filter(resourceToDelete => resource !== resourceToDelete)
                                 })
                               }
-                              className="hover:text-danger bg-white text-slate-600 duration-200">
+                              className="bg-white text-slate-600 duration-200 hover:text-danger">
                               <IoTrash size={16} />
                             </button>
                           </div>
@@ -520,7 +518,7 @@ export default function ProductModal({ isOpen, setOpened, business, action = "cr
                       </label>
                     </div>
                     {errors.path ?
-                      <p className="text-danger text-xs">{errors.path}</p>
+                      <p className="text-xs text-danger">{errors.path}</p>
                     : <p className="mt-2 text-xs text-white-full-dark">
                         {createBusinessURL(business)}/products/
                         {(data.path || data.names) &&

@@ -1,9 +1,9 @@
-import { apiResponseHandler } from "helpers";
-import { ChangeUserPasswordInterface } from "interfaces";
-import { ConnectMongo } from "utilities";
-import { UserModel } from "models";
+import { apiResponseHandler } from "@helpers/apiResponseHandler";
+import { ConnectMongo } from "@libs/mongoose";
+import { UserModel } from "@models/user";
+import { ChangeUserPassword } from "@typescript/models/user";
+import { ValidatorToChangeUserPassword } from "@validators/user";
 import { NextRequest, NextResponse } from "next/server";
-import { ChangeUserPasswordValidator } from "validations";
 
 interface Params {
   _id: any;
@@ -11,8 +11,8 @@ interface Params {
 
 export async function PUT(request: NextRequest, { params }: { params: Params }): Promise<NextResponse> {
   try {
-    const body: ChangeUserPasswordInterface = await request.json();
-    const validation = ChangeUserPasswordValidator.validate(body);
+    const body: ChangeUserPassword = await request.json();
+    const validation = ValidatorToChangeUserPassword.validate(body);
     if (!validation.success) return apiResponseHandler({ status: 200, errors: validation.errors });
 
     await ConnectMongo();

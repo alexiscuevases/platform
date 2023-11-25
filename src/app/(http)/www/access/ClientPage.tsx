@@ -1,17 +1,17 @@
 "use client";
 
-import { AuthenticationApiResponseInterface } from "interfaces";
 import { useState } from "react";
 import FirstStep from "./FirstStep";
 import SecondStep from "./SecondStep";
 import ThirdStep from "./ThirdStep";
 import { IoChevronBack } from "react-icons/io5";
 import Link from "next/link";
+import { Authentication } from "@typescript/models/authentication";
 
 export default function ClientPage({ searchParams }) {
   const [data, setData] = useState<any>({});
   const [verification, setVerification] = useState<any>({});
-  const [authentication, setAuthentication] = useState<AuthenticationApiResponseInterface>();
+  const [authentication, setAuthentication] = useState<Authentication>();
   const [step, setStep] = useState<number>(1);
 
   return (

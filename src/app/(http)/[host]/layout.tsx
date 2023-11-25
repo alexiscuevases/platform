@@ -1,10 +1,10 @@
 import "app/_theme/styles/globals.css";
-import { comfortaa } from "app/_theme/fonts";
 import { ReactNode } from "react";
 import { type Metadata } from "next";
-import { getBusinesses } from "services";
-import { getSettings } from "settings";
 import { cookies } from "next/headers";
+import { getBusinesses } from "@services/business";
+import { getConfigs } from "@helpers/getConfigs";
+import { Comfortaa } from "@resources/fonts";
 
 interface Props {
   params: {
@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!business.success || !business.result[0])
     return {
-      title: `Not found · ${getSettings("platform").name}`
+      title: `Not found · ${getConfigs("platform").name}`
     };
 
   return {
@@ -35,10 +35,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   const cookieStore = cookies();
-  const languageCookie = cookieStore.get(getSettings("application").cookies.language.name);
+  const languageCookie = cookieStore.get(getConfigs("application").cookies.language.name);
 
   return (
-    <html lang={languageCookie ? languageCookie.value : "en"} className={comfortaa.variable}>
+    <html lang={languageCookie ? languageCookie.value : "en"} className={Comfortaa.variable}>
       <body className="font-comfortaa">{children}</body>
     </html>
   );

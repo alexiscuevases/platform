@@ -1,18 +1,19 @@
 "use client";
 
-import { getCollectionsByBusinessId } from "services";
-import { BusinessApiResponseInterface, ParsedCollectionInterface } from "interfaces";
+import { getCollectionsByBusinessId } from "@services/business/collection";
+import { Business } from "@typescript/models/business";
+import { ParsedCollection } from "@typescript/models/business/collection";
+import { SchemaParser } from "@utils/schemaParser";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { IoOpenOutline } from "react-icons/io5";
-import { SchemaParser } from "utilities";
 
 interface Props {
-  business: BusinessApiResponseInterface;
+  business: Business;
 }
 
 export function CollectionsTable({ business }: Props) {
-  const [collections, setCollection] = useState<ParsedCollectionInterface[]>([]);
+  const [collections, setCollection] = useState<ParsedCollection[]>([]);
 
   useEffect(() => {
     const Collection = async () => {

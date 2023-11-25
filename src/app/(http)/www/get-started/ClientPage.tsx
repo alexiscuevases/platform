@@ -3,16 +3,16 @@
 import { useState } from "react";
 import FirstStep from "./FirstStep";
 import SecondStep from "./SecondStep";
-import { CreateUserInterface } from "interfaces";
 import ThirdStep from "./ThirdStep";
 import FourthStep from "./FourthStep";
 import { IoChevronBack } from "react-icons/io5";
 import Link from "next/link";
+import { CreateUser } from "@typescript/models/user";
 
 export default function ClientPage() {
   const [step, setStep] = useState<number>(1);
   // @ts-expect-error
-  const [data, setData] = useState<CreateUserInterface>({});
+  const [data, setData] = useState<CreateUser>({});
   const [verification, setVerification] = useState<any>({});
 
   return (

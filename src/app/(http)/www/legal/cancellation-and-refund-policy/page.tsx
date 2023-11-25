@@ -2,7 +2,7 @@ import { Footer } from "../../_components/Footer";
 import { Header } from "../../_components/Header";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getSettings } from "settings";
+import { getConfigs } from "@helpers/getConfigs";
 
 export const metadata: Metadata = {
   title: "Política de Cancelación y Devolución"
@@ -49,8 +49,8 @@ export default function Page() {
             <h2 className="text-3xl font-medium">3. Proceso de Devolución</h2>
             <p>
               Para solicitar un reembolso, los Usuarios deben comunicarse con nuestro equipo de soporte a través de{" "}
-              <Link className="text-primary underline" href={`mailto:support@${getSettings("application").host}`}>
-                support@{getSettings("application").host}
+              <Link className="text-primary underline" href={`mailto:support@${getConfigs("application").host}`}>
+                support@{getConfigs("application").host}
               </Link>
               y proporcionar la siguiente información:
             </p>
@@ -78,18 +78,18 @@ export default function Page() {
             <p>
               Si tienes alguna pregunta o inquietud con respecto a esta Política de Cancelación y Devolución, no dudes
               en ponerte en contacto con nosotros a través de{" "}
-              <Link className="text-primary underline" href={`mailto:help@${getSettings("application").host}`}>
-                help@{getSettings("application").host}.
+              <Link className="text-primary underline" href={`mailto:help@${getConfigs("application").host}`}>
+                help@{getConfigs("application").host}.
               </Link>
             </p>
           </div>
           <p className="text-sm font-light">
-            Gracias por elegir {getSettings("platform").name} como tu plataforma de comercio electrónico. Estamos
+            Gracias por elegir {getConfigs("platform").name} como tu plataforma de comercio electrónico. Estamos
             comprometidos a proporcionar una experiencia segura y eficiente para tu negocio.
             <br />
             <br />
             Atentamente, El equipo de{" "}
-            {getSettings("legal").constitutions[getSettings("legal").main_constitution].commercialName}
+            {getConfigs("legal").constitutions[getConfigs("legal").main_constitution].commercialName}
           </p>
         </div>
       </main>

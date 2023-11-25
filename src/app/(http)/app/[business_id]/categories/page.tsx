@@ -1,16 +1,16 @@
-import { isBusinessId } from "guards";
 import type { Metadata } from "next";
-import { BusinessApiResponseInterface } from "interfaces";
 import Navbar from "../../_components/navbar";
 import Header from "./header";
 import { CategoriesTable } from "../../_components/tables/categories";
+import { Business } from "@typescript/models/business";
+import { isBusinessId } from "@guards/business";
 
 export const metadata: Metadata = {
   title: "Categorías"
 };
 
 interface Props {
-  business: BusinessApiResponseInterface;
+  business: Business;
 }
 
 export default isBusinessId(async ({ business }: Props) => {

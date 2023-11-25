@@ -1,16 +1,17 @@
-import { BusinessApiResponseInterface, ParsedProductInterface } from "interfaces";
+import { getProductsByBusinessId } from "@services/business/product";
+import { Business } from "@typescript/models/business";
+import { ParsedProduct } from "@typescript/models/business/product";
+import { SchemaParser } from "@utils/schemaParser";
 import Image from "next/image";
 import Link from "next/link";
-import { getProductsByBusinessId } from "services";
-import { SchemaParser } from "utilities";
 
 interface Props {
-  business: BusinessApiResponseInterface;
+  business: Business;
 }
 
 export async function Products({ business }: Props) {
   const products = await getProductsByBusinessId(business._id);
-  const parsedProducts: ParsedProductInterface[] = [];
+  const parsedProducts: ParsedProduct[] = [];
 
   products.result?.forEach(product => {
     const productParsed = new SchemaParser({

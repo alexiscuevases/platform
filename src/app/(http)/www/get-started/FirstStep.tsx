@@ -1,19 +1,20 @@
 "use client";
 
-import { CreateUserInterface, ErrorsInterface } from "interfaces";
-import { SchemaValidator } from "utilities";
+import { getConfigs } from "@helpers/getConfigs";
+import { CreateUser } from "@typescript/models/user";
+import { GeneralErrors } from "@typescript/others";
+import { SchemaValidator } from "@utils/schemaValidator";
 import Link from "next/link";
 import { useState } from "react";
-import { getSettings } from "settings";
 
 interface Props {
   setData: any;
-  data: CreateUserInterface;
+  data: CreateUser;
   setStep: any;
 }
 
 export default function FirstStep({ setData, data, setStep }: Props) {
-  const [errors, setErrors] = useState<ErrorsInterface<CreateUserInterface>>({});
+  const [errors, setErrors] = useState<GeneralErrors<CreateUser>>({});
 
   const continueHandler = () => {
     const validation = new SchemaValidator({
@@ -89,7 +90,7 @@ export default function FirstStep({ setData, data, setStep }: Props) {
           </div>
           <div>
             <Link
-              href={`${getSettings("application").URLs.www}/access`}
+              href={`${getConfigs("application").URLs.www}/access`}
               className="inline-block cursor-pointer border-b border-dashed border-primary text-sm font-medium text-primary">
               Ya tengo una cuenta
             </Link>
