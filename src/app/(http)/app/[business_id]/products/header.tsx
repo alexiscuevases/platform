@@ -116,6 +116,11 @@ export default function Header({ business }: Props) {
             title: "Nuevo Producto",
             fields: [
               {
+                id: "reference",
+                title: "Referencia",
+                type: "text"
+              },
+              {
                 id: "names",
                 title: "Nombre",
                 type: "text",
@@ -197,7 +202,8 @@ export default function Header({ business }: Props) {
             type: "variations",
             title: "Variaciones del producto",
             multi_values: "Variaciones por mercado",
-            multi_values_type: "market"
+            multi_values_type: "market",
+            default_property: "Default"
           },
           {
             type: "fields",

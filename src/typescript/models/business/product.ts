@@ -29,6 +29,7 @@ export interface UploadProductResources {
 
 export interface Product extends MongooseSchemaDefaultProperties {
   business_id?: any;
+  reference?: string;
   path?: string;
   status?: ProductStatuses;
   names?: Translations;
@@ -46,6 +47,7 @@ export interface Product extends MongooseSchemaDefaultProperties {
 }
 
 export interface ParsedProduct extends MongooseSchemaDefaultProperties {
+  reference?: string;
   path?: string;
   business_id?: string;
   status?: ProductStatuses;
@@ -64,6 +66,7 @@ export interface ParsedProduct extends MongooseSchemaDefaultProperties {
 }
 
 export interface CreateProduct {
+  reference?: string;
   path: string;
   status?: ProductStatuses;
   names: Translations;
@@ -81,6 +84,7 @@ export interface CreateProduct {
 }
 
 export interface UpdateProduct {
+  reference?: string;
   path: string;
   status?: ProductStatuses;
   names: Translations;

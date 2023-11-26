@@ -4,6 +4,7 @@ import { SchemaValidator } from "@utils/schemaValidator";
 
 export const ValidatorToCreateProduct = new SchemaValidator<CreateProduct>(
   {
+    reference: { ...ProductSchema.getPropertyValidations("reference") },
     path: { ...ProductSchema.getPropertyValidations("path") },
     status: { ...ProductSchema.getPropertyValidations("status") },
     names: { ...ProductSchema.getPropertyValidations("names") },
@@ -24,6 +25,7 @@ export const ValidatorToCreateProduct = new SchemaValidator<CreateProduct>(
 
 export const ValidatorToUpdateProduct = new SchemaValidator<UpdateProduct>(
   {
+    reference: { ...ProductSchema.getPropertyValidations("reference") },
     path: { ...ProductSchema.getPropertyValidations("path") },
     status: { ...ProductSchema.getPropertyValidations("status") },
     names: { ...ProductSchema.getPropertyValidations("names") },

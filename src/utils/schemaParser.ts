@@ -18,6 +18,7 @@ export class SchemaParser {
     if (dataToParse._id) parsedProduct._id = dataToParse._id;
     if (dataToParse.status) parsedProduct.status = dataToParse.status;
     if (dataToParse.business_id) parsedProduct.business_id = dataToParse.business_id;
+    if (dataToParse.reference) parsedProduct.reference = dataToParse.reference;
     if (dataToParse.path) parsedProduct.path = dataToParse.path;
     if (dataToParse.names)
       parsedProduct.name =

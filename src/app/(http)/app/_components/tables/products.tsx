@@ -53,7 +53,7 @@ export function ProductsTable({ business }: Props) {
           <tr key={index} className="group cursor-default border-t">
             <td className="px-2 text-left">
               <Link href="123456" className="border-dashed border-primary text-sm text-primary group-hover:border-b">
-                0123456789
+                {product.reference}
               </Link>
             </td>
             <td className="flex space-x-2 px-2 py-2">

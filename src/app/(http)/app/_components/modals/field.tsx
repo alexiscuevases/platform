@@ -12,7 +12,7 @@ export default function Field({ fieldData, data, errors, setData, resources, set
           type={fieldData.type}
           id={fieldData.id}
           onChange={e =>
-            fieldData.multi_values ?
+            fieldData.default_property ?
               setData(prevState => ({
                 ...prevState,
                 [fieldData.id]: { [fieldData.default_property]: e.target.value }
@@ -38,7 +38,7 @@ export default function Field({ fieldData, data, errors, setData, resources, set
         <textarea
           id={fieldData.id}
           onChange={e =>
-            fieldData.multi_values ?
+            fieldData.default_property ?
               setData(prevState => ({
                 ...prevState,
                 [fieldData.id]: { [fieldData.default_property]: e.target.value }
@@ -60,7 +60,7 @@ export default function Field({ fieldData, data, errors, setData, resources, set
         <select
           id={fieldData.id}
           onChange={e =>
-            fieldData.multi_values ?
+            fieldData.default_property ?
               setData(prevState => ({
                 ...prevState,
                 [fieldData.id]: { [fieldData.default_property]: e.target.value }
@@ -86,7 +86,7 @@ export default function Field({ fieldData, data, errors, setData, resources, set
           defaultChecked={fieldData.default_value}
           checked={fieldData.checked}
           onChange={e =>
-            fieldData.multi_values ?
+            fieldData.default_property ?
               setData(prevState => ({
                 ...prevState,
                 [fieldData.id]: { [fieldData.default_property]: e.target.checked }

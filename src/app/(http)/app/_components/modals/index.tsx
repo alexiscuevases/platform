@@ -40,6 +40,7 @@ interface SectionInterface {
   information?: string;
   multi_values?: string;
   multi_values_type?: "market" | "language";
+  default_property?: string;
   fields?: FieldInterface[] | FieldInterface[][];
 }
 

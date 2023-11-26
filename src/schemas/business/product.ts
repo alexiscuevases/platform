@@ -4,6 +4,7 @@ import { SchemaValidator } from "@utils/schemaValidator";
 
 export const ProductSchema = new SchemaValidator<Product>({
   business_id: { valueType: String, referenceModel: "Business", isRequired: true, isObjectId: true },
+  reference: { valueType: String, isRequired: true },
   path: { valueType: String, isRequired: true, isRegex: /^[a-zA-Z0-9\-_]+$/, maxLength: 64 },
   status: {
     valueType: String,
