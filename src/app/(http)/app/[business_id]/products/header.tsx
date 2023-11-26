@@ -6,9 +6,7 @@ import Link from "next/link";
 import Modal from "../../_components/modals";
 import { useRouter } from "next/navigation";
 import { Business } from "@typescript/models/business";
-import { ResourceController } from "@controllers/resource";
 import { ProductController } from "@controllers/business/product";
-import { DeleteResource } from "@typescript/models/resource";
 import { createBusinessURL } from "@helpers/createBusinessURL";
 import { currencyFormat } from "@helpers/currencyFormat";
 import { GeneralErrors } from "@typescript/others";
@@ -28,14 +26,13 @@ export default function Header({ business }: Props) {
   // @ts-expect-error
   const [data, setData] = useState<CreateProductInterface>({});
   const [resources, setResources] = useState<any[]>([]);
-  const [deletedResources, setDeletedResources] = useState<any[]>([]);
   const [resourcesInformation, setResourcesInformation] = useState({
     uploading: false,
     deleting: false
   });
   const [waitingResponse, setWaitingResponse] = useState<boolean>(false);
   const [errors, setErrors] = useState<GeneralErrors<CreateProduct>>({});
-  const resourceController = new ResourceController();
+
   const productController = new ProductController();
   const router = useRouter();
 
@@ -46,12 +43,6 @@ export default function Header({ business }: Props) {
 
     const response = await productController.create(business._id, data);
     if (!response.success) return setErrors(response.errors), setWaitingResponse(false);
-
-    if (deletedResources && deletedResources.length > 0) {
-      setResourcesInformation({ ...resourcesInformation, deleting: true });
-      await resourceController.deleteResources(deletedResources as DeleteResource[]);
-      setResourcesInformation({ ...resourcesInformation, deleting: false });
-    }
 
     if (resources.length > 0) {
       setResourcesInformation({ ...resourcesInformation, uploading: true });
@@ -265,7 +256,6 @@ export default function Header({ business }: Props) {
         data={data}
         setData={setData}
         resourcesInformation={resourcesInformation}
-        setDeletedResources={setDeletedResources}
         errors={errors}
         resources={resources}
         setResources={setResources}

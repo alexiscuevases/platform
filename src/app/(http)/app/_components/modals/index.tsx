@@ -30,8 +30,9 @@ interface FieldInterface {
   multi_values_type?: "market" | "language";
   default_property?: any;
   options?: OptionInterface[];
-  value?: string;
-  default_value?: string;
+  value?: string | number;
+  checked?: boolean;
+  default_value?: string | number;
 }
 
 interface SectionInterface {
@@ -104,58 +105,56 @@ export default function Modal({
                   </div>
                   {section.type === "variations" && (
                     <>
-                      {data.variations &&
-                        data.variations.Default.map((variation, variations_index) => (
-                          <div key={variations_index} className="space-y-2">
-                            <input
-                              type="text"
-                              value={data.variations?.Default[variations_index].name}
-                              onChange={e => {
-                                const updatedData = data;
-                                updatedData.variations.Default[variations_index].name = e.target.value;
-                                setData(prevState => ({ ...prevState, ...updatedData }));
-                              }}
-                              className="h-12 w-full rounded-xl border bg-transparent text-center caret-primary outline-none duration-200 hover:shadow-[0_0_0_2px_hsla(244,49%,49%,.1)] focus:shadow-[inset_0_0_0_1px_hsla(244,49%,49%,1),0_0_0_2px_hsla(244,49%,49%,0.1)]"
-                            />
-                            <div className="space-y-2">
-                              {variation.values &&
-                                variation.values.map((value, values_index) => (
-                                  <div key={values_index} className="px-4">
-                                    <input
-                                      type="text"
-                                      value={data.variations?.Default[variations_index].values[values_index].name}
-                                      onChange={e => {
-                                        const updatedData = data;
-                                        updatedData.variations.Default[variations_index].values[values_index].name =
-                                          e.target.value;
-                                        setData(prevState => ({ ...prevState, ...updatedData }));
-                                      }}
-                                      className="h-10 w-full rounded-xl border bg-transparent text-center caret-primary outline-none duration-200 hover:shadow-[0_0_0_2px_hsla(244,49%,49%,.1)] focus:shadow-[inset_0_0_0_1px_hsla(244,49%,49%,1),0_0_0_2px_hsla(244,49%,49%,0.1)]"
-                                    />
-                                  </div>
-                                ))}
-                              <div className="px-4">
-                                <button
-                                  onClick={() => {
-                                    const newData = data;
-                                    newData.variations.Default[variations_index].values.push({ name: "" });
-                                    setData(prevState => ({ ...prevState, ...newData }));
+                      {data.variations?.Default.map((variation, variations_index) => (
+                        <div key={variations_index} className="space-y-2">
+                          <input
+                            type="text"
+                            value={data.variations?.Default[variations_index].name}
+                            onChange={e => {
+                              const updatedData = data;
+                              updatedData.variations.Default[variations_index].name = e.target.value;
+                              setData(prevState => ({ ...prevState, ...updatedData }));
+                            }}
+                            className="h-12 w-full rounded-xl border bg-transparent text-center caret-primary outline-none duration-200 hover:shadow-[0_0_0_2px_hsla(244,49%,49%,.1)] focus:shadow-[inset_0_0_0_1px_hsla(244,49%,49%,1),0_0_0_2px_hsla(244,49%,49%,0.1)]"
+                          />
+                          <div className="space-y-2">
+                            {variation.values?.map((value, values_index) => (
+                              <div key={values_index} className="px-4">
+                                <input
+                                  type="text"
+                                  value={data.variations?.Default[variations_index].values[values_index].name}
+                                  onChange={e => {
+                                    const updatedData = data;
+                                    updatedData.variations.Default[variations_index].values[values_index].name =
+                                      e.target.value;
+                                    setData(prevState => ({ ...prevState, ...updatedData }));
                                   }}
-                                  className="flex h-10 w-full items-center justify-center gap-1 rounded-xl border border-dashed font-light duration-200 hover:border-primary hover:text-primary">
-                                  <IoAdd size={18} />
-                                  <span>Añadir valor a la variación</span>
-                                </button>
+                                  className="h-10 w-full rounded-xl border bg-transparent text-center caret-primary outline-none duration-200 hover:shadow-[0_0_0_2px_hsla(244,49%,49%,.1)] focus:shadow-[inset_0_0_0_1px_hsla(244,49%,49%,1),0_0_0_2px_hsla(244,49%,49%,0.1)]"
+                                />
                               </div>
+                            ))}
+                            <div className="px-4">
+                              <button
+                                onClick={() => {
+                                  const newData = data;
+                                  newData.variations.Default[variations_index].values.push({ name: "" });
+                                  setData(prevState => ({ ...prevState, ...newData }));
+                                }}
+                                className="flex h-10 w-full items-center justify-center gap-1 rounded-xl border border-dashed font-light duration-200 hover:border-primary hover:text-primary">
+                                <IoAdd size={18} />
+                                <span>Añadir valor a la variación</span>
+                              </button>
                             </div>
                           </div>
-                        ))}
+                        </div>
+                      ))}
                       <button
                         onClick={() => {
                           setData(currentData => ({
                             ...currentData,
                             variations: {
                               Default:
-                                currentData.variations && currentData.variations.Default ?
+                                currentData.variations?.Default ?
                                   [...currentData.variations.Default, { name: "", values: [] }]
                                 : [{ name: "", values: [] }]
                             }
@@ -205,7 +204,7 @@ export default function Modal({
                                 } ${field.type === "checkbox" && "flex space-x-2"}`}>
                                 <Field
                                   fieldData={field}
-                                  data={field}
+                                  data={data}
                                   setData={setData}
                                   errors={errors}
                                   resources={resources}

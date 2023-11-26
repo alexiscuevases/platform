@@ -25,9 +25,9 @@ export async function POST(request: NextRequest, { params }: { params: Params })
     const productPathExists = await ProductModel.findOne({ business_id: params._id, path: body.path });
     if (productPathExists) return apiResponseHandler({ status: 200, errors: { path: "Product path already in use" } });
 
-    const productReferenceExists = await ProductModel.findOne({ business_id: params._id, reference: body.path });
+    const productReferenceExists = await ProductModel.findOne({ business_id: params._id, reference: body.reference });
     if (productReferenceExists)
-      return apiResponseHandler({ status: 200, errors: { path: "Product reference already in use" } });
+      return apiResponseHandler({ status: 200, errors: { reference: "Product reference already in use" } });
 
     const product = await ProductModel.create({ business_id: params._id, ...body });
     return apiResponseHandler({ status: 200, result: product });

@@ -31,6 +31,12 @@ export async function PUT(request: NextRequest, { params }: { params: Params }):
         return apiResponseHandler({ status: 200, errors: { path: "Product path already in use" } });
     }
 
+    if (productExists.reference !== body.reference) {
+      const productReferenceExists = await ProductModel.findOne({ business_id: params._id, reference: body.reference });
+      if (productReferenceExists)
+        return apiResponseHandler({ status: 200, errors: { reference: "Product reference already in use" } });
+    }
+
     const productUpdated = await ProductModel.findByIdAndUpdate(productExists._id, body);
     return apiResponseHandler({ status: 200, result: productUpdated });
   } catch (e: any) {
