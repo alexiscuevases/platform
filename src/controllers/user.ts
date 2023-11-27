@@ -1,35 +1,20 @@
 import { sendMail } from "@libs/nodemailer";
 import { changeUserPassword, createUser, getUsers } from "@services/user";
 import { createVerification, getVerificationById } from "@services/verification";
-import { ChangeUserPassword, CreateUser, RecoveryUserPassword, User } from "@typescript/models/user";
-import { Verification } from "@typescript/models/verification";
+import {
+  CreateUser_ErrorResponse,
+  CreateUser_SuccessResponse,
+  RecoveryUserPassword_SuccessResponse,
+  VerifyUserPasswordRecovery_ErrorResponse
+} from "@typescript/controllers/user";
+import { ChangeUserPassword, CreateUser, RecoveryUserPassword } from "@typescript/models/user";
 import { GeneralResponse } from "@typescript/others";
 import { Validator } from "@utils/validator";
 
 const validation = new Validator();
 
-interface Create_SuccessResponseInterface {
-  verificationCode: string;
-}
-
-interface Create_ErrorResponseInterface {
-  email: string;
-  code: string;
-}
-
-interface RecoveryPassword_SuccessResponseInterface {
-  user: User;
-  verification: Verification;
-}
-
-interface VerifyPasswordRecovery_ErrorResponseInterface {
-  code: string;
-}
-
 export class UserController {
-  async verifyCreation(
-    email: string
-  ): Promise<GeneralResponse<Create_SuccessResponseInterface, Create_ErrorResponseInterface>> {
+  async verifyCreation(email: string): Promise<GeneralResponse<CreateUser_SuccessResponse, CreateUser_ErrorResponse>> {
     if (!validation.isEmail(email))
       return { success: false, errors: { email: "Correo electrónico no válido, por favor ingrese uno diferente" } };
 
@@ -63,7 +48,7 @@ export class UserController {
 
   async recoveryPassword(
     data: RecoveryUserPassword
-  ): Promise<GeneralResponse<RecoveryPassword_SuccessResponseInterface, RecoveryUserPassword>> {
+  ): Promise<GeneralResponse<RecoveryUserPassword_SuccessResponse, RecoveryUserPassword>> {
     if (!validation.isEmail(data.email)) return { success: false, errors: { email: "Correo electrónico no válido" } };
 
     const userExists = await getUsers({ email: data.email });
@@ -83,7 +68,7 @@ export class UserController {
   async verifyPasswordRecovery(
     verification_id: string,
     code: string
-  ): Promise<GeneralResponse<void, VerifyPasswordRecovery_ErrorResponseInterface>> {
+  ): Promise<GeneralResponse<void, VerifyUserPasswordRecovery_ErrorResponse>> {
     const verification = await getVerificationById(verification_id, {
       code
     });

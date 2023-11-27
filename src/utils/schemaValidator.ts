@@ -78,10 +78,21 @@ export class SchemaValidator<Properties> {
 
         if (mapOf && properties[key] !== undefined) {
           Object.keys(properties[key]).map(value => {
-            const valueErrors = mapOf.validate(properties[key][value]);
-            if (!valueErrors.success) {
-              errors[key] = errors[key] ? [...errors[key]] : [];
-              errors[key][value] = valueErrors.errors;
+            if (Array.isArray(properties[key][value])) {
+              for (const valueInValue in properties[key][value]) {
+                const valueErrors = mapOf[0].validate(properties[key][value][valueInValue]);
+                if (!valueErrors.success) {
+                  errors[key] = errors[key] ? errors[key] : [];
+                  errors[key][value] = errors[key][value] ? errors[key][value] : [];
+                  errors[key][value][valueInValue] = valueErrors.errors;
+                }
+              }
+            } else {
+              const valueErrors = mapOf.validate(properties[key][value]);
+              if (!valueErrors.success) {
+                errors[key] = errors[key] ? errors[key] : [];
+                errors[key][value] = valueErrors.errors;
+              }
             }
           });
         }

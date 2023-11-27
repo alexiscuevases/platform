@@ -39,7 +39,7 @@ export const fetchData = async <Result, Body>(
   }
 ): Promise<GeneralResponse<Result, Body>> => {
   try {
-    if (extra && extra.validator && body) {
+    if (extra?.validator && body) {
       const validation = extra.validator.validate(body);
       if (!validation.success) return { success: false, errors: validation.errors };
     }

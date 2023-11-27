@@ -17,7 +17,6 @@ import { SchemaParser } from "@utils/schemaParser";
 import { getCollectionsByBusinessId } from "@services/business/collection";
 import { getProvidersByBusinessId } from "@services/business/provider";
 import { getTagsByBusinessId } from "@services/business/tag";
-import { ParsedCollection } from "@typescript/models/business/collection";
 
 interface Props {
   business: Business;
@@ -27,7 +26,6 @@ export default function Header({ business }: Props) {
   const [isOpen, setOpen] = useState<boolean>(false);
   const [categories, setCategories] = useState<ParsedCategory[]>([]);
   const [categoryOptions, setCategoryOptions] = useState<any[]>([]);
-  const [collections, setCollections] = useState<ParsedCollection[]>([]);
   const [collectionOptions, setCollectionOptions] = useState<any[]>([]);
   const [providerOptions, setProviderOptions] = useState<any[]>([]);
   const [tagOptions, setTagOptions] = useState<any[]>([]);
@@ -88,17 +86,14 @@ export default function Header({ business }: Props) {
     const Collections = async () => {
       const response = await getCollectionsByBusinessId(business._id);
       if (response.result) {
-        const parsedCollections = [];
         const parsedCollectionOptions = [];
         response.result.forEach(collection => {
           const parsedCollection = new SchemaParser({
             language_code: "ES",
             currency_code: "COP"
           }).parseCollection(collection);
-          parsedCollections.push(collection);
           parsedCollectionOptions.push({ value: parsedCollection._id, title: parsedCollection.name });
         });
-        setCollections(parsedCollections);
         setCollectionOptions(parsedCollectionOptions);
       }
     };

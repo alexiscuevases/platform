@@ -2,24 +2,17 @@ import { getConfigs } from "@helpers/getConfigs";
 import { createAuthentication } from "@services/authentication";
 import { cookie } from "@services/cookie";
 import { createVerification, getVerificationById } from "@services/verification";
-import { Authentication, CreateAuthentication } from "@typescript/models/authentication";
-import { Verification } from "@typescript/models/verification";
+import {
+  CreateAuthentication_SuccessResponse,
+  VerifyAuthenticationCreation_ErrorResponse
+} from "@typescript/controllers/authentication";
+import { CreateAuthentication } from "@typescript/models/authentication";
 import { GeneralResponse } from "@typescript/others";
-
-interface CreateAuthentication_SuccessResponseInterface {
-  two_factor_authentication: boolean;
-  verification?: Verification;
-  authentication?: Authentication;
-}
-
-interface VerifyAuthenticationCreation_ErrorResponseInterface {
-  code: string;
-}
 
 export class AuthenticationController {
   async create(
     dataToCreate: CreateAuthentication
-  ): Promise<GeneralResponse<CreateAuthentication_SuccessResponseInterface, CreateAuthentication>> {
+  ): Promise<GeneralResponse<CreateAuthentication_SuccessResponse, CreateAuthentication>> {
     const auth = await createAuthentication(dataToCreate);
     if (!auth.success) return { success: false, errors: auth.errors };
 
@@ -49,7 +42,7 @@ export class AuthenticationController {
     verification_id: string,
     code: string,
     authentication_id: string
-  ): Promise<GeneralResponse<void, VerifyAuthenticationCreation_ErrorResponseInterface>> {
+  ): Promise<GeneralResponse<void, VerifyAuthenticationCreation_ErrorResponse>> {
     const verification = await getVerificationById(verification_id, {
       code
     });

@@ -33,7 +33,10 @@ export const SchemaMongo = <ModelSchema>(validations: TS.MongoValidatorSchema<Mo
     }
 
     if (validations[validation].type === Map)
-      validations[validation].of = new Schema(validations[validation].of.toMongoSchemaValidations());
+      if (validations[validation].of instanceof SchemaValidator)
+        validations[validation].of = new Schema(validations[validation].of.toMongoSchemaValidations());
+      else if (validations[validation].of[0] instanceof SchemaValidator)
+        validations[validation].of = [new Schema(validations[validation].of[0].toMongoSchemaValidations())];
   });
 
   return new Schema<TS.MongoValidatorSchema<ModelSchema>>(validations, {

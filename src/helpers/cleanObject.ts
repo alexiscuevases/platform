@@ -1,4 +1,4 @@
-export const cleanObject = (object: any): typeof object => {
+export const cleanObject = (object: object): typeof object => {
   const cleanedObject = {};
   for (const key in object) {
     if (object[key] !== null && object[key].length !== 0) {

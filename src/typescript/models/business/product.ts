@@ -8,11 +8,13 @@ import { MongooseSchemaDefaultProperties } from "@typescript/libs/mongoose";
 
 type ProductStatuses = "Active" | "Inactive" | "Archived";
 
-interface Variation {
+export interface VariationValue {
   name: string;
-  values?: {
-    name: string;
-  }[];
+}
+
+export interface Variation {
+  name: string;
+  values?: VariationValue[];
 }
 
 export interface Variations {
