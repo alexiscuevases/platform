@@ -46,7 +46,9 @@ export default function Header({ business, product }: Props) {
     setWaitingResponse(true);
     setErrors({});
 
-    const response = await productController.update(business._id, product._id, data);
+    let response;
+    if (action === "edit") response = await productController.update(business._id, product._id, data);
+    else response = await productController.create(business._id, data);
     if (!response.success) return setErrors(response.errors), setWaitingResponse(false);
 
     if (deletedResources && deletedResources.length > 0) {

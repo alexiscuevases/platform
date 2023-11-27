@@ -7,7 +7,7 @@ import { ValidatorToUpdateProduct } from "@validators/business/product";
 import { NextRequest, NextResponse } from "next/server";
 
 interface Params {
-  _id: any;
+  _id: string;
   product_id: string;
 }
 
@@ -40,7 +40,6 @@ export async function PUT(request: NextRequest, { params }: { params: Params }):
     const productUpdated = await ProductModel.findByIdAndUpdate(productExists._id, body);
     return apiResponseHandler({ status: 200, result: productUpdated });
   } catch (e: any) {
-    console.log(e);
     return apiResponseHandler({ status: 500, errors: { GENERAL_ERROR: e.message } });
   }
 }
