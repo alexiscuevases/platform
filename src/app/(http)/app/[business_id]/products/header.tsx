@@ -14,6 +14,10 @@ import { CreateProduct } from "@typescript/models/business/product";
 import { ParsedCategory } from "@typescript/models/business/category";
 import { getCategoriesByBusinessId } from "@services/business/category";
 import { SchemaParser } from "@utils/schemaParser";
+import { getCollectionsByBusinessId } from "@services/business/collection";
+import { getProvidersByBusinessId } from "@services/business/provider";
+import { getTagsByBusinessId } from "@services/business/tag";
+import { ParsedCollection } from "@typescript/models/business/collection";
 
 interface Props {
   business: Business;
@@ -23,6 +27,10 @@ export default function Header({ business }: Props) {
   const [isOpen, setOpen] = useState<boolean>(false);
   const [categories, setCategories] = useState<ParsedCategory[]>([]);
   const [categoryOptions, setCategoryOptions] = useState<any[]>([]);
+  const [collections, setCollections] = useState<ParsedCollection[]>([]);
+  const [collectionOptions, setCollectionOptions] = useState<any[]>([]);
+  const [providerOptions, setProviderOptions] = useState<any[]>([]);
+  const [tagOptions, setTagOptions] = useState<any[]>([]);
   // @ts-expect-error
   const [data, setData] = useState<CreateProductInterface>({});
   const [resources, setResources] = useState<any[]>([]);
@@ -77,7 +85,46 @@ export default function Header({ business }: Props) {
       }
     };
 
+    const Collections = async () => {
+      const response = await getCollectionsByBusinessId(business._id);
+      if (response.result) {
+        const parsedCollections = [];
+        const parsedCollectionOptions = [];
+        response.result.forEach(collection => {
+          const parsedCollection = new SchemaParser({
+            language_code: "ES",
+            currency_code: "COP"
+          }).parseCollection(collection);
+          parsedCollections.push(collection);
+          parsedCollectionOptions.push({ value: parsedCollection._id, title: parsedCollection.name });
+        });
+        setCollections(parsedCollections);
+        setCollectionOptions(parsedCollectionOptions);
+      }
+    };
+
+    const Providers = async () => {
+      const response = await getProvidersByBusinessId(business._id);
+      if (response.result) {
+        const providerOptions = [];
+        response.result.forEach(provider => providerOptions.push({ value: provider._id, title: provider.name }));
+        setProviderOptions(providerOptions);
+      }
+    };
+
+    const Tags = async () => {
+      const response = await getTagsByBusinessId(business._id);
+      if (response.result) {
+        const tagOptions = [];
+        response.result.forEach(tag => tagOptions.push({ value: tag._id, title: tag.name }));
+        setTagOptions(tagOptions);
+      }
+    };
+
+    Collections();
     Categories();
+    Providers();
+    Tags();
   }, [business]);
 
   return (
@@ -210,17 +257,23 @@ export default function Header({ business }: Props) {
               {
                 id: "providers",
                 title: "Proveedores",
-                type: "text"
+                options: providerOptions,
+                multiple: true,
+                type: "select"
               },
               {
-                id: "colelctions",
+                id: "collections",
                 title: "Colecciones",
-                type: "text"
+                options: collectionOptions,
+                multiple: true,
+                type: "select"
               },
               {
                 id: "tags",
                 title: "Etiquetas",
-                type: "text"
+                options: tagOptions,
+                multiple: true,
+                type: "select"
               }
             ]
           },

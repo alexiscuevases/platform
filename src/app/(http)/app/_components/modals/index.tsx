@@ -32,6 +32,7 @@ interface FieldInterface {
   options?: OptionInterface[];
   value?: string | number;
   checked?: boolean;
+  multiple?: boolean;
   default_value?: string | number;
 }
 

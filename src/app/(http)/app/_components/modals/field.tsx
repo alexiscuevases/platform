@@ -70,6 +70,7 @@ export default function Field({ fieldData, data, errors, setData, resources, set
           defaultValue={fieldData.default_value}
           value={fieldData.value}
           disabled={fieldData.disabled}
+          multiple={fieldData.multiple ? true : false}
           className="peer h-[58px] w-full cursor-pointer rounded-2xl border px-3 pb-2 pt-6 outline-none transition-all hover:shadow-[0_0_0_4px_hsla(244,_49%,_49%,_.1)] focus:shadow-[inset_0_0_0_2px_hsla(244,49%,49%,1),0_0_0_4px_hsla(244,49%,49%,0.1)]">
           <option value="">- Selecciona una opción -</option>
           {fieldData.options?.map((option, index) => (
