@@ -7,6 +7,7 @@ type CollectionStatuses = "Active" | "Inactive" | "Archived";
 export interface Collection extends MongooseSchemaDefaultProperties {
   business_id?: string;
   path?: string;
+  products_count?: number;
   status?: CollectionStatuses;
   names?: Translations;
   descriptions?: Translations;
@@ -16,6 +17,7 @@ export interface Collection extends MongooseSchemaDefaultProperties {
 export interface ParsedCollection extends MongooseSchemaDefaultProperties {
   business_id?: any;
   path?: string;
+  products_count?: number;
   status?: CollectionStatuses;
   name?: string;
   description?: string;
@@ -24,6 +26,7 @@ export interface ParsedCollection extends MongooseSchemaDefaultProperties {
 
 export interface CreateCollection {
   path: string;
+  products_count?: number;
   status?: CollectionStatuses;
   names: Translations;
   descriptions?: Translations;
@@ -32,6 +35,7 @@ export interface CreateCollection {
 
 export interface UpdateCollection {
   path?: string;
+  products_count?: number;
   status?: CollectionStatuses;
   names?: Translations;
   descriptions?: Translations;

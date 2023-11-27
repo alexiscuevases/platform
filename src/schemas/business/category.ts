@@ -17,6 +17,7 @@ export const CategorySchema = new SchemaValidator<Category>({
     isObjectId: true,
     defaultValue: null
   },
+  products_count: { valueType: Number, isRequired: false, defaultValue: 0 },
   names: { valueType: Object, isRequired: true },
   descriptions: { valueType: Object, isRequired: false, defaultValue: null },
   taxes: { valueType: Map, mapOf: TaxSchema, isRequired: false, defaultValue: () => {} }

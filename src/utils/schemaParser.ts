@@ -53,6 +53,8 @@ export class SchemaParser {
     if (dataToParse._id) parsedCategory._id = dataToParse._id;
     if (dataToParse.business_id) parsedCategory.business_id = dataToParse.business_id;
     if (dataToParse.category_id) parsedCategory.category_id = dataToParse.category_id;
+    if (dataToParse.products_count || dataToParse.products_count === 0)
+      parsedCategory.products_count = dataToParse.products_count;
     if (dataToParse.names)
       parsedCategory.name =
         dataToParse.names[this.schemaData.language_code] ?
@@ -75,27 +77,29 @@ export class SchemaParser {
 
   parseCollection(dataToParse: Collection): ParsedCollection {
     const resourceController = new ResourceController();
-    const parsedColelction: ParsedCollection = {};
+    const parsedCollection: ParsedCollection = {};
 
-    if (dataToParse._id) parsedColelction._id = dataToParse._id;
-    if (dataToParse.status) parsedColelction.status = dataToParse.status;
-    if (dataToParse.business_id) parsedColelction.business_id = dataToParse.business_id;
-    if (dataToParse.path) parsedColelction.path = dataToParse.path;
+    if (dataToParse._id) parsedCollection._id = dataToParse._id;
+    if (dataToParse.status) parsedCollection.status = dataToParse.status;
+    if (dataToParse.business_id) parsedCollection.business_id = dataToParse.business_id;
+    if (dataToParse.products_count || dataToParse.products_count === 0)
+      parsedCollection.products_count = dataToParse.products_count;
+    if (dataToParse.path) parsedCollection.path = dataToParse.path;
     if (dataToParse.names)
-      parsedColelction.name =
+      parsedCollection.name =
         dataToParse.names[this.schemaData.language_code] ?
           dataToParse.names[this.schemaData.language_code]
         : dataToParse.names["Default"];
     if (dataToParse.descriptions)
-      parsedColelction.description =
+      parsedCollection.description =
         dataToParse.descriptions[this.schemaData.language_code] ?
           dataToParse.descriptions[this.schemaData.language_code]
         : dataToParse.descriptions["Default"];
     if (dataToParse.resource)
-      parsedColelction.resource = resourceController.getResourceUrlByPublicId(dataToParse.resource.path);
-    if (dataToParse.creation_date) parsedColelction.creation_date = dataToParse.creation_date;
-    if (dataToParse.update_date) parsedColelction.update_date = dataToParse.update_date;
+      parsedCollection.resource = resourceController.getResourceUrlByPublicId(dataToParse.resource.path);
+    if (dataToParse.creation_date) parsedCollection.creation_date = dataToParse.creation_date;
+    if (dataToParse.update_date) parsedCollection.update_date = dataToParse.update_date;
 
-    return parsedColelction;
+    return parsedCollection;
   }
 }

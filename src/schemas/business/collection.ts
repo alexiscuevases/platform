@@ -4,6 +4,7 @@ import { SchemaValidator } from "@utils/schemaValidator";
 
 export const CollectionSchema = new SchemaValidator<Collection>({
   business_id: { valueType: String, referenceModel: "Business", isRequired: true, isObjectId: true },
+  products_count: { valueType: Number, isRequired: false, defaultValue: 0 },
   path: { valueType: String, isRequired: true, isRegex: /^[a-zA-Z0-9\-_]+$/, maxLength: 64 },
   status: {
     valueType: String,

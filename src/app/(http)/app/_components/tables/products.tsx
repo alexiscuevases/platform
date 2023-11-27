@@ -1,6 +1,6 @@
 "use client";
 
-import { IoEye, IoOpenOutline } from "react-icons/io5";
+import { IoEye, IoOpenOutline, IoTrash } from "react-icons/io5";
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -111,6 +111,9 @@ export function ProductsTable({ business }: Props) {
                   className="text-slate-600 duration-200 hover:scale-110 hover:text-slate-700">
                   <IoOpenOutline size={18} />
                 </Link>
+                <button className="text-slate-600 duration-200 hover:scale-110 hover:text-danger">
+                  <IoTrash size={18} />
+                </button>
               </div>
             </td>
           </tr>
