@@ -75,7 +75,7 @@ export default function Header({ business }: Props) {
             language_code: "ES",
             currency_code: "COP"
           }).parseCategory(category);
-          parsedCategories.push(category);
+          parsedCategories.push(parsedCategory);
           parsedCategoryOptions.push({ value: parsedCategory._id, title: parsedCategory.name });
         });
         setCategories(parsedCategories);
@@ -248,10 +248,7 @@ export default function Header({ business }: Props) {
                 type: "select",
                 options: categoryOptions,
                 warning:
-                  (
-                    categories.filter(category => category._id === data.category)?.[0]?.taxes &&
-                    Object.keys(categories.filter(category => category._id === data.category)?.[0]?.taxes).length > 0
-                  ) ?
+                  categories.filter(category => category._id === data.category)?.[0]?.taxes?.length > 0 ?
                     undefined
                   : "No has definido ningún impuesto para esta categoría"
               },
