@@ -1,5 +1,5 @@
 import { CollectionSchema } from "@schemas/business/collection";
-import { CreateCollection, UpdateCollection } from "@typescript/models/business/collection";
+import { CreateCollection, UpdateCollection, UploadCollectionResources } from "@typescript/models/business/collection";
 import { SchemaValidator } from "@utils/schemaValidator";
 
 export const ValidatorToCreateCollection = new SchemaValidator<CreateCollection>(
@@ -8,7 +8,7 @@ export const ValidatorToCreateCollection = new SchemaValidator<CreateCollection>
     status: { ...CollectionSchema.getPropertyValidations("status") },
     names: { ...CollectionSchema.getPropertyValidations("names") },
     descriptions: { ...CollectionSchema.getPropertyValidations("descriptions") },
-    resource: { ...CollectionSchema.getPropertyValidations("resource") }
+    resources: { ...CollectionSchema.getPropertyValidations("resources") }
   },
   CollectionSchema.getSchemaErrorsValidations<CreateCollection>()
 );
@@ -19,7 +19,14 @@ export const ValidatorToUpdateCollection = new SchemaValidator<UpdateCollection>
     status: { ...CollectionSchema.getPropertyValidations("status") },
     names: { ...CollectionSchema.getPropertyValidations("names") },
     descriptions: { ...CollectionSchema.getPropertyValidations("descriptions") },
-    resource: { ...CollectionSchema.getPropertyValidations("resource") }
+    resources: { ...CollectionSchema.getPropertyValidations("resources") }
   },
   CollectionSchema.getSchemaErrorsValidations<UpdateCollection>()
+);
+
+export const ValidatorToUploadCollectionResources = new SchemaValidator<UploadCollectionResources>(
+  {
+    resources: { ...CollectionSchema.getPropertyValidations("resources"), isRequired: true }
+  },
+  CollectionSchema.getSchemaErrorsValidations<UploadCollectionResources>()
 );

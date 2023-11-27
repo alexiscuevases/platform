@@ -37,6 +37,15 @@ export default function Header({ business }: Props) {
     const response = await collectionController.create(business._id, data);
     if (!response.success) return setErrors(response.errors), setWaitingResponse(false);
 
+    if (resources.length > 0) {
+      setResourcesInformation({ ...resourcesInformation, uploading: true });
+      await collectionController.uploadResources(business._id, response.result._id, [
+        ...(data.resources ? data.resources : []),
+        ...resources
+      ]);
+      setResourcesInformation({ ...resourcesInformation, uploading: false });
+    }
+
     setWaitingResponse(false);
     setOpen(false);
     router.refresh();

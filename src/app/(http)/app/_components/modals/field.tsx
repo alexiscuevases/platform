@@ -59,14 +59,14 @@ export default function Field({ fieldData, data, errors, setData, resources, set
       {fieldData.type === "select" && (
         <select
           id={fieldData.id}
-          onChange={e =>
+          onChange={e => {
             fieldData.default_property ?
               setData(prevState => ({
                 ...prevState,
                 [fieldData.id]: { [fieldData.default_property]: e.target.value }
               }))
-            : setData(prevState => ({ ...prevState, [fieldData.id]: e.target.value }))
-          }
+            : setData(prevState => ({ ...prevState, [fieldData.id]: e.target.value }));
+          }}
           defaultValue={fieldData.default_value}
           value={fieldData.value}
           disabled={fieldData.disabled}

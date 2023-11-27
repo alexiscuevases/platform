@@ -2,9 +2,18 @@
 
 import { fetchData } from "@helpers/fetchData";
 import { getConfigs } from "@helpers/getConfigs";
-import { Collection, CreateCollection, UpdateCollection } from "@typescript/models/business/collection";
+import {
+  Collection,
+  CreateCollection,
+  UpdateCollection,
+  UploadCollectionResources
+} from "@typescript/models/business/collection";
 import { GeneralResponse } from "@typescript/others";
-import { ValidatorToCreateCollection, ValidatorToUpdateCollection } from "@validators/business/collection";
+import {
+  ValidatorToCreateCollection,
+  ValidatorToUpdateCollection,
+  ValidatorToUploadCollectionResources
+} from "@validators/business/collection";
 
 const API_ENDPOINT = getConfigs("application").URLs.api;
 
@@ -32,6 +41,16 @@ export const deleteCollectionByBusinessId = async (
   collection_id: string
 ): Promise<GeneralResponse<void, void>> =>
   fetchData(`${API_ENDPOINT}/business/${business_id}/collection/${collection_id}`, "DELETE", null, {
+    revalidateTags: [`business-${business_id}.collections`]
+  });
+
+export const uploadCollectionResourcesByBusinessId = async (
+  business_id: string,
+  collection_id: string,
+  dataToUpdate: UploadCollectionResources
+): Promise<GeneralResponse<Collection, UploadCollectionResources>> =>
+  fetchData(`${API_ENDPOINT}/business/${business_id}/collection/${collection_id}/resources`, "PUT", dataToUpdate, {
+    validator: ValidatorToUploadCollectionResources,
     revalidateTags: [`business-${business_id}.collections`]
   });
 

@@ -11,7 +11,11 @@ export interface Collection extends MongooseSchemaDefaultProperties {
   status?: CollectionStatuses;
   names?: Translations;
   descriptions?: Translations;
-  resource?: Resource;
+  resources?: Resource[];
+}
+
+export interface UploadCollectionResources {
+  resources: Resource[];
 }
 
 export interface ParsedCollection extends MongooseSchemaDefaultProperties {
@@ -21,7 +25,7 @@ export interface ParsedCollection extends MongooseSchemaDefaultProperties {
   status?: CollectionStatuses;
   name?: string;
   description?: string;
-  resource?: string;
+  resources?: string[];
 }
 
 export interface CreateCollection {
@@ -30,7 +34,7 @@ export interface CreateCollection {
   status?: CollectionStatuses;
   names: Translations;
   descriptions?: Translations;
-  resource?: Resource;
+  resources?: Resource[];
 }
 
 export interface UpdateCollection {
@@ -39,5 +43,5 @@ export interface UpdateCollection {
   status?: CollectionStatuses;
   names?: Translations;
   descriptions?: Translations;
-  resource?: Resource;
+  resources?: Resource[];
 }

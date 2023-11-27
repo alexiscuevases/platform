@@ -96,8 +96,12 @@ export class SchemaParser {
         dataToParse.descriptions[this.schemaData.language_code] ?
           dataToParse.descriptions[this.schemaData.language_code]
         : dataToParse.descriptions["Default"];
-    if (dataToParse.resource)
-      parsedCollection.resource = resourceController.getResourceUrlByPublicId(dataToParse.resource.path);
+    if (dataToParse.resources) {
+      parsedCollection.resources = [];
+      dataToParse.resources.forEach(resource =>
+        parsedCollection.resources.push(resourceController.getResourceUrlByPublicId(resource.path))
+      );
+    }
     if (dataToParse.creation_date) parsedCollection.creation_date = dataToParse.creation_date;
     if (dataToParse.update_date) parsedCollection.update_date = dataToParse.update_date;
 

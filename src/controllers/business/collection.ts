@@ -1,10 +1,20 @@
+import { ResourceController } from "@controllers/resource";
 import {
   createCollectionByBusinessId,
   deleteCollectionByBusinessId,
-  updateCollectionByBusinessId
+  updateCollectionByBusinessId,
+  uploadCollectionResourcesByBusinessId
 } from "@services/business/collection";
-import { Collection, CreateCollection, UpdateCollection } from "@typescript/models/business/collection";
+import {
+  Collection,
+  CreateCollection,
+  UpdateCollection,
+  UploadCollectionResources
+} from "@typescript/models/business/collection";
+import { Resource } from "@typescript/models/resource";
 import { GeneralResponse } from "@typescript/others";
+
+const resourceController = new ResourceController();
 
 export class CollectionController {
   async create(
@@ -43,6 +53,29 @@ export class CollectionController {
   async delete(business_id: string, collection_id: string): Promise<GeneralResponse<void, void>> {
     const collection = await deleteCollectionByBusinessId(business_id, collection_id);
     if (!collection.success) return { success: false, errors: collection.errors };
+
+    return { success: true };
+  }
+
+  async uploadResources(
+    business_id: string,
+    product_id: string,
+    resources: (File | Resource)[]
+  ): Promise<GeneralResponse<Collection, UploadCollectionResources>> {
+    // @ts-expect-error
+    const alreadyResources = resources.filter(resource => !resource.name) as Resource[];
+    // @ts-expect-error
+    const resourcesToUpload = resources.filter(resource => resource.name) as File[];
+    const uploadedResources = await resourceController.uploadResources(resourcesToUpload);
+    if (!uploadedResources.success) return { success: false, errors: uploadedResources.errors };
+
+    const product = await uploadCollectionResourcesByBusinessId(business_id, product_id, {
+      resources: [...alreadyResources, ...uploadedResources.result]
+    });
+    if (!product.success) {
+      //-- WARNING: Delete resources uploaded.
+      return { success: false, errors: product.errors };
+    }
 
     return { success: true };
   }

@@ -19,7 +19,6 @@ import { copyObjectAndExcludeKeys } from "@helpers/copyAndExcludeObjectKeys";
 import { getTagsByBusinessId } from "@services/business/tag";
 import { getProvidersByBusinessId } from "@services/business/provider";
 import { getCollectionsByBusinessId } from "@services/business/collection";
-import { ParsedCollection } from "@typescript/models/business/collection";
 
 interface Props {
   business: Business;
@@ -31,7 +30,6 @@ export default function Header({ business, product }: Props) {
   const [action, setAction] = useState<"edit" | "duplicate">(null);
   const [categories, setCategories] = useState<ParsedCategory[]>([]);
   const [categoryOptions, setCategoryOptions] = useState<any[]>([]);
-  const [collections, setCollections] = useState<ParsedCollection[]>([]);
   const [collectionOptions, setCollectionOptions] = useState<any[]>([]);
   const [providerOptions, setProviderOptions] = useState<any[]>([]);
   const [tagOptions, setTagOptions] = useState<any[]>([]);
@@ -90,7 +88,7 @@ export default function Header({ business, product }: Props) {
             language_code: "ES",
             currency_code: "COP"
           }).parseCategory(category);
-          parsedCategories.push(category);
+          parsedCategories.push(parsedCategory);
           parsedCategoryOptions.push({ value: parsedCategory._id, title: parsedCategory.name });
         });
         setCategories(parsedCategories);
@@ -101,17 +99,14 @@ export default function Header({ business, product }: Props) {
     const Collections = async () => {
       const response = await getCollectionsByBusinessId(business._id);
       if (response.result) {
-        const parsedCollections = [];
         const parsedCollectionOptions = [];
         response.result.forEach(collection => {
           const parsedCollection = new SchemaParser({
             language_code: "ES",
             currency_code: "COP"
           }).parseCollection(collection);
-          parsedCollections.push(collection);
           parsedCollectionOptions.push({ value: parsedCollection._id, title: parsedCollection.name });
         });
-        setCollections(parsedCollections);
         setCollectionOptions(parsedCollectionOptions);
       }
     };
@@ -292,7 +287,10 @@ export default function Header({ business, product }: Props) {
                 title: "Categoría",
                 type: "select",
                 options: categoryOptions,
-                warning: "No has definido ningún impuesto para esta categoría"
+                warning:
+                  categories.filter(category => category._id === data.category)?.[0]?.taxes?.length > 0 ?
+                    undefined
+                  : "No has definido ningún impuesto para esta categoría"
               },
               {
                 id: "providers",

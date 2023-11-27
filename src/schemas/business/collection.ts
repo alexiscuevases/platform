@@ -14,5 +14,5 @@ export const CollectionSchema = new SchemaValidator<Collection>({
   },
   names: { valueType: Object, isRequired: true },
   descriptions: { valueType: Object, isRequired: false, defaultValue: null },
-  resource: { valueType: ResourceSchema, isRequired: false, defaultValue: null }
+  resources: { valueType: [ResourceSchema], isRequired: false, defaultValue: [] }
 });
