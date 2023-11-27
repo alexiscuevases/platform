@@ -247,7 +247,13 @@ export default function Header({ business }: Props) {
                 title: "Categoría",
                 type: "select",
                 options: categoryOptions,
-                warning: "No has definido ningún impuesto para esta categoría"
+                warning:
+                  (
+                    categories.filter(category => category._id === data.category)?.[0]?.taxes &&
+                    Object.keys(categories.filter(category => category._id === data.category)?.[0]?.taxes).length > 0
+                  ) ?
+                    undefined
+                  : "No has definido ningún impuesto para esta categoría"
               },
               {
                 id: "providers",

@@ -66,9 +66,10 @@ export class SchemaParser {
           dataToParse.descriptions[this.schemaData.language_code]
         : dataToParse.descriptions["Default"];
     if (dataToParse.taxes)
-      dataToParse.taxes[this.schemaData.language_code] ?
-        dataToParse.taxes[this.schemaData.language_code]
-      : dataToParse.taxes["Default"];
+      parsedCategory.taxes =
+        dataToParse.taxes[this.schemaData.language_code] ?
+          dataToParse.taxes[this.schemaData.language_code]
+        : dataToParse.taxes["Default"];
     if (dataToParse.creation_date) parsedCategory.creation_date = dataToParse.creation_date;
     if (dataToParse.update_date) parsedCategory.update_date = dataToParse.update_date;
 
