@@ -1,5 +1,4 @@
 import { MongooseSchemaDefaultProperties } from "@typescript/libs/mongoose";
-import { Translations } from "@typescript/others";
 import { Resource } from "@typescript/models/resource";
 
 type CollectionStatuses = "Active" | "Inactive" | "Archived";
@@ -9,8 +8,8 @@ export interface Collection extends MongooseSchemaDefaultProperties {
   path?: string;
   products_count?: number;
   status?: CollectionStatuses;
-  names?: Translations;
-  descriptions?: Translations;
+  names?: Record<string, string>[];
+  descriptions?: Record<string, string>[];
   resources?: Resource[];
 }
 
@@ -32,8 +31,8 @@ export interface CreateCollection {
   path: string;
   products_count?: number;
   status?: CollectionStatuses;
-  names: Translations;
-  descriptions?: Translations;
+  names: Record<string, string>[];
+  descriptions?: Record<string, string>[];
   resources?: Resource[];
 }
 
@@ -41,7 +40,7 @@ export interface UpdateCollection {
   path?: string;
   products_count?: number;
   status?: CollectionStatuses;
-  names?: Translations;
-  descriptions?: Translations;
+  names?: Record<string, string>[];
+  descriptions?: Record<string, string>[];
   resources?: Resource[];
 }

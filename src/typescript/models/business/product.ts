@@ -1,4 +1,3 @@
-import { Translations } from "@typescript/others";
 import { Resource } from "../resource";
 import { Collection } from "./collection";
 import { Tag } from "./tag";
@@ -34,8 +33,8 @@ export interface Product extends MongooseSchemaDefaultProperties {
   reference?: string;
   path?: string;
   status?: ProductStatuses;
-  names?: Translations;
-  descriptions?: Translations;
+  names?: Record<string, string>[];
+  descriptions?: Record<string, string>[];
   resources?: Resource[];
   prices?: PricesInterface;
   comparation_prices?: PricesInterface;
@@ -71,8 +70,8 @@ export interface CreateProduct {
   reference?: string;
   path: string;
   status?: ProductStatuses;
-  names: Translations;
-  descriptions: Translations;
+  names: Record<string, string>[];
+  descriptions: Record<string, string>[];
   resources: Resource[];
   prices: PricesInterface;
   comparation_prices?: PricesInterface;
@@ -89,8 +88,8 @@ export interface UpdateProduct {
   reference?: string;
   path: string;
   status?: ProductStatuses;
-  names: Translations;
-  descriptions: Translations;
+  names: Record<string, string>[];
+  descriptions: Record<string, string>[];
   resources?: Resource[];
   prices: PricesInterface;
   comparation_prices?: PricesInterface;

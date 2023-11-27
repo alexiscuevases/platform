@@ -8,10 +8,6 @@ export interface Taxes {
   [key: string]: Tax[];
 }
 
-export interface Translations {
-  [key: string]: string;
-}
-
 export type GeneralErrors<Errors> = {
   [key in keyof Errors | "GENERAL_ERROR"]?: any;
 };
