@@ -27,6 +27,14 @@ export const updateProviderByBusinessId = async (
     revalidateTags: [`business-${business_id}.providers`]
   });
 
+export const deleteProviderByBusinessId = async (
+  business_id: string,
+  provider_id: string
+): Promise<GeneralResponse<void, void>> =>
+  fetchData(`${API_ENDPOINT}/business/${business_id}/provider/${provider_id}`, "DELETE", null, {
+    revalidateTags: [`business-${business_id}.providers`]
+  });
+
 export const getProvidersByBusinessId = async (
   business_id: string,
   dataToFind?: Provider

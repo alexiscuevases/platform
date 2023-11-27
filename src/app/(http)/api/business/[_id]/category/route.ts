@@ -41,3 +41,14 @@ export async function GET(request: NextRequest, { params }: { params: Params }):
     return apiResponseHandler({ status: 500, errors: { GENERAL_ERROR: e.message } });
   }
 }
+
+export async function DELETE(request: NextRequest, { params }: { params: Params }): Promise<NextResponse> {
+  try {
+    await ConnectMongo();
+    await CategoryModel.findByIdAndRemove(params._id);
+
+    return apiResponseHandler({ status: 200 });
+  } catch (e: any) {
+    return apiResponseHandler({ status: 500, errors: { GENERAL_ERROR: e.message } });
+  }
+}

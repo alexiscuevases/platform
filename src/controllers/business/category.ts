@@ -1,4 +1,8 @@
-import { createCategoryByBusinessId, updateCategoryByBusinessId } from "@services/business/category";
+import {
+  createCategoryByBusinessId,
+  deleteCategoryByBusinessId,
+  updateCategoryByBusinessId
+} from "@services/business/category";
 import { Category, CreateCategory, UpdateCategory } from "@typescript/models/business/category";
 import { GeneralResponse } from "@typescript/others";
 
@@ -19,5 +23,12 @@ export class CategoryController {
     if (!category.success) return { success: false, errors: category.errors };
 
     return { success: true, result: category.result };
+  }
+
+  async delete(business_id: string, category_id: string): Promise<GeneralResponse<void, void>> {
+    const category = await deleteCategoryByBusinessId(business_id, category_id);
+    if (!category.success) return { success: false, errors: category.errors };
+
+    return { success: true };
   }
 }

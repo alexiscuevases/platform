@@ -1,4 +1,8 @@
-import { createCollectionByBusinessId, updateCollectionByBusinessId } from "@services/business/collection";
+import {
+  createCollectionByBusinessId,
+  deleteCollectionByBusinessId,
+  updateCollectionByBusinessId
+} from "@services/business/collection";
 import { Collection, CreateCollection, UpdateCollection } from "@typescript/models/business/collection";
 import { GeneralResponse } from "@typescript/others";
 
@@ -34,5 +38,12 @@ export class CollectionController {
     if (!collection.success) return { success: false, errors: collection.errors };
 
     return { success: true, result: collection.result };
+  }
+
+  async delete(business_id: string, collection_id: string): Promise<GeneralResponse<void, void>> {
+    const collection = await deleteCollectionByBusinessId(business_id, collection_id);
+    if (!collection.success) return { success: false, errors: collection.errors };
+
+    return { success: true };
   }
 }

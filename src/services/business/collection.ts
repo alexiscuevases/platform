@@ -27,6 +27,14 @@ export const updateCollectionByBusinessId = async (
     revalidateTags: [`business-${business_id}.collections`]
   });
 
+export const deleteCollectionByBusinessId = async (
+  business_id: string,
+  collection_id: string
+): Promise<GeneralResponse<void, void>> =>
+  fetchData(`${API_ENDPOINT}/business/${business_id}/collection/${collection_id}`, "DELETE", null, {
+    revalidateTags: [`business-${business_id}.collections`]
+  });
+
 export const getCollectionsByBusinessId = async (
   business_id: string,
   dataToFind?: Collection

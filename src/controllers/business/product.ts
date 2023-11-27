@@ -2,6 +2,7 @@ import { GeneralResponse } from "@typescript/others";
 import { ResourceController } from "../resource";
 import {
   createProductByBusinessId,
+  deleteProductByBusinessId,
   updateProductByBusinessId,
   uploadProductResourcesByBusinessId
 } from "@services/business/product";
@@ -39,6 +40,13 @@ export class ProductController {
     if (!product.success) return { success: false, errors: product.errors };
 
     return { success: true, result: product.result };
+  }
+
+  async delete(business_id: string, product_id: string): Promise<GeneralResponse<void, void>> {
+    const product = await deleteProductByBusinessId(business_id, product_id);
+    if (!product.success) return { success: false, errors: product.errors };
+
+    return { success: true };
   }
 
   async uploadResources(

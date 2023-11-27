@@ -31,6 +31,14 @@ export const updateProductByBusinessId = async (
     revalidateTags: [`business-${business_id}.products`]
   });
 
+export const deleteProductByBusinessId = async (
+  business_id: string,
+  product_id: string
+): Promise<GeneralResponse<void, void>> =>
+  fetchData(`${API_ENDPOINT}/business/${business_id}/product/${product_id}`, "DELETE", null, {
+    revalidateTags: [`business-${business_id}.products`]
+  });
+
 export const uploadProductResourcesByBusinessId = async (
   business_id: string,
   product_id: string,

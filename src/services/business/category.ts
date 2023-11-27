@@ -27,6 +27,15 @@ export const updateCategoryByBusinessId = async (
     revalidateTags: [`business-${business_id}.categories`]
   });
 
+export const deleteCategoryByBusinessId = async (
+  business_id: string,
+  category_id: string
+): Promise<GeneralResponse<void, void>> =>
+  fetchData(`${API_ENDPOINT}/business/${business_id}/category/${category_id}`, "DELETE", null, {
+    validator: ValidatorToUpdateCategory,
+    revalidateTags: [`business-${business_id}.categories`]
+  });
+
 export const getCategoriesByBusinessId = async (
   business_id: string,
   dataToFind?: Category

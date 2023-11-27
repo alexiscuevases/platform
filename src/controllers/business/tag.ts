@@ -1,4 +1,4 @@
-import { createTagByBusinessId, updateTagByBusinessId } from "@services/business/tag";
+import { createTagByBusinessId, deleteTagByBusinessId, updateTagByBusinessId } from "@services/business/tag";
 import { CreateTag, Tag, UpdateTag } from "@typescript/models/business/tag";
 import { GeneralResponse } from "@typescript/others";
 
@@ -15,5 +15,12 @@ export class TagController {
     if (!tag.success) return { success: false, errors: tag.errors };
 
     return { success: true, result: tag.result };
+  }
+
+  async delete(business_id: string, tag_id: string): Promise<GeneralResponse<void, void>> {
+    const tag = await deleteTagByBusinessId(business_id, tag_id);
+    if (!tag.success) return { success: false, errors: tag.errors };
+
+    return { success: true };
   }
 }
