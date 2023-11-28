@@ -1,29 +1,81 @@
 "use client";
 
 import { createBusiness } from "@services/business";
+import {
+  CreateTokenizedCard,
+  createWompiSignature,
+  createWompiTransaction,
+  getWompiMerchant
+} from "@services/services/wompi";
 import { CreateBusiness } from "@typescript/models/business";
-import { PaymenentCard } from "@typescript/models/payment";
+import { TokenizeCard } from "@typescript/models/transaction";
+import { User } from "@typescript/models/user";
 import { GeneralErrors } from "@typescript/others";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { IoWallet } from "react-icons/io5";
 
-export default function CreateBusinessComponent({ data, setStep }: { data: CreateBusiness; setStep: any }) {
+export default function CreateBusinessComponent({
+  data,
+  setStep,
+  user
+}: {
+  data: CreateBusiness;
+  setStep: any;
+  user: User;
+}) {
   const [waitingResponse, setWaitingResponse] = useState<boolean>(false);
   const [errors, setErrors] = useState<GeneralErrors<any>>({});
   // @ts-expect-error
-  const [payment, setPayment] = useState<PaymenentCard>({});
+  const [payment, setPayment] = useState<TokenizeCard>({});
   const router = useRouter();
 
   const finishHandler = async () => {
-    if (waitingResponse) return;
-    setWaitingResponse(true);
-    setErrors({});
+    // if (waitingResponse) return;
+    // setWaitingResponse(true);
+    // setErrors({});
 
-    const business = await createBusiness(data);
-    if (!business.success) return setErrors(business.errors), setWaitingResponse(false);
+    const tokenizedCard = await CreateTokenizedCard({
+      number: payment.number,
+      exp_month: payment.expiration.split("/")[0],
+      exp_year: payment.expiration.split("/")[1],
+      cvc: payment.cvc,
+      card_holder: payment.card_holder
+    });
 
-    router.push("/");
+    if (!tokenizedCard.status || tokenizedCard.status !== "CREATED")
+      return setErrors({ GENERAL_ERROR: "Tarjéta no válida" }), setWaitingResponse(false);
+
+    const merchant = await getWompiMerchant();
+    console.log(merchant.data.presigned_acceptance.acceptance_token);
+    const transaction = await createWompiTransaction({
+      acceptance_token: merchant.data.presigned_acceptance.acceptance_token,
+      reference: `${new Date().getTime()}`,
+      amount_in_cents: 9000000,
+      currency: "COP",
+      signature: await createWompiSignature(`${new Date().getTime()}`, 9000000, "COP"),
+      customer_email: data.business_email,
+      customer_data: {
+        phone_number: data.phone_number,
+        full_name:
+          data.business_type === "Natural person" ?
+            `${data.legal_names} ${data.legal_surnames}`
+          : data.business_legal_name,
+        legal_id: data.business_type === "Natural person" ? data.document_number : data.business_legal_identification,
+        legal_id_type: data.business_type === "Natural person" ? data.document_type : "NIT"
+      },
+      payment_method: {
+        type: "CARD",
+        token: tokenizedCard.data.id,
+        installments: 1
+      }
+    });
+
+    console.log(transaction);
+
+    // const business = await createBusiness(data);
+    // if (!business.success) return setErrors(business.errors), setWaitingResponse(false);
+    // router.push("/");
   };
 
   return (
@@ -74,9 +126,7 @@ export default function CreateBusinessComponent({ data, setStep }: { data: Creat
                   id="card_number"
                   placeholder=" "
                   className="peer w-full rounded-2xl bg-transparent px-4 pb-2 pt-6 text-lg caret-primary outline-none transition-all hover:shadow-[0_0_0_4px_hsla(244,_49%,_49%,_.1)] focus:shadow-[inset_0_0_0_2px_hsla(244,49%,49%,1),0_0_0_4px_hsla(244,49%,49%,0.1)]"
-                  onChange={(event: any) =>
-                    setPayment(prevState => ({ ...prevState, card_number: event.target.value }))
-                  }
+                  onChange={(event: any) => setPayment(prevState => ({ ...prevState, number: event.target.value }))}
                 />
                 <label
                   htmlFor="card_number"
@@ -92,7 +142,7 @@ export default function CreateBusinessComponent({ data, setStep }: { data: Creat
                     placeholder=" "
                     className="peer w-full rounded-2xl bg-transparent px-4 pb-2 pt-6 text-lg caret-primary outline-none transition-all hover:shadow-[0_0_0_4px_hsla(244,_49%,_49%,_.1)] focus:shadow-[inset_0_0_0_2px_hsla(244,49%,49%,1),0_0_0_4px_hsla(244,49%,49%,0.1)]"
                     onChange={(event: any) =>
-                      setPayment(prevState => ({ ...prevState, card_expiration: event.target.value }))
+                      setPayment(prevState => ({ ...prevState, expiration: event.target.value }))
                     }
                   />
                   <label
@@ -104,17 +154,33 @@ export default function CreateBusinessComponent({ data, setStep }: { data: Creat
                 <div className="group relative flex w-full rounded-2xl border">
                   <input
                     type="text"
-                    id="card_cvv"
+                    id="card_cvc"
                     placeholder=" "
                     className="peer w-full rounded-2xl bg-transparent px-4 pb-2 pt-6 text-lg caret-primary outline-none transition-all hover:shadow-[0_0_0_4px_hsla(244,_49%,_49%,_.1)] focus:shadow-[inset_0_0_0_2px_hsla(244,49%,49%,1),0_0_0_4px_hsla(244,49%,49%,0.1)]"
-                    onChange={(event: any) => setPayment(prevState => ({ ...prevState, card_cvv: event.target.value }))}
+                    onChange={(event: any) => setPayment(prevState => ({ ...prevState, cvc: event.target.value }))}
                   />
                   <label
-                    htmlFor="card_cvv"
+                    htmlFor="card_cvc"
                     className="absolute left-4 right-4 top-4 cursor-text text-lg text-white-full-dark transition-all selection:bg-transparent peer-focus:top-2 peer-focus:text-xs peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:text-xs">
                     CVV
                   </label>
                 </div>
+              </div>
+              <div className="group relative flex w-full rounded-2xl border">
+                <input
+                  type="text"
+                  id="card_holder"
+                  placeholder=" "
+                  className="peer w-full rounded-2xl bg-transparent px-4 pb-2 pt-6 text-lg caret-primary outline-none transition-all hover:shadow-[0_0_0_4px_hsla(244,_49%,_49%,_.1)] focus:shadow-[inset_0_0_0_2px_hsla(244,49%,49%,1),0_0_0_4px_hsla(244,49%,49%,0.1)]"
+                  onChange={(event: any) =>
+                    setPayment(prevState => ({ ...prevState, card_holder: event.target.value }))
+                  }
+                />
+                <label
+                  htmlFor="card_holder"
+                  className="absolute left-4 right-4 top-4 cursor-text text-lg text-white-full-dark transition-all selection:bg-transparent peer-focus:top-2 peer-focus:text-xs peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:text-xs">
+                  Nombre en la tarjeta
+                </label>
               </div>
             </div>
             <div>
@@ -127,13 +193,14 @@ export default function CreateBusinessComponent({ data, setStep }: { data: Creat
         {(
           !waitingResponse &&
           (data.subscription_plan == "Free" ||
-            (payment.card_number &&
-              payment.card_number.length === 16 &&
-              payment.card_expiration &&
-              payment.card_expiration.length === 5 &&
-              payment.card_cvv &&
-              payment.card_cvv.length >= 3 &&
-              payment.card_cvv.length <= 4))
+            (payment.number &&
+              payment.number.length === 16 &&
+              payment.expiration &&
+              payment.expiration.length === 5 &&
+              payment.cvc &&
+              payment.cvc.length >= 3 &&
+              payment.cvc.length <= 4 &&
+              payment.card_holder))
         ) ?
           <button type="submit" onClick={() => finishHandler()} className="button button-primary">
             {data.subscription_plan == "Free" ? "Realizar registro" : "Realizar pago"}

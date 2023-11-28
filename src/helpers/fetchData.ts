@@ -32,6 +32,7 @@ export const fetchData = async <Result, Body>(
   method: string,
   body?: Body,
   extra?: {
+    headers?: Record<string, string>;
     validator?: SchemaValidator<Body>;
     revalidateTags?: string[];
     revalidateOtherTags?: RevalidateOtherTag[];
@@ -47,6 +48,7 @@ export const fetchData = async <Result, Body>(
     const response = await fetch(url, {
       method,
       headers: {
+        ...(extra.headers ? extra.headers : {}),
         "Content-Type": "application/json"
       },
       body: body ? JSON.stringify(body) : null,
