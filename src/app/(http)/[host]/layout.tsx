@@ -1,4 +1,4 @@
-import "app/_theme/styles/globals.css";
+import "@resources/styles/globals.css";
 import { ReactNode } from "react";
 import { type Metadata } from "next";
 import { cookies } from "next/headers";
