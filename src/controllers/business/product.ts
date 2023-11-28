@@ -14,7 +14,7 @@ const resourceController = new ResourceController();
 export class ProductController {
   async create(business_id: string, dataToCreate: CreateProduct): Promise<GeneralResponse<Product, CreateProduct>> {
     if (dataToCreate.names)
-      dataToCreate.path = (!dataToCreate.path ? dataToCreate.names?.Default : dataToCreate.path)
+      dataToCreate.path = (!dataToCreate.path ? dataToCreate.names?.["Default"] : dataToCreate.path)
         .toLowerCase()
         .trim()
         .replace(/ /g, "-");
@@ -31,7 +31,7 @@ export class ProductController {
     dataToUpdate: UpdateProduct
   ): Promise<GeneralResponse<Product, UpdateProduct>> {
     if (dataToUpdate.names)
-      dataToUpdate.path = (!dataToUpdate.path ? dataToUpdate.names?.Default : dataToUpdate.path)
+      dataToUpdate.path = (!dataToUpdate.path ? dataToUpdate.names?.["Default"] : dataToUpdate.path)
         .toLowerCase()
         .trim()
         .replace(/ /g, "-");
