@@ -127,7 +127,7 @@ export class SchemaParser {
         : dataToParse.codes["Default"];
     if (dataToParse.discount_type) parsed.discount_type = dataToParse.discount_type;
     if (dataToParse.discount_value) parsed.discount_value = dataToParse.discount_value;
-    if (dataToParse.uses || dataToParse.uses === 0) parsed.uses_limit = dataToParse.uses;
+    if (dataToParse.uses || dataToParse.uses === 0) parsed.uses = dataToParse.uses;
     if (dataToParse.uses_limit || dataToParse.uses_limit === 0) parsed.uses_limit = dataToParse.uses_limit;
     if (dataToParse.uses_limit_per_customer || dataToParse.uses_limit_per_customer === 0)
       parsed.uses_limit_per_customer = dataToParse.uses_limit_per_customer;
