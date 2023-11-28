@@ -4,9 +4,8 @@ import { sendMail } from "@libs/nodemailer";
 import { UserModel } from "@models/user";
 import { VerificationModel } from "@models/verification";
 import { User } from "@typescript/models/user";
-import { CreateVerification } from "@typescript/models/verification";
+import { CreateVerification, Verification } from "@typescript/models/verification";
 import { ValidatorToCreateVerification } from "@validators/verification";
-import { Verification } from "next/dist/lib/metadata/types/metadata-types";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
