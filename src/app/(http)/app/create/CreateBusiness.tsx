@@ -51,6 +51,7 @@ export default function CreateBusinessComponent({
     if (!merchant.success) return setErrors(merchant.errors), setWaitingResponse(false);
 
     const transactionCreated = await createWompiTransaction({
+      // @ts-expect-error
       acceptance_token: merchant.result.presigned_acceptance.acceptance_token,
       reference: `${new Date().getTime()}`,
       amount_in_cents: getConfigs("platform").plans[data.subscription_plan].costs.monthly_price * 100,
@@ -62,6 +63,7 @@ export default function CreateBusinessComponent({
       ),
       customer_email: data.business_email,
       customer_data: {
+        // @ts-expect-error
         phone_number: data.phone_number,
         full_name:
           data.business_type === "Natural person" ?
@@ -72,6 +74,7 @@ export default function CreateBusinessComponent({
       },
       payment_method: {
         type: "CARD",
+        // @ts-expect-error
         token: tokenizedCard.result.id,
         installments: 1
       }
