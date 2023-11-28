@@ -104,6 +104,7 @@ export default function Header({ business }: Props) {
           {
             type: "fields",
             title: "Límites y expiración",
+            // @ts-expect-error
             fields: [
               [
                 {
