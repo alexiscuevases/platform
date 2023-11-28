@@ -9,7 +9,9 @@ type PaymentMethodTypes =
   | "BANCOLOMBIA_COLLECT"
   | "BANCOLOMBIA_QR";
 
-export interface TokenizeCard {
+export interface WompiMerchant {}
+
+export interface WompiTokenizeCard {
   number: string;
   cvc: string;
   exp_month: string;
@@ -17,11 +19,13 @@ export interface TokenizeCard {
   card_holder: string;
 }
 
-export interface Transaction {
+export interface WompiTokenizedCard {}
+
+export interface WompiTransaction {
   status?: TransactionStatuses;
 }
 
-export interface CreateTransaction {
+export interface CreateWompiTransaction {
   acceptance_token: string;
   amount_in_cents: number;
   currency: string;
@@ -51,3 +55,5 @@ export interface CreateTransaction {
   redirect_url?: string;
   reference: string;
 }
+
+export interface WompiEvent {}

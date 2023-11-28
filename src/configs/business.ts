@@ -16,6 +16,6 @@ export const BusinessConfigs = {
     }
   ],
   namesNotAllowed: [PlatformConfigs.name],
-  subdomainsNotAllowed: ["www", "app", "api", "blog", "developers", "investors"],
+  subdomainsNotAllowed: ["www", "app", "api", "blog", "developers", "investors", "webhook"],
   domainsNotAllowed: [ApplicationConfigs.host]
 };

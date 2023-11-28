@@ -33,6 +33,11 @@ export const middleware = async (request: NextRequest): Promise<NextResponse> =>
     return NextResponse.rewrite(nextUrl);
   }
 
+  if (localSubdomainOrDomain === "webhook") {
+    nextUrl.pathname = `/webhook${nextUrl.pathname}`;
+    return NextResponse.rewrite(nextUrl);
+  }
+
   nextUrl.pathname = `/${localSubdomainOrDomain}${nextUrl.pathname}`;
   return NextResponse.rewrite(nextUrl);
 };

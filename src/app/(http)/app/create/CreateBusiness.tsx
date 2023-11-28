@@ -1,5 +1,6 @@
 "use client";
 
+import { getConfigs } from "@helpers/getConfigs";
 import { createBusiness } from "@services/business";
 import {
   CreateTokenizedCard,
@@ -8,9 +9,9 @@ import {
   getWompiMerchant
 } from "@services/services/wompi";
 import { CreateBusiness } from "@typescript/models/business";
-import { TokenizeCard } from "@typescript/models/transaction";
 import { User } from "@typescript/models/user";
 import { GeneralErrors } from "@typescript/others";
+import { WompiTokenizeCard } from "@typescript/services/wompi";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { IoWallet } from "react-icons/io5";
@@ -27,33 +28,38 @@ export default function CreateBusinessComponent({
   const [waitingResponse, setWaitingResponse] = useState<boolean>(false);
   const [errors, setErrors] = useState<GeneralErrors<any>>({});
   // @ts-expect-error
-  const [payment, setPayment] = useState<TokenizeCard>({});
+  const [payment, setPayment] = useState<WompiTokenizeCard>({});
   const router = useRouter();
 
   const finishHandler = async () => {
-    // if (waitingResponse) return;
-    // setWaitingResponse(true);
-    // setErrors({});
+    if (waitingResponse) return;
+    setWaitingResponse(true);
+    setErrors({});
 
     const tokenizedCard = await CreateTokenizedCard({
       number: payment.number,
+      // @ts-expect-error
       exp_month: payment.expiration.split("/")[0],
+      // @ts-expect-error
       exp_year: payment.expiration.split("/")[1],
       cvc: payment.cvc,
       card_holder: payment.card_holder
     });
-
-    if (!tokenizedCard.status || tokenizedCard.status !== "CREATED")
-      return setErrors({ GENERAL_ERROR: "Tarjéta no válida" }), setWaitingResponse(false);
+    if (!tokenizedCard.success) return setErrors(tokenizedCard.errors), setWaitingResponse(false);
 
     const merchant = await getWompiMerchant();
-    console.log(merchant.data.presigned_acceptance.acceptance_token);
-    const transaction = await createWompiTransaction({
-      acceptance_token: merchant.data.presigned_acceptance.acceptance_token,
+    if (!merchant.success) return setErrors(merchant.errors), setWaitingResponse(false);
+
+    const transactionCreated = await createWompiTransaction({
+      acceptance_token: merchant.result.presigned_acceptance.acceptance_token,
       reference: `${new Date().getTime()}`,
-      amount_in_cents: 9000000,
+      amount_in_cents: getConfigs("platform").plans[data.subscription_plan].costs.monthly_price * 100,
       currency: "COP",
-      signature: await createWompiSignature(`${new Date().getTime()}`, 9000000, "COP"),
+      signature: await createWompiSignature(
+        `${new Date().getTime()}`,
+        getConfigs("platform").plans[data.subscription_plan].costs.monthly_price * 100,
+        "COP"
+      ),
       customer_email: data.business_email,
       customer_data: {
         phone_number: data.phone_number,
@@ -66,16 +72,16 @@ export default function CreateBusinessComponent({
       },
       payment_method: {
         type: "CARD",
-        token: tokenizedCard.data.id,
+        token: tokenizedCard.result.id,
         installments: 1
       }
     });
+    if (!transactionCreated.success) return setErrors(transactionCreated.errors), setWaitingResponse(false);
 
-    console.log(transaction);
+    const business = await createBusiness({ ...data, subscription_plan: "Free" });
+    if (!business.success) return setErrors(business.errors), setWaitingResponse(false);
 
-    // const business = await createBusiness(data);
-    // if (!business.success) return setErrors(business.errors), setWaitingResponse(false);
-    // router.push("/");
+    router.push("/");
   };
 
   return (
@@ -195,7 +201,9 @@ export default function CreateBusinessComponent({
           (data.subscription_plan == "Free" ||
             (payment.number &&
               payment.number.length === 16 &&
+              // @ts-expect-error
               payment.expiration &&
+              // @ts-expect-error
               payment.expiration.length === 5 &&
               payment.cvc &&
               payment.cvc.length >= 3 &&
