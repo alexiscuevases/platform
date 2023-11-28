@@ -2,7 +2,7 @@ import { apiResponseHandler } from "@helpers/apiResponseHandler";
 import { getUrlParams } from "@helpers/getUrlParams";
 import { ConnectMongo } from "@libs/mongoose";
 import { BusinessModel } from "@models/business/business";
-import { Business } from "@typescript/models/business";
+import { Business, CreateBusiness } from "@typescript/models/business";
 import { ValidatorToCreateBusiness } from "@validators/business";
 import { NextRequest, NextResponse } from "next/server";
 
