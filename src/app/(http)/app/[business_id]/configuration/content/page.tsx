@@ -52,22 +52,22 @@ export default isBusinessId(async ({ business }: Props) => {
             <p className="font-medium">Etiquetas</p>
           </Link>
           <Link
-            href={`/${business._id}/configuration`}
+            href={`/${business._id}/gift_cards`}
             className="flex h-[200px] w-full flex-col items-center justify-center gap-2 rounded-2xl bg-white text-primary-dark shadow-xl duration-300 hover:scale-105 hover:text-primary">
             <IoGiftOutline size={36} />
             <p className="font-medium">Tarjetas de regalo</p>
           </Link>
           <Link
-            href={`/${business._id}/configuration`}
+            href={`/${business._id}/coupons`}
             className="flex h-[200px] w-full flex-col items-center justify-center gap-2 rounded-2xl bg-white text-primary-dark shadow-xl duration-300 hover:scale-105 hover:text-primary">
             <IoTicketOutline size={36} />
             <p className="font-medium">Cupones</p>
           </Link>
           <Link
-            href={`/${business._id}/configuration`}
+            href={`/${business._id}/template`}
             className="flex h-[200px] w-full flex-col items-center justify-center gap-2 rounded-2xl bg-white text-primary-dark shadow-xl duration-300 hover:scale-105 hover:text-primary">
             <IoConstructOutline size={36} />
-            <p className="font-medium">Plantillas</p>
+            <p className="font-medium">Plantilla</p>
           </Link>
         </div>
       </main>

@@ -3,6 +3,7 @@ import * as TS from "@typescript/utils/parser";
 import { Category, ParsedCategory } from "@typescript/models/business/category";
 import { Collection, ParsedCollection } from "@typescript/models/business/collection";
 import { ParsedProduct, Product } from "@typescript/models/business/product";
+import { Coupon, ParsedCoupon } from "@typescript/models/business/coupon";
 
 export class SchemaParser {
   private schemaData: TS.SchemaParser;
@@ -13,98 +14,127 @@ export class SchemaParser {
 
   parseProduct(dataToParse: Product): ParsedProduct {
     const resourceController = new ResourceController();
-    const parsedProduct: ParsedProduct = {};
+    const parsed: ParsedProduct = {};
 
-    if (dataToParse._id) parsedProduct._id = dataToParse._id;
-    if (dataToParse.status) parsedProduct.status = dataToParse.status;
-    if (dataToParse.business_id) parsedProduct.business_id = dataToParse.business_id;
-    if (dataToParse.reference) parsedProduct.reference = dataToParse.reference;
-    if (dataToParse.path) parsedProduct.path = dataToParse.path;
+    if (dataToParse._id) parsed._id = dataToParse._id;
+    if (dataToParse.status) parsed.status = dataToParse.status;
+    if (dataToParse.business_id) parsed.business_id = dataToParse.business_id;
+    if (dataToParse.reference) parsed.reference = dataToParse.reference;
+    if (dataToParse.path) parsed.path = dataToParse.path;
     if (dataToParse.names)
-      parsedProduct.name =
+      parsed.name =
         dataToParse.names[this.schemaData.language_code] ?
           dataToParse.names[this.schemaData.language_code]
         : dataToParse.names["Default"];
     if (dataToParse.descriptions)
-      parsedProduct.description =
+      parsed.description =
         dataToParse.descriptions[this.schemaData.language_code] ?
           dataToParse.descriptions[this.schemaData.language_code]
         : dataToParse.descriptions["Default"];
     if (dataToParse.resources) {
-      parsedProduct.resources = [];
+      parsed.resources = [];
       dataToParse.resources.forEach(resource =>
-        parsedProduct.resources.push(resourceController.getResourceUrlByPublicId(resource.path))
+        parsed.resources.push(resourceController.getResourceUrlByPublicId(resource.path))
       );
     }
     if (dataToParse.prices)
-      parsedProduct.price =
+      parsed.price =
         dataToParse.prices[this.schemaData.currency_code] ?
           dataToParse.prices[this.schemaData.currency_code]
         : dataToParse.prices["Default"];
-    if (dataToParse.creation_date) parsedProduct.creation_date = dataToParse.creation_date;
-    if (dataToParse.update_date) parsedProduct.update_date = dataToParse.update_date;
+    if (dataToParse.creation_date) parsed.creation_date = dataToParse.creation_date;
+    if (dataToParse.update_date) parsed.update_date = dataToParse.update_date;
 
-    return parsedProduct;
+    return parsed;
   }
 
   parseCategory(dataToParse: Category): ParsedCategory {
-    const parsedCategory: ParsedCategory = {};
+    const parsed: ParsedCategory = {};
 
-    if (dataToParse._id) parsedCategory._id = dataToParse._id;
-    if (dataToParse.business_id) parsedCategory.business_id = dataToParse.business_id;
-    if (dataToParse.category_id) parsedCategory.category_id = dataToParse.category_id;
+    if (dataToParse._id) parsed._id = dataToParse._id;
+    if (dataToParse.business_id) parsed.business_id = dataToParse.business_id;
+    if (dataToParse.category_id) parsed.category_id = dataToParse.category_id;
     if (dataToParse.products_count || dataToParse.products_count === 0)
-      parsedCategory.products_count = dataToParse.products_count;
+      parsed.products_count = dataToParse.products_count;
     if (dataToParse.names)
-      parsedCategory.name =
+      parsed.name =
         dataToParse.names[this.schemaData.language_code] ?
           dataToParse.names[this.schemaData.language_code]
         : dataToParse.names["Default"];
     if (dataToParse.descriptions)
-      parsedCategory.description =
+      parsed.description =
         dataToParse.descriptions[this.schemaData.language_code] ?
           dataToParse.descriptions[this.schemaData.language_code]
         : dataToParse.descriptions["Default"];
     if (dataToParse.taxes)
-      parsedCategory.taxes =
+      parsed.taxes =
         dataToParse.taxes[this.schemaData.language_code] ?
           dataToParse.taxes[this.schemaData.language_code]
         : dataToParse.taxes["Default"];
-    if (dataToParse.creation_date) parsedCategory.creation_date = dataToParse.creation_date;
-    if (dataToParse.update_date) parsedCategory.update_date = dataToParse.update_date;
+    if (dataToParse.creation_date) parsed.creation_date = dataToParse.creation_date;
+    if (dataToParse.update_date) parsed.update_date = dataToParse.update_date;
 
-    return parsedCategory;
+    return parsed;
   }
 
   parseCollection(dataToParse: Collection): ParsedCollection {
     const resourceController = new ResourceController();
-    const parsedCollection: ParsedCollection = {};
+    const parsed: ParsedCollection = {};
 
-    if (dataToParse._id) parsedCollection._id = dataToParse._id;
-    if (dataToParse.status) parsedCollection.status = dataToParse.status;
-    if (dataToParse.business_id) parsedCollection.business_id = dataToParse.business_id;
+    if (dataToParse._id) parsed._id = dataToParse._id;
+    if (dataToParse.status) parsed.status = dataToParse.status;
+    if (dataToParse.business_id) parsed.business_id = dataToParse.business_id;
     if (dataToParse.products_count || dataToParse.products_count === 0)
-      parsedCollection.products_count = dataToParse.products_count;
-    if (dataToParse.path) parsedCollection.path = dataToParse.path;
+      parsed.products_count = dataToParse.products_count;
+    if (dataToParse.path) parsed.path = dataToParse.path;
     if (dataToParse.names)
-      parsedCollection.name =
+      parsed.name =
         dataToParse.names[this.schemaData.language_code] ?
           dataToParse.names[this.schemaData.language_code]
         : dataToParse.names["Default"];
     if (dataToParse.descriptions)
-      parsedCollection.description =
+      parsed.description =
         dataToParse.descriptions[this.schemaData.language_code] ?
           dataToParse.descriptions[this.schemaData.language_code]
         : dataToParse.descriptions["Default"];
     if (dataToParse.resources) {
-      parsedCollection.resources = [];
+      parsed.resources = [];
       dataToParse.resources.forEach(resource =>
-        parsedCollection.resources.push(resourceController.getResourceUrlByPublicId(resource.path))
+        parsed.resources.push(resourceController.getResourceUrlByPublicId(resource.path))
       );
     }
-    if (dataToParse.creation_date) parsedCollection.creation_date = dataToParse.creation_date;
-    if (dataToParse.update_date) parsedCollection.update_date = dataToParse.update_date;
+    if (dataToParse.creation_date) parsed.creation_date = dataToParse.creation_date;
+    if (dataToParse.update_date) parsed.update_date = dataToParse.update_date;
 
-    return parsedCollection;
+    return parsed;
+  }
+
+  parseCoupon(dataToParse: Coupon): ParsedCoupon {
+    const parsed: ParsedCoupon = {};
+
+    if (dataToParse._id) parsed._id = dataToParse._id;
+    if (dataToParse.business_id) parsed.business_id = dataToParse.business_id;
+    if (dataToParse.status) parsed.status = dataToParse.status;
+    if (dataToParse.names)
+      parsed.name =
+        dataToParse.names[this.schemaData.language_code] ?
+          dataToParse.names[this.schemaData.language_code]
+        : dataToParse.names["Default"];
+    if (dataToParse.codes)
+      parsed.code =
+        dataToParse.codes[this.schemaData.language_code] ?
+          dataToParse.codes[this.schemaData.language_code]
+        : dataToParse.codes["Default"];
+    if (dataToParse.discount_type) parsed.discount_type = dataToParse.discount_type;
+    if (dataToParse.discount_value) parsed.discount_value = dataToParse.discount_value;
+    if (dataToParse.uses || dataToParse.uses === 0) parsed.uses_limit = dataToParse.uses;
+    if (dataToParse.uses_limit || dataToParse.uses_limit === 0) parsed.uses_limit = dataToParse.uses_limit;
+    if (dataToParse.uses_limit_per_customer || dataToParse.uses_limit_per_customer === 0)
+      parsed.uses_limit_per_customer = dataToParse.uses_limit_per_customer;
+    if (dataToParse.expiration_date) parsed.expiration_date = dataToParse.expiration_date;
+    if (dataToParse.creation_date) parsed.creation_date = dataToParse.creation_date;
+    if (dataToParse.update_date) parsed.update_date = dataToParse.update_date;
+
+    return parsed;
   }
 }

@@ -7,7 +7,10 @@ export default function Field({ fieldData, data, errors, setData, resources, set
 
   return (
     <>
-      {(fieldData.type === "text" || fieldData.type === "number" || fieldData.type === "email") && (
+      {(fieldData.type === "text" ||
+        fieldData.type === "number" ||
+        fieldData.type === "email" ||
+        fieldData.type === "date") && (
         <input
           type={fieldData.type}
           id={fieldData.id}
@@ -32,6 +35,22 @@ export default function Field({ fieldData, data, errors, setData, resources, set
                 : "caret-primary hover:shadow-[0_0_0_4px_hsla(244,49%,49%,.1)] focus:shadow-[inset_0_0_0_2px_hsla(244,49%,49%,1),0_0_0_4px_hsla(244,49%,49%,0.1)]"
               }`
           }`}
+        />
+      )}
+      {fieldData.type === "checkbox" && (
+        <input
+          type="checkbox"
+          id={fieldData.id}
+          defaultChecked={fieldData.default_value}
+          checked={fieldData.checked}
+          onChange={e =>
+            fieldData.default_property ?
+              setData(prevState => ({
+                ...prevState,
+                [fieldData.id]: { [fieldData.default_property]: e.target.checked }
+              }))
+            : setData(prevState => ({ ...prevState, [fieldData.id]: e.target.checked }))
+          }
         />
       )}
       {fieldData.type === "textarea" && (
@@ -79,22 +98,6 @@ export default function Field({ fieldData, data, errors, setData, resources, set
             </option>
           ))}
         </select>
-      )}
-      {fieldData.type === "checkbox" && (
-        <input
-          type="checkbox"
-          id={fieldData.id}
-          defaultChecked={fieldData.default_value}
-          checked={fieldData.checked}
-          onChange={e =>
-            fieldData.default_property ?
-              setData(prevState => ({
-                ...prevState,
-                [fieldData.id]: { [fieldData.default_property]: e.target.checked }
-              }))
-            : setData(prevState => ({ ...prevState, [fieldData.id]: e.target.checked }))
-          }
-        />
       )}
       {fieldData.type === "file" && (
         <>

@@ -20,7 +20,7 @@ interface OptionInterface {
 }
 
 interface FieldInterface {
-  type: "text" | "number" | "email" | "password" | "textarea" | "file" | "checkbox" | "select";
+  type: "text" | "number" | "email" | "password" | "textarea" | "file" | "checkbox" | "select" | "date";
   id: string;
   title?: string;
   disabled?: boolean;
