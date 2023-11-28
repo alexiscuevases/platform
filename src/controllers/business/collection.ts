@@ -22,7 +22,7 @@ export class CollectionController {
     dataToCreate: CreateCollection
   ): Promise<GeneralResponse<Collection, CreateCollection>> {
     if (dataToCreate.names)
-      dataToCreate.path = (!dataToCreate.path ? dataToCreate.names?.Default : dataToCreate.path)
+      dataToCreate.path = (!dataToCreate.path ? dataToCreate.names?.["Default"] : dataToCreate.path)
         .toLowerCase()
         .trim()
         .replace(/ /g, "-");
@@ -39,7 +39,7 @@ export class CollectionController {
     dataToUpdate: UpdateCollection
   ): Promise<GeneralResponse<Collection, UpdateCollection>> {
     if (dataToUpdate.names)
-      dataToUpdate.path = (!dataToUpdate.path ? dataToUpdate.names?.Default : dataToUpdate.path)
+      dataToUpdate.path = (!dataToUpdate.path ? dataToUpdate.names?.["Default"] : dataToUpdate.path)
         .toLowerCase()
         .trim()
         .replace(/ /g, "-");
