@@ -60,11 +60,17 @@ export default function Header({ business }: Props) {
               {
                 id: "names",
                 title: "Nombre",
+                multi_values: "Traducciones",
+                multi_values_type: "language",
+                default_property: "Default",
                 type: "text"
               },
               {
                 id: "codes",
                 title: "Código",
+                multi_values: "Traducciones",
+                multi_values_type: "language",
+                default_property: "Default",
                 type: "text"
               }
             ]
