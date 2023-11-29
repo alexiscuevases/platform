@@ -48,6 +48,21 @@ export const createWompiCardTokenization = async (
   return { success: true, result: response.data };
 };
 
+export const createWompiSignature = async (
+  reference: string,
+  amount_in_cents: number,
+  currency: string
+): Promise<string> => {
+  const encondedText = new TextEncoder().encode(
+    `${reference}${amount_in_cents}${currency}${getEnvironmentVariable("WOMPI_INTEGRITY_SECRET")}`
+  );
+  const hashBuffer = await crypto.subtle.digest("SHA-256", encondedText);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+
+  return hashHex;
+};
+
 export const createWompiTransaction = async (
   dataToCreate: CreateWompiTransaction
 ): Promise<GeneralResponse<WompiTransaction, CreateWompiTransaction>> => {

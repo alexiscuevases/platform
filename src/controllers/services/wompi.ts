@@ -1,5 +1,9 @@
-import { getEnvironmentVariable } from "@helpers/getEnvironmentVariable";
-import { createWompiCardTokenization, createWompiTransaction, getWompiMerchant } from "@services/services/wompi";
+import {
+  createWompiCardTokenization,
+  createWompiSignature,
+  createWompiTransaction,
+  getWompiMerchant
+} from "@services/services/wompi";
 import { GeneralResponse } from "@typescript/others";
 import {
   CreateWompiCardTokenization,
@@ -24,22 +28,11 @@ export class WompiController {
     return { success: true, result: tokenization.result };
   }
 
-  async createWompiSignature(reference: string, amount_in_cents: number, currency: string): Promise<string> {
-    const encondedText = new TextEncoder().encode(
-      `${reference}${amount_in_cents}${currency}${process.env.WOMPI_INTEGRITY_SECRET}`
-    );
-    const hashBuffer = await crypto.subtle.digest("SHA-256", encondedText);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashHex = hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
-
-    return hashHex;
-  }
-
   async createTransaction(dataToCreate: CreateWompiTransaction): Promise<GeneralResponse<WompiTransaction, any>> {
     const merchant = await this.getMerchant();
     if (!merchant.success) return { success: false, errors: merchant.errors };
 
-    const signature = await this.createWompiSignature(
+    const signature = await createWompiSignature(
       dataToCreate.reference,
       dataToCreate.amount_in_cents,
       dataToCreate.currency
