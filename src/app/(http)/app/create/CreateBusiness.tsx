@@ -1,42 +1,29 @@
 "use client";
 
+import { WompiController } from "@controllers/services/wompi";
 import { getConfigs } from "@helpers/getConfigs";
 import { createBusiness } from "@services/business";
-import {
-  CreateTokenizedCard,
-  createWompiSignature,
-  createWompiTransaction,
-  getWompiMerchant
-} from "@services/services/wompi";
 import { CreateBusiness } from "@typescript/models/business";
-import { User } from "@typescript/models/user";
 import { GeneralErrors } from "@typescript/others";
-import { WompiTokenizeCard } from "@typescript/services/wompi";
+import { CreateWompiCardTokenization } from "@typescript/services/wompi";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { IoWallet } from "react-icons/io5";
 
-export default function CreateBusinessComponent({
-  data,
-  setStep,
-  user
-}: {
-  data: CreateBusiness;
-  setStep: any;
-  user: User;
-}) {
+export default function CreateBusinessComponent({ data, setStep }: { data: CreateBusiness; setStep: any }) {
   const [waitingResponse, setWaitingResponse] = useState<boolean>(false);
   const [errors, setErrors] = useState<GeneralErrors<any>>({});
   // @ts-expect-error
-  const [payment, setPayment] = useState<WompiTokenizeCard>({});
+  const [payment, setPayment] = useState<CreateWompiCardTokenization>({});
   const router = useRouter();
+  const wompiController = new WompiController();
 
   const finishHandler = async () => {
     if (waitingResponse) return;
     setWaitingResponse(true);
     setErrors({});
 
-    const tokenizedCard = await CreateTokenizedCard({
+    const tokenizedCard = await wompiController.createCardTokenization({
       number: payment.number,
       // @ts-expect-error
       exp_month: payment.expiration.split("/")[0],
@@ -47,24 +34,13 @@ export default function CreateBusinessComponent({
     });
     if (!tokenizedCard.success) return setErrors(tokenizedCard.errors), setWaitingResponse(false);
 
-    const merchant = await getWompiMerchant();
-    if (!merchant.success) return setErrors(merchant.errors), setWaitingResponse(false);
-
-    const transactionCreated = await createWompiTransaction({
-      // @ts-expect-error
-      acceptance_token: merchant.result.presigned_acceptance.acceptance_token,
+    const transaction = await wompiController.createTransaction({
       reference: `${new Date().getTime()}`,
       amount_in_cents: getConfigs("platform").plans[data.subscription_plan].costs.monthly_price * 100,
       currency: "COP",
-      signature: await createWompiSignature(
-        `${new Date().getTime()}`,
-        getConfigs("platform").plans[data.subscription_plan].costs.monthly_price * 100,
-        "COP"
-      ),
       customer_email: data.business_email,
       customer_data: {
-        // @ts-expect-error
-        phone_number: data.phone_number,
+        phone_number: data.business_phone,
         full_name:
           data.business_type === "Natural person" ?
             `${data.legal_names} ${data.legal_surnames}`
@@ -74,12 +50,11 @@ export default function CreateBusinessComponent({
       },
       payment_method: {
         type: "CARD",
-        // @ts-expect-error
         token: tokenizedCard.result.id,
         installments: 1
       }
     });
-    if (!transactionCreated.success) return setErrors(transactionCreated.errors), setWaitingResponse(false);
+    if (!transaction.success) return setErrors(transaction.errors), setWaitingResponse(false);
 
     const business = await createBusiness({ ...data, subscription_plan: "Free" });
     if (!business.success) return setErrors(business.errors), setWaitingResponse(false);

@@ -17,6 +17,7 @@ export const BusinessSchema = new SchemaValidator<Business>({
     notIsEnum: getConfigs("business").namesNotAllowed
   },
   business_email: { valueType: String, isRequired: true, isEmail: true },
+  business_phone: { valueType: String, isRequired: true, isPhone: true },
   business_local_subdomain: {
     valueType: String,
     uniqueValue: true,

@@ -17,6 +17,7 @@ export interface Address {
 export interface BusinessInformation {
   business_name: string;
   business_email: string;
+  business_phone: string;
   business_local_subdomain: string;
 }
 
@@ -37,6 +38,7 @@ export interface Business extends MongooseSchemaDefaultProperties {
   business_status?: BusinessStatuses;
   business_name?: string;
   business_email?: string;
+  business_phone?: string;
   business_local_subdomain?: string;
   business_custom_domain?: string;
   business_currency?: string;

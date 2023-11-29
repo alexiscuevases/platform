@@ -15,6 +15,7 @@ export const BusinessInformationValidator = new SchemaValidator<BusinessInformat
   {
     business_name: { ...BusinessSchema.getPropertyValidations("business_name") },
     business_email: { ...BusinessSchema.getPropertyValidations("business_email") },
+    business_phone: { ...BusinessSchema.getPropertyValidations("business_phone") },
     business_local_subdomain: { ...BusinessSchema.getPropertyValidations("business_local_subdomain") }
   },
   BusinessSchema.getSchemaErrorsValidations<CreateBusiness>()
@@ -40,6 +41,7 @@ export const ValidatorToCreateBusiness = new SchemaValidator<CreateBusiness>(
     owner_user_id: { ...BusinessSchema.getPropertyValidations("owner_user_id") },
     business_name: { ...BusinessSchema.getPropertyValidations("business_name") },
     business_email: { ...BusinessSchema.getPropertyValidations("business_email") },
+    business_phone: { ...BusinessSchema.getPropertyValidations("business_phone") },
     business_local_subdomain: { ...BusinessSchema.getPropertyValidations("business_local_subdomain") },
     subscription_plan: { ...BusinessSchema.getPropertyValidations("subscription_plan") },
     business_type: { ...BusinessSchema.getPropertyValidations("business_type") },

@@ -6,7 +6,7 @@ import { getEnvironmentVariable } from "@helpers/getEnvironmentVariable";
 import {
   CreateWompiTransaction,
   WompiMerchant,
-  WompiTokenizeCard,
+  CreateWompiCardTokenization,
   WompiTokenizedCard,
   WompiTransaction
 } from "@typescript/services/wompi";
@@ -32,23 +32,8 @@ export const getWompiMerchant = async (): Promise<GeneralResponse<WompiMerchant,
   return { success: true, result: response.data };
 };
 
-export const createWompiSignature = async (
-  reference: string,
-  amount_in_cents: number,
-  currency: string
-): Promise<string> => {
-  const encondedText = new TextEncoder().encode(
-    `${reference}${amount_in_cents}${currency}${getEnvironmentVariable("WOMPI_INTEGRITY_SECRET")}`
-  );
-  const hashBuffer = await crypto.subtle.digest("SHA-256", encondedText);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const hashHex = hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
-
-  return hashHex;
-};
-
-export const CreateTokenizedCard = async (
-  dataToCreate: WompiTokenizeCard
+export const createWompiCardTokenization = async (
+  dataToCreate: CreateWompiCardTokenization
 ): Promise<GeneralResponse<WompiTokenizedCard, any>> => {
   const response = await fetchData(`${API_ENDPOINT}/tokens/cards`, "POST", dataToCreate, {
     headers: {

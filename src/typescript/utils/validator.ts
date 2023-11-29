@@ -8,6 +8,7 @@ export interface SchemaValidationErrors {
   mapOf?: string;
   isRequired?: string;
   isEmail?: string;
+  isPhone?: string;
   isRegex?: string;
   isEqualTo?: string;
   isPassword?: string;
@@ -31,6 +32,7 @@ export interface ValidationSchema {
   mapOf?: any;
   isRequired?: boolean;
   isEmail?: boolean;
+  isPhone?: boolean;
   isRegex?: any;
   isEqualTo?: string;
   isPassword?: boolean;

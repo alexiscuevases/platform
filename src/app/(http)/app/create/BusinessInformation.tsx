@@ -144,8 +144,43 @@ export default function AccessInformation({
                 </p>
               }
             </div>
+            <div>
+              <div className="group relative w-full">
+                <input
+                  type="text"
+                  id="business_phone"
+                  value={data.business_phone}
+                  placeholder=" "
+                  className={`peer border transition-all ${
+                    errors.business_phone ?
+                      "border-[hsla(353,100%,35%,1)] caret-[hsla(353,100%,35%,1)] hover:shadow-[0_0_0_4px_hsla(353,100%,35%,.1)] focus:shadow-[inset_0_0_0_1px_hsla(353,100%,35%,1),0_0_0_4px_hsla(353,100%,35%,0.1)]"
+                    : "caret-primary hover:shadow-[0_0_0_4px_hsla(244,49%,49%,.1)] focus:shadow-[inset_0_0_0_2px_hsla(244,49%,49%,1),0_0_0_4px_hsla(244,49%,49%,0.1)]"
+                  } w-full rounded-2xl bg-transparent px-4 pb-2 pt-6 text-lg outline-none`}
+                  onChange={(event: any) => {
+                    setData(prevState => ({
+                      ...prevState,
+                      business_phone: event.target.value
+                    }));
+                    setErrors(prevState => ({ ...prevState, business_phone: undefined }));
+                  }}
+                />
+                <label
+                  htmlFor="business_phone"
+                  className={`absolute left-4 right-4 top-4 text-lg ${
+                    errors.business_phone ? "text-[hsla(353,100%,35%,1)]" : "text-white-full-dark"
+                  } cursor-text transition-all selection:bg-transparent peer-focus:top-2 peer-focus:text-xs peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:text-xs`}>
+                  Número de contacto
+                </label>
+              </div>
+              {errors.business_phone ?
+                <p className="mt-2 text-xs text-[hsla(353,100%,35%,1)]">{errors.business_phone}</p>
+              : <p className="mt-2 text-xs text-white-full-dark">
+                  Este será el número de contacto principal del negocio
+                </p>
+              }
+            </div>
           </div>
-          {!waitingResponse && data.business_name && data.business_email ?
+          {!waitingResponse && data.business_name && data.business_email && data.business_phone ?
             <button type="submit" onClick={() => continueHandler()} className="button button-primary">
               Continuar
             </button>
