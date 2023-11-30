@@ -15,7 +15,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const wompiTransaction = body.data.transaction;
     const checksum = generateHash_SHA256(
       `${wompiTransaction.id}${wompiTransaction.status}${wompiTransaction.amount_in_cents}${getEnvironmentVariable(
-        body.environment === "prod" ? "WOMPI_EVENTS_SECRET" : "WOMPI_TEST_EVENTS_SECRET"
+        body.environment === "test" ? "WOMPI_TEST_EVENTS_SECRET" : "WOMPI_EVENTS_SECRET"
       )}`
     );
 
