@@ -58,7 +58,7 @@ export default function Page({ user }: { user: User }) {
         {(step == 2 || step == 3) && <LegalInformation setData={setData} data={data} step={step} setStep={setStep} />}
         {step == 4 && <BusinessInformation setData={setData} data={data} setStep={setStep} />}
         {step == 5 && <SelectPlan setData={setData} data={data} setStep={setStep} />}
-        {step == 6 && <CreateBusiness data={data} setStep={setStep} user={user} />}
+        {step == 6 && <CreateBusiness data={data} setStep={setStep} />}
       </main>
     </div>
   );
