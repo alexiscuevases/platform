@@ -14,9 +14,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const body: WompiEvent = await request.json();
     const wompiTransaction = body.data.transaction;
     const checksum = generateHash_SHA256(
-      `${wompiTransaction.id}${wompiTransaction.status}${wompiTransaction.amount_in_cents}${getEnvironmentVariable(
-        body.environment === "test" ? "WOMPI_TEST_EVENTS_SECRET" : "WOMPI_EVENTS_SECRET"
-      )}`
+      `${wompiTransaction.id}${wompiTransaction.status}${wompiTransaction.amount_in_cents}${
+        body.timestamp
+      }${getEnvironmentVariable(body.environment === "test" ? "WOMPI_TEST_EVENTS_SECRET" : "WOMPI_EVENTS_SECRET")}`
     );
 
     if (checksum !== body.signature.checksum)
