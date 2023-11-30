@@ -1,5 +1,5 @@
 import { GeneralResponse } from "@typescript/others";
-import { ResourceController } from "../resource";
+import { ResourceController } from "../../resource";
 import {
   createProductByBusinessId,
   deleteProductByBusinessId,

@@ -4,7 +4,7 @@ import { fetchData } from "@helpers/fetchData";
 import { getConfigs } from "@helpers/getConfigs";
 import { Category, CreateCategory, UpdateCategory } from "@typescript/models/business/category";
 import { GeneralResponse } from "@typescript/others";
-import { ValidatorToCreateCategory, ValidatorToUpdateCategory } from "@validators/business/category";
+import { ValidatorToCreateCategory, ValidatorToUpdateCategory } from "@validators/models/business/category";
 
 const API_ENDPOINT = getConfigs("application").URLs.api;
 

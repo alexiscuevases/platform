@@ -4,7 +4,7 @@ import { getConfigs } from "@helpers/getConfigs";
 import { fetchData } from "@helpers/fetchData";
 import { ChangeUserPassword, CreateUser, User } from "@typescript/models/user";
 import { GeneralResponse } from "@typescript/others";
-import { ValidatorToChangeUserPassword, ValidatorToCreateUser } from "@validators/user";
+import { ValidatorToChangeUserPassword, ValidatorToCreateUser } from "@validators/models/user";
 
 const API_ENDPOINT = `${getConfigs("application").URLs.api}/user`;
 

@@ -2,7 +2,7 @@
 
 import { Address, CreateBusiness, LegalPerson, NaturalPerson } from "@typescript/models/business";
 import { GeneralErrors } from "@typescript/others";
-import { BusinessAddressValidator, LegalPersonValidator, NaturalPersonValidator } from "@validators/business";
+import { BusinessAddressValidator, LegalPersonValidator, NaturalPersonValidator } from "@validators/models/business";
 import { useState } from "react";
 
 export default function AccessInformation({

@@ -1,4 +1,4 @@
-import { VerificationSchema } from "@schemas/verification";
+import { VerificationSchema } from "@schemas/models/verification";
 import { SchemaMongo } from "@libs/mongoose";
 import { model, models } from "mongoose";
 

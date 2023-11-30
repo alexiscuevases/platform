@@ -1,4 +1,4 @@
-import { ProviderSchema } from "@schemas/business/provider";
+import { ProviderSchema } from "@schemas/models/business/provider";
 import { CreateProvider, UpdateProvider } from "@typescript/models/business/provider";
 import { SchemaValidator } from "@utils/schemaValidator";
 

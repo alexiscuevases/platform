@@ -3,7 +3,7 @@ import { getUrlParams } from "@helpers/getUrlParams";
 import { ConnectMongo } from "@libs/mongoose";
 import { UserModel } from "@models/user";
 import { CreateUser, User } from "@typescript/models/user";
-import { ValidatorToCreateUser } from "@validators/user";
+import { ValidatorToCreateUser } from "@validators/models/user";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest): Promise<NextResponse> {

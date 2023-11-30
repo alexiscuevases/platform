@@ -1,4 +1,4 @@
-import { ProductSchema } from "@schemas/business/product";
+import { ProductSchema } from "@schemas/models/business/product";
 import { SchemaMongo } from "@libs/mongoose";
 import { model, models } from "mongoose";
 

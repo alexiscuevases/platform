@@ -1,4 +1,4 @@
-import { CollectionSchema } from "@schemas/business/collection";
+import { CollectionSchema } from "@schemas/models/business/collection";
 import { SchemaMongo } from "@libs/mongoose";
 import { model, models } from "mongoose";
 

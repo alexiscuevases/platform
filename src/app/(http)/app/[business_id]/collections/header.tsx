@@ -5,7 +5,7 @@ import { IoAdd } from "react-icons/io5";
 import Modal from "../../_components/modals";
 import { useRouter } from "next/navigation";
 import { Business } from "@typescript/models/business";
-import { CollectionController } from "@controllers/business/collection";
+import { CollectionController } from "@controllers/models/business/collection";
 import { GeneralErrors } from "@typescript/others";
 import { CreateCollection } from "@typescript/models/business/collection";
 import { createBusinessURL } from "@helpers/createBusinessURL";

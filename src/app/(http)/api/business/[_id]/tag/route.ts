@@ -4,7 +4,7 @@ import { ConnectMongo } from "@libs/mongoose";
 import { BusinessModel } from "@models/business/business";
 import { TagModel } from "@models/business/tag";
 import { CreateTag, Tag } from "@typescript/models/business/tag";
-import { ValidatorToCreateTag } from "@validators/business/tag";
+import { ValidatorToCreateTag } from "@validators/models/business/tag";
 import { NextRequest, NextResponse } from "next/server";
 
 interface Params {

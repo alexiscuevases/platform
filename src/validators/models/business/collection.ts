@@ -1,4 +1,4 @@
-import { CollectionSchema } from "@schemas/business/collection";
+import { CollectionSchema } from "@schemas/models/business/collection";
 import { CreateCollection, UpdateCollection, UploadCollectionResources } from "@typescript/models/business/collection";
 import { SchemaValidator } from "@utils/schemaValidator";
 

@@ -6,7 +6,7 @@ import Link from "next/link";
 import Modal from "../../_components/modals";
 import { useRouter } from "next/navigation";
 import { Business } from "@typescript/models/business";
-import { ProductController } from "@controllers/business/product";
+import { ProductController } from "@controllers/models/business/product";
 import { createBusinessURL } from "@helpers/createBusinessURL";
 import { currencyFormat } from "@helpers/currencyFormat";
 import { GeneralErrors } from "@typescript/others";

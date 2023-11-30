@@ -3,7 +3,7 @@ import { ConnectMongo } from "@libs/mongoose";
 import { BusinessModel } from "@models/business/business";
 import { CollectionModel } from "@models/business/collection";
 import { Collection, UpdateCollection } from "@typescript/models/business/collection";
-import { ValidatorToUpdateCollection } from "@validators/business/collection";
+import { ValidatorToUpdateCollection } from "@validators/models/business/collection";
 import { NextRequest, NextResponse } from "next/server";
 
 interface Params {

@@ -4,7 +4,7 @@ import { ConnectMongo } from "@libs/mongoose";
 import { BusinessModel } from "@models/business/business";
 import { ProviderModel } from "@models/business/provider";
 import { CreateProvider, Provider } from "@typescript/models/business/provider";
-import { ValidatorToCreateProvider } from "@validators/business/provider";
+import { ValidatorToCreateProvider } from "@validators/models/business/provider";
 import { NextRequest, NextResponse } from "next/server";
 
 interface Params {

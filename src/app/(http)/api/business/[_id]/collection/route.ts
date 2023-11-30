@@ -4,7 +4,7 @@ import { ConnectMongo } from "@libs/mongoose";
 import { BusinessModel } from "@models/business/business";
 import { CollectionModel } from "@models/business/collection";
 import { Collection, CreateCollection } from "@typescript/models/business/collection";
-import { ValidatorToCreateCollection } from "@validators/business/collection";
+import { ValidatorToCreateCollection } from "@validators/models/business/collection";
 import { NextRequest, NextResponse } from "next/server";
 
 interface Params {

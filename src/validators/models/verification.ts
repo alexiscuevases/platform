@@ -1,4 +1,4 @@
-import { VerificationSchema } from "@schemas/verification";
+import { VerificationSchema } from "@schemas/models/verification";
 import { CreateVerification } from "@typescript/models/verification";
 import { SchemaValidator } from "@utils/schemaValidator";
 

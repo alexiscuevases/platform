@@ -1,4 +1,4 @@
-import { ProductSchema } from "@schemas/business/product";
+import { ProductSchema } from "@schemas/models/business/product";
 import { CreateProduct, UpdateProduct, UploadProductResources } from "@typescript/models/business/product";
 import { SchemaValidator } from "@utils/schemaValidator";
 

@@ -1,4 +1,4 @@
-import { BusinessSchema } from "@schemas/business";
+import { BusinessSchema } from "@schemas/models/business";
 import { Address, BusinessInformation, CreateBusiness, LegalPerson, NaturalPerson } from "@typescript/models/business";
 import { SchemaValidator } from "@utils/schemaValidator";
 

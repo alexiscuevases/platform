@@ -4,7 +4,7 @@ import { getConfigs } from "@helpers/getConfigs";
 import { fetchData } from "@helpers/fetchData";
 import { Authentication, CreateAuthentication, UpdateAuthentication } from "@typescript/models/authentication";
 import { GeneralResponse } from "@typescript/others";
-import { ValidatorToCreateAuthentication, ValidatorToUpdateAuthentication } from "@validators/authentication";
+import { ValidatorToCreateAuthentication, ValidatorToUpdateAuthentication } from "@validators/models/authentication";
 
 const API_ENDPOINT = `${getConfigs("application").URLs.api}/authentication`;
 

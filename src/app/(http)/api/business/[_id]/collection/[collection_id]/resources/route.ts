@@ -2,7 +2,7 @@ import { apiResponseHandler } from "@helpers/apiResponseHandler";
 import { ConnectMongo } from "@libs/mongoose";
 import { CollectionModel } from "@models/business/collection";
 import { Collection, UploadCollectionResources } from "@typescript/models/business/collection";
-import { ValidatorToUploadCollectionResources } from "@validators/business/collection";
+import { ValidatorToUploadCollectionResources } from "@validators/models/business/collection";
 import { NextRequest, NextResponse } from "next/server";
 
 interface Params {

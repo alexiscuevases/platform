@@ -1,4 +1,4 @@
-import { TagSchema } from "@schemas/business/tag";
+import { TagSchema } from "@schemas/models/business/tag";
 import { CreateTag, UpdateTag } from "@typescript/models/business/tag";
 import { SchemaValidator } from "@utils/schemaValidator";
 

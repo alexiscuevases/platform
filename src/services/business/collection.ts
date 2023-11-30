@@ -13,7 +13,7 @@ import {
   ValidatorToCreateCollection,
   ValidatorToUpdateCollection,
   ValidatorToUploadCollectionResources
-} from "@validators/business/collection";
+} from "@validators/models/business/collection";
 
 const API_ENDPOINT = getConfigs("application").URLs.api;
 

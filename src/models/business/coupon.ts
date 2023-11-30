@@ -1,4 +1,4 @@
-import { CouponSchema } from "@schemas/business/coupon";
+import { CouponSchema } from "@schemas/models/business/coupon";
 import { SchemaMongo } from "@libs/mongoose";
 import { model, models } from "mongoose";
 

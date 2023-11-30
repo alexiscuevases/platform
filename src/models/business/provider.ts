@@ -1,4 +1,4 @@
-import { ProviderSchema } from "@schemas/business/provider";
+import { ProviderSchema } from "@schemas/models/business/provider";
 import { SchemaMongo } from "@libs/mongoose";
 import { model, models } from "mongoose";
 

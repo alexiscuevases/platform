@@ -8,7 +8,7 @@ import {
   ValidatorToCreateProduct,
   ValidatorToUpdateProduct,
   ValidatorToUploadProductResources
-} from "@validators/business/product";
+} from "@validators/models/business/product";
 
 const API_ENDPOINT = `${getConfigs("application").URLs.api}`;
 

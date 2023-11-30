@@ -4,7 +4,7 @@ import { getConfigs } from "@helpers/getConfigs";
 import { fetchData } from "@helpers/fetchData";
 import { CreateProvider, Provider, UpdateProvider } from "@typescript/models/business/provider";
 import { GeneralResponse } from "@typescript/others";
-import { ValidatorToCreateProvider, ValidatorToUpdateProvider } from "@validators/business/provider";
+import { ValidatorToCreateProvider, ValidatorToUpdateProvider } from "@validators/models/business/provider";
 
 const API_ENDPOINT = getConfigs("application").URLs.api;
 

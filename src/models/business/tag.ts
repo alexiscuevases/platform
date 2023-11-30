@@ -1,4 +1,4 @@
-import { TagSchema } from "@schemas/business/tag";
+import { TagSchema } from "@schemas/models/business/tag";
 import { SchemaMongo } from "@libs/mongoose";
 import { model, models } from "mongoose";
 

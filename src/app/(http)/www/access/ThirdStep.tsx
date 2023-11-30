@@ -1,4 +1,4 @@
-import { AuthenticationController } from "@controllers/authentication";
+import { AuthenticationController } from "@controllers/models/authentication";
 import { getConfigs } from "@helpers/getConfigs";
 import { Authentication, CreateAuthentication } from "@typescript/models/authentication";
 import { GeneralErrors } from "@typescript/others";

@@ -1,4 +1,4 @@
-import { UserSchema } from "@schemas/user";
+import { UserSchema } from "@schemas/models/user";
 import { ChangeUserPassword, CreateUser } from "@typescript/models/user";
 import { SchemaValidator } from "@utils/schemaValidator";
 

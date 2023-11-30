@@ -2,7 +2,7 @@ import { apiResponseHandler } from "@helpers/apiResponseHandler";
 import { ConnectMongo } from "@libs/mongoose";
 import { UserModel } from "@models/user";
 import { ChangeUserPassword } from "@typescript/models/user";
-import { ValidatorToChangeUserPassword } from "@validators/user";
+import { ValidatorToChangeUserPassword } from "@validators/models/user";
 import { NextRequest, NextResponse } from "next/server";
 
 interface Params {

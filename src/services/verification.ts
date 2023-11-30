@@ -4,7 +4,7 @@ import { getConfigs } from "@helpers/getConfigs";
 import { fetchData } from "@helpers/fetchData";
 import { CreateVerification, Verification } from "@typescript/models/verification";
 import { GeneralResponse } from "@typescript/others";
-import { ValidatorToCreateVerification } from "@validators/verification";
+import { ValidatorToCreateVerification } from "@validators/models/verification";
 
 const API_ENDPOINT = `${getConfigs("application").URLs.api}/verification`;
 

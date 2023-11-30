@@ -5,7 +5,7 @@ import { IoAdd } from "react-icons/io5";
 import Modal from "../../_components/modals";
 import { useRouter } from "next/navigation";
 import { Business } from "@typescript/models/business";
-import { TagController } from "@controllers/business/tag";
+import { TagController } from "@controllers/models/business/tag";
 import { GeneralErrors } from "@typescript/others";
 import { CreateTag } from "@typescript/models/business/tag";
 

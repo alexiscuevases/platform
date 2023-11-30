@@ -5,7 +5,7 @@ import { IoAdd } from "react-icons/io5";
 import Modal from "../../_components/modals";
 import { useRouter } from "next/navigation";
 import { Business } from "@typescript/models/business";
-import { CategoryController } from "@controllers/business/category";
+import { CategoryController } from "@controllers/models/business/category";
 import { GeneralErrors } from "@typescript/others";
 import { CreateCategory, ParsedCategory } from "@typescript/models/business/category";
 import { getCategoriesByBusinessId } from "@services/business/category";

@@ -2,7 +2,7 @@ import { apiResponseHandler } from "@helpers/apiResponseHandler";
 import { ConnectMongo } from "@libs/mongoose";
 import { AuthenticationModel } from "@models/authentication";
 import { Authentication, UpdateAuthentication } from "@typescript/models/authentication";
-import { ValidatorToUpdateAuthentication } from "@validators/authentication";
+import { ValidatorToUpdateAuthentication } from "@validators/models/authentication";
 import { Types } from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 

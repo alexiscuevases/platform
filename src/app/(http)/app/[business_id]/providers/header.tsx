@@ -4,7 +4,7 @@ import { useState } from "react";
 import { IoAdd } from "react-icons/io5";
 import Modal from "../../_components/modals";
 import { useRouter } from "next/navigation";
-import { ProviderController } from "@controllers/business/provider";
+import { ProviderController } from "@controllers/models/business/provider";
 import { GeneralErrors } from "@typescript/others";
 import { CreateProvider } from "@typescript/models/business/provider";
 import { Business } from "@typescript/models/business";

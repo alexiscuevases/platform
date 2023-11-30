@@ -6,7 +6,7 @@ import Modal from "../../../_components/modals";
 import { useRouter } from "next/navigation";
 import { Business } from "@typescript/models/business";
 import { ResourceController } from "@controllers/resource";
-import { ProductController } from "@controllers/business/product";
+import { ProductController } from "@controllers/models/business/product";
 import { DeleteResource } from "@typescript/models/resource";
 import { createBusinessURL } from "@helpers/createBusinessURL";
 import { currencyFormat } from "@helpers/currencyFormat";

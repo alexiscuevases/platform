@@ -4,7 +4,7 @@ import { getConfigs } from "@helpers/getConfigs";
 import { getBusinesses } from "@services/business";
 import { BusinessInformation, CreateBusiness } from "@typescript/models/business";
 import { GeneralErrors } from "@typescript/others";
-import { BusinessInformationValidator } from "@validators/business";
+import { BusinessInformationValidator } from "@validators/models/business";
 import { useState } from "react";
 
 export default function AccessInformation({

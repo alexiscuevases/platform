@@ -6,7 +6,7 @@ import { AuthenticationModel } from "@models/authentication";
 import { UserModel } from "@models/user";
 import { Authentication, CreateAuthentication } from "@typescript/models/authentication";
 import { User } from "@typescript/models/user";
-import { ValidatorToCreateAuthentication } from "@validators/authentication";
+import { ValidatorToCreateAuthentication } from "@validators/models/authentication";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest): Promise<NextResponse> {

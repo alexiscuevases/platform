@@ -5,7 +5,7 @@ import { IoAdd } from "react-icons/io5";
 import Modal from "../../_components/modals";
 import { useRouter } from "next/navigation";
 import { Business } from "@typescript/models/business";
-import { CouponController } from "@controllers/business/coupon";
+import { CouponController } from "@controllers/models/business/coupon";
 import { GeneralErrors } from "@typescript/others";
 import { CreateCoupon } from "@typescript/models/business/coupon";
 

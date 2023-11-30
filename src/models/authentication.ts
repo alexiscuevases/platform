@@ -1,4 +1,4 @@
-import { AuthenticationSchema } from "@schemas/authentication";
+import { AuthenticationSchema } from "@schemas/models/authentication";
 import { SchemaMongo } from "@libs/mongoose";
 import { model, models } from "mongoose";
 

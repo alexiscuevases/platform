@@ -1,4 +1,4 @@
-import { UserSchema } from "@schemas/user";
+import { UserSchema } from "@schemas/models/user";
 import { SchemaMongo } from "@libs/mongoose";
 import { model, models } from "mongoose";
 

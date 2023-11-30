@@ -1,5 +1,5 @@
-import { AuthenticationSchema } from "@schemas/authentication";
-import { UserSchema } from "@schemas/user";
+import { AuthenticationSchema } from "@schemas/models/authentication";
+import { UserSchema } from "@schemas/models/user";
 import { CreateAuthentication, UpdateAuthentication } from "@typescript/models/authentication";
 import { SchemaValidator } from "@utils/schemaValidator";
 

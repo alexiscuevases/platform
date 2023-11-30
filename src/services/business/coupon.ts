@@ -4,7 +4,7 @@ import { getConfigs } from "@helpers/getConfigs";
 import { fetchData } from "@helpers/fetchData";
 import { CreateCoupon, Coupon, UpdateCoupon } from "@typescript/models/business/coupon";
 import { GeneralResponse } from "@typescript/others";
-import { ValidatorToCreateCoupon, ValidatorToUpdateCoupon } from "@validators/business/coupon";
+import { ValidatorToCreateCoupon, ValidatorToUpdateCoupon } from "@validators/models/business/coupon";
 
 const API_ENDPOINT = getConfigs("application").URLs.api;
 

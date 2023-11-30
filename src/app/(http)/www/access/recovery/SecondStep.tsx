@@ -1,6 +1,6 @@
 "use client";
 
-import { UserController } from "@controllers/user";
+import { UserController } from "@controllers/models/user";
 import { RecoveryUserPassword } from "@typescript/models/user";
 import { GeneralErrors } from "@typescript/others";
 import { useState } from "react";

@@ -4,7 +4,7 @@ import { getConfigs } from "@helpers/getConfigs";
 import { fetchData } from "@helpers/fetchData";
 import { CreateTag, Tag, UpdateTag } from "@typescript/models/business/tag";
 import { GeneralResponse } from "@typescript/others";
-import { ValidatorToCreateTag, ValidatorToUpdateTag } from "@validators/business/tag";
+import { ValidatorToCreateTag, ValidatorToUpdateTag } from "@validators/models/business/tag";
 
 const API_ENDPOINT = getConfigs("application").URLs.api;
 

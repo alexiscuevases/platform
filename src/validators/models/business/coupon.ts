@@ -1,4 +1,4 @@
-import { CouponSchema } from "@schemas/business/coupon";
+import { CouponSchema } from "@schemas/models/business/coupon";
 import { CreateCoupon, UpdateCoupon } from "@typescript/models/business/coupon";
 import { SchemaValidator } from "@utils/schemaValidator";
 

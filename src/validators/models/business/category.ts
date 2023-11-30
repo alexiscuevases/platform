@@ -1,4 +1,4 @@
-import { CategorySchema } from "@schemas/business/category";
+import { CategorySchema } from "@schemas/models/business/category";
 import { CreateCategory, UpdateCategory } from "@typescript/models/business/category";
 import { SchemaValidator } from "@utils/schemaValidator";
 
