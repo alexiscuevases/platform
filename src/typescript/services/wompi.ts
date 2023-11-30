@@ -1,5 +1,7 @@
 type LegalIdTypes = "CC" | "CE" | "TI" | "NIT" | "PP" | "DNI" | "RG" | "OTHER";
 type TransactionStatuses = "PENDING" | "APPROVED" | "DECLINED" | "ERROR" | "VOIDED";
+type EventTypes = "transaction.updated" | "nequi_token.updated";
+type EnviromentTypes = "prod" | "test";
 type PaymentMethodTypes =
   | "CARD"
   | "NEQUI"
@@ -88,4 +90,28 @@ export interface CreateWompiTransaction {
   reference: string;
 }
 
-export interface WompiEvent {}
+export interface WompiEvent {
+  event: EventTypes;
+  data: {
+    transaction: {
+      id: string;
+      amount_in_cents: number;
+      reference: string;
+      customer_email: string;
+      currency: "COP";
+      payment_method_type: PaymentMethodTypes;
+      redirect_url: string;
+      status: TransactionStatuses;
+      shipping_address: string;
+      payment_link_id: string;
+      payment_source_id: string;
+    };
+  };
+  environment: EnviromentTypes;
+  signature: {
+    properties: ["transaction.id", "transaction.status", "transaction.amount_in_cents"];
+    checksum: string;
+  };
+  timestamp: number;
+  sent_at: Date;
+}
