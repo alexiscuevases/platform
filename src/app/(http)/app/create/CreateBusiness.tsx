@@ -3,6 +3,7 @@
 import { WompiController } from "@controllers/services/wompi";
 import { getConfigs } from "@helpers/getConfigs";
 import { createBusiness } from "@services/business";
+import { createTransaction } from "@services/transaction";
 import { CreateBusiness } from "@typescript/models/business";
 import { GeneralErrors } from "@typescript/others";
 import { CreateWompiCardTokenization } from "@typescript/services/wompi";
@@ -23,41 +24,55 @@ export default function CreateBusinessComponent({ data, setStep }: { data: Creat
     setWaitingResponse(true);
     setErrors({});
 
-    const tokenizedCard = await wompiController.createCardTokenization({
-      number: payment.number,
-      // @ts-expect-error
-      exp_month: payment.expiration.split("/")[0],
-      // @ts-expect-error
-      exp_year: payment.expiration.split("/")[1],
-      cvc: payment.cvc,
-      card_holder: payment.card_holder
-    });
-    if (!tokenizedCard.success) return setErrors(tokenizedCard.errors), setWaitingResponse(false);
+    if (data.subscription_plan !== "Free") {
+      const tokenizedCard = await wompiController.createCardTokenization({
+        number: payment.number,
+        // @ts-expect-error
+        exp_month: payment.expiration.split("/")[0],
+        // @ts-expect-error
+        exp_year: payment.expiration.split("/")[1],
+        cvc: payment.cvc,
+        card_holder: payment.card_holder
+      });
+      if (!tokenizedCard.success) return setErrors(tokenizedCard.errors), setWaitingResponse(false);
 
-    const transaction = await wompiController.createTransaction({
-      reference: `${new Date().getTime()}`,
-      amount_in_cents: getConfigs("platform").plans[data.subscription_plan].costs.monthly_price * 100,
-      currency: "COP",
-      customer_email: data.business_email,
-      customer_data: {
-        phone_number: data.business_phone,
-        full_name:
-          data.business_type === "Natural person" ?
-            `${data.legal_names} ${data.legal_surnames}`
-          : data.business_legal_name,
-        legal_id: data.business_type === "Natural person" ? data.document_number : data.business_legal_identification,
-        legal_id_type: data.business_type === "Natural person" ? data.document_type : "NIT"
-      },
-      payment_method: {
-        type: "CARD",
-        token: tokenizedCard.result.id,
-        installments: 1
-      }
-    });
-    if (!transaction.success) return setErrors(transaction.errors), setWaitingResponse(false);
+      const wompiTransaction = await wompiController.createTransaction({
+        reference: `${new Date().getTime()}`,
+        amount_in_cents: getConfigs("platform").plans[data.subscription_plan].costs.monthly_price * 100,
+        currency: "COP",
+        customer_email: data.business_email,
+        customer_data: {
+          phone_number: data.business_phone,
+          full_name:
+            data.business_type === "Natural person" ?
+              `${data.legal_names} ${data.legal_surnames}`
+            : data.business_legal_name,
+          legal_id: data.business_type === "Natural person" ? data.document_number : data.business_legal_identification,
+          legal_id_type: data.business_type === "Natural person" ? data.document_type : "NIT"
+        },
+        payment_method: {
+          type: "CARD",
+          token: tokenizedCard.result.id,
+          installments: 1
+        }
+      });
+      if (!wompiTransaction.success) return setErrors(wompiTransaction.errors), setWaitingResponse(false);
 
-    const business = await createBusiness({ ...data, subscription_plan: "Free" });
-    if (!business.success) return setErrors(business.errors), setWaitingResponse(false);
+      const business = await createBusiness(data);
+      if (!business.success) return setErrors(business.errors), setWaitingResponse(false);
+
+      const transaction = await createTransaction({
+        status: wompiTransaction.result.status,
+        transaction_provider: "Wompi",
+        transaction_id: wompiTransaction.result.id,
+        intention: "Create subscription",
+        intention_id: business.result._id
+      });
+      if (!transaction.success) return setErrors(transaction.errors), setWaitingResponse(false);
+    } else {
+      const business = await createBusiness({ ...data, subscription_status: "Active" });
+      if (!business.success) return setErrors(business.errors), setWaitingResponse(false);
+    }
 
     router.push("/");
   };

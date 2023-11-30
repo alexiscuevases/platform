@@ -1,5 +1,6 @@
+import { TransactionStatuses } from "@typescript/models/transaction";
+
 type LegalIdTypes = "CC" | "CE" | "TI" | "NIT" | "PP" | "DNI" | "RG" | "OTHER";
-type TransactionStatuses = "PENDING" | "APPROVED" | "DECLINED" | "ERROR" | "VOIDED";
 type EventTypes = "transaction.updated" | "nequi_token.updated";
 type EnviromentTypes = "prod" | "test";
 type PaymentMethodTypes =
@@ -57,6 +58,35 @@ export interface WompiTokenizedCard {
 
 export interface WompiTransaction {
   status?: TransactionStatuses;
+  id?: string;
+  amount_in_cents?: number;
+  reference?: string;
+  currency?: "COP";
+  payment_method_type?: PaymentMethodTypes;
+  payment_method?: {
+    type?: PaymentMethodTypes;
+    extra?: {
+      name?: string;
+      brand?: "VISA" | "MASTERCARD";
+      last_four?: string;
+      processor_response_code?: string;
+    };
+    installments?: number;
+  };
+  redirect_url?: string;
+  status_message?: string;
+  merchant?: {
+    name?: string;
+    legal_name?: string;
+    contact_name?: string;
+    phone_number?: string;
+    logo_url?: string;
+    legal_id_type?: LegalIdTypes;
+    email?: string;
+    legal_id?: string;
+  };
+  taxes?: any[];
+  created_at?: Date;
 }
 
 export interface CreateWompiTransaction {

@@ -44,6 +44,7 @@ export const ValidatorToCreateBusiness = new SchemaValidator<CreateBusiness>(
     business_phone: { ...BusinessSchema.getPropertyValidations("business_phone") },
     business_local_subdomain: { ...BusinessSchema.getPropertyValidations("business_local_subdomain") },
     subscription_plan: { ...BusinessSchema.getPropertyValidations("subscription_plan") },
+    subscription_status: { ...BusinessSchema.getPropertyValidations("subscription_status") },
     business_type: { ...BusinessSchema.getPropertyValidations("business_type") },
     legal_names: { ...BusinessSchema.getPropertyValidations("legal_names") },
     legal_surnames: { ...BusinessSchema.getPropertyValidations("legal_surnames") },

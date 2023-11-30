@@ -50,7 +50,12 @@ export const BusinessSchema = new SchemaValidator<Business>({
     isRequired: false,
     defaultValue: null
   },
-  subscription_status: { valueType: String, isRequired: false, isEnum: ["Active", "Expired"], defaultValue: "Active" },
+  subscription_status: {
+    valueType: String,
+    isRequired: false,
+    isEnum: ["Active", "Expired", "Pending"],
+    defaultValue: "Pending"
+  },
   business_type: { valueType: String, isRequired: true, isEnum: ["Natural person", "Legal person"] },
   legal_names: { valueType: String, isRequired: false, maxLength: 32, defaultValue: null },
   legal_surnames: { valueType: String, isRequired: false, maxLength: 32, defaultValue: null },

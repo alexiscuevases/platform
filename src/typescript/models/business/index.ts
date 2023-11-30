@@ -1,12 +1,11 @@
 import { MongooseSchemaDefaultProperties } from "@typescript/libs/mongoose";
 import { Taxes } from "@typescript/others";
+import { SubscriptionPlans, SubscriptionStatuses } from "../subscription";
 
 type DocumentTypes = "CC" | "CE";
 type LegalityVerificationStatuses = "Approved" | "Disapproved" | "Pending";
 type BusinessStatuses = "Activated" | "Desactivated";
 type BusinessTypes = "Natural person" | "Legal person";
-type SubscriptionStatuses = "Active" | "Expired";
-type SubscriptionPlans = "Free" | "Basic" | "Standard" | "Advanced" | "Pro";
 
 export interface Address {
   country_code: string;
@@ -64,6 +63,7 @@ export interface Business extends MongooseSchemaDefaultProperties {
 export interface CreateBusiness extends BusinessInformation, Address {
   owner_user_id: any;
   subscription_plan?: SubscriptionPlans;
+  subscription_status?: SubscriptionStatuses;
   business_type: BusinessTypes;
   legal_names?: string | null;
   legal_surnames?: string | null;
