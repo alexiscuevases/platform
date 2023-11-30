@@ -10,6 +10,7 @@ import {
   WompiTokenizedCard,
   WompiTransaction
 } from "@typescript/services/wompi";
+import { generateHash_SHA256 } from "@helpers/generateHash_SHA256";
 
 const API_ENDPOINT = getEnvironmentVariable("WOMPI_ENDPOINT");
 
@@ -52,16 +53,8 @@ export const createWompiSignature = async (
   reference: string,
   amount_in_cents: number,
   currency: string
-): Promise<string> => {
-  const encondedText = new TextEncoder().encode(
-    `${reference}${amount_in_cents}${currency}${getEnvironmentVariable("WOMPI_INTEGRITY_SECRET")}`
-  );
-  const hashBuffer = await crypto.subtle.digest("SHA-256", encondedText);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const hashHex = hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
-
-  return hashHex;
-};
+): Promise<string> =>
+  generateHash_SHA256(`${reference}${amount_in_cents}${currency}${getEnvironmentVariable("WOMPI_INTEGRITY_SECRET")}`);
 
 export const createWompiTransaction = async (
   dataToCreate: CreateWompiTransaction
