@@ -66,9 +66,9 @@ export default function SecondStep({ setData, data, setStep, setVerification }: 
                 Correo electrónico
               </label>
             </div>
-            {(errors.email || errors.GENERAL_ERROR) && (
+            {(errors.email || errors.GENERAL_ERROR || errors.code) && (
               <p className="rounded-2xl bg-[hsla(353,100%,35%,.05)] p-4 font-medium text-[hsla(353,100%,35%,1)]">
-                {errors.email || errors.GENERAL_ERROR}
+                {errors.email || errors.GENERAL_ERROR || errors.code}
               </p>
             )}
           </div>
